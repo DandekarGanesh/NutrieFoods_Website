@@ -1,8 +1,83 @@
 <!-- including header  -->
 <%- include("./navbar.ejs") %> 
 
+<div class="product_container">
 
-<h1> This is an show .ejs </h1>
+    <% if(typeof product !== 'undefined') { %>
+        <div class="product_img">
+           <img src="<%=product.url%>" alt="">
+        </div>
+
+        <div class="product_info">
+            <p> Nutriefoods </p>
+            <h3> <%= product.title.toUpperCase() %> </h3>
+            <div class="product_price"> <h5> Rs.<%= product.Price %> </h5> </div>
+            <p class="product_desc"> <%= product.description %> </p>
+
+            <div class="delete-edit-btn">
+                <form method="POST" action="/delete/<%=product._id%>?_method=DELETE">
+                    <button class="btn btn-success"> Delete </button>
+                </form>
+                
+                <a href="/edit/<%=product._id%>"> <button class="btn btn-success"> edit </button> </a>
+            </div>
+            
+
+        </div>
+    <% } %>
+</div>
+
+
+<br> <br> <br> <br> <br> <br> 
+
+
+
+<div class="review-sec">
+    <hr>
+    <h3> Reviews </h3>
+   
+    <form class="form">
+        <label for="customRange1" class="form-label"> Ratings </label>
+        <input type="range" class="form-range">
+
+        <br> <br> 
+        <label for="customRange1" class="form-label"> Reviews </label>
+        <textarea class="form-control" name="" id="" cols="200" rows="5"> eg: nice product </textarea> <br>
+
+        <button class="btn btn-success"> Add Reviews </button>
+    </form>
+    
+    <hr>
+</div>
+
+
+<br> <br> <br> <br> <br>
+
+
+<div class="suggested_products">
+    
+        <% if(typeof cards !== 'undefined') { %>
+        <% for(card in cards) { %> 
+
+            <% if(cards[card]._id.toString() !== product._id.toString()  ) { %>         
+                    <a class="cardLink" href="/show/<%=cards[card]._id%>" >
+                        <div class="card">
+                            <div class="card_img">
+                                <img src="<%= cards[card].url %>" alt="">
+                            </div>
+
+                            <div class="card_info">
+                                 <div> <%= cards[card].title.toUpperCase() %> </div>
+                                <h5> <%= cards[card].Price %> </h5>
+                            </div>
+                        </div>
+                    </a>
+                <% } %>
+
+            <% } %>
+        <% } %>
+ </div>
+
 
 <!-- including footer  -->
 <%- include("./footer.ejs") %>

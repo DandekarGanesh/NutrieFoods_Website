@@ -5,67 +5,67 @@
 <!-- nav_circles sec start  -->
 <div class="nav_circles">
      <div class="circle_outer">
-         <div class="circle"></div>
+        <div class="circle"> <img class="circle_img" src="../NavCircles_Top Deals.gif" alt="img"></div>
         <div class="circle_name"> Deals </div> 
      </div>
 
-     <div class="circle_outer">
-        <div class="circle"></div>
+     <div class="circle_outer"> 
+        <div class="circle"> <img class="circle_img" src="../NavCircles_AllRanges.gif" alt=""> </div>
         <div class="circle_name"> Explore Us </div> 
     </div>
 
     <div class="circle_outer">
-        <div class="circle"></div>
+        <div class="circle"> <img class="circle_img" src="../NavCircles_newArrival.gif" alt=""> </div>
         <div class="circle_name"> New Arrival </div> 
     </div>
 
     <div class="circle_outer">
-        <div class="circle"></div>
+        <div class="circle"> <img class="circle_img" src="../NavCircles_BestSeller.gif" alt=""> </div>
         <div class="circle_name"> Best Seller </div> 
     </div>
 
     <div class="circle_outer">
-        <div class="circle"></div>
+        <div class="circle"> <img class="circle_img" src="../NavCircles_Millet_munch.gif" alt=""> </div>
         <div class="circle_name"> Pancake - Whole Grain </div> 
     </div>
 
     <div class="circle_outer">
-        <div class="circle"></div>
+        <div class="circle"> <img class="circle_img" src="../NavCircles_meals-on-go.gif" alt=""> </div>
         <div class="circle_name"> Nutriefit meals </div> 
     </div>
 
     <div class="circle_outer">
-        <div class="circle"></div>
+        <div class="circle"> <img class="circle_img" src="../NavCircles_Millet_munch.gif" alt=""> </div>
         <div class="circle_name"> Wholesome Millet Munch  </div> 
     </div>
 
     <div class="circle_outer">
-        <div class="circle"></div>
+        <div class="circle"> <img class="circle_img" src="../NavCircles_Trail_mix.gif" alt=""> </div>
         <div class="circle_name"> Nuts & Mix Marvels </div> 
     </div>
 
     <div class="circle_outer">
-        <div class="circle"></div>
+        <div class="circle"> <img class="circle_img" src="../NavCircles_Dried_Fruits.gif" alt=""> </div>
         <div class="circle_name"> Deliciously Dried Fruits </div> 
     </div>
 
     <div class="circle_outer">
-        <div class="circle"></div>
+        <div class="circle"> <img class="circle_img" src="../NavCircles_pulpy toffee.gif" alt=""> </div>
         <div class="circle_name"> Fruity Delight Bites </div> 
     </div>
 
     <div class="circle_outer">
-        <div class="circle"></div>
+        <div class="circle"> <img class="circle_img" src="../NavCircles_Raw sugar.gif" alt=""> </div>
         <div class="circle_name"> Raw Sugar </div> 
     </div>
 
     <div class="circle_outer">
-        <div class="circle"></div>
+        <div class="circle"> <img class="circle_img" src="../NavCircles_Choco_crunch.gif" alt=""> </div>
         <div class="circle_name"> Chocolate Nuts Bliss </div> 
     </div>
 
     <div class="circle_outer">
-        <div class="circle"></div>
+        <div class="circle"> <img class="circle_img" src="../NavCircles_Morning_delight.gif" alt=""> </div>
         <div class="circle_name"> Granola Galore </div> 
     </div>
 </div> 
@@ -82,19 +82,18 @@
 <!-- card sec start -->
 <div class="home_products">
 
-    <% if(cards && cards.length > 0) { %>
+    <% if(typeof cards !== 'undefined') { %>
         <% for(card in cards) { %>
 
-            <a href="/product/show/<%=cards[card]._id%>" >
+            <a class="cardLink" href="/show/<%=cards[card]._id%>" >
                 <div class="card">
                     <div class="card_img">
-                        <img class="card_img" src="<%= cards[card].url %>" alt="">
+                        <img src="<%= cards[card].url %>" alt="">
                     </div>
 
                     <div class="card_info">
-                        <h3> <%= cards[card].title %> </h3>
-                        <h5> <%= cards[card].Price %> </h5>
-                        <p> <%= cards[card].description %> </p>
+                        <div> <%= cards[card].title.toUpperCase() %> </div>
+                        <h5> Rs.<%= cards[card].Price %> </h5>
                     </div>
                 </div>
             </a>

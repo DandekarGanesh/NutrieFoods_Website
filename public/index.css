@@ -1,6 +1,6 @@
 /* styling for nav circles start */
 .nav_circles {
-    border: 2px solid black;
+    /* border: 2px solid black; */
     height: 180px;
     display: flex;
     align-items: center;
@@ -16,7 +16,7 @@
     max-height: 100px;
     min-width: 100px;
     max-width: 100px;
-    /* border: 2px solid black; */
+ 
     margin: 0 20px 0 20px;
 }
 
@@ -25,14 +25,18 @@
     height: 70px;
     width: 70px;
     border-radius: 50%;
-    border: 2px solid black;
     margin: 10px auto 0 auto;
+}
+
+.circle_img {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
 }
 
 
 .circle_name {
     text-align: center;
-    /* border: 2px solid black; */
 }
 
 /* styling for nav circles end */
@@ -52,25 +56,39 @@
 
 /* home card sec start */
 .home_products {
-    border: 2px solid black;
-    height: 400px;
+    min-height: 600px;
     display: flex;
     justify-content: start;
     align-items: center;
-    flex-wrap: wrap;
+    overflow: auto;
 }
 
 .card {
-    height: 350px;
-    width: 200px;
-    border: 2px solid black;
-    border-radius: 10px;
+    height: 500px;
+    min-width: 250px;
+    max-width: 250px;
     margin: 0 20px 0 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: 0.5px solid transparent;
+}
+
+.cardLink {
+    text-decoration: none;
 }
 
 .card_img {
-    height: 200px;
+    min-height: 300px;
+    max-height: 300px;
     width: 100%;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.card_img img {
+    height: 95%;
+    width: 95%;
 }
 
 .card_info {
