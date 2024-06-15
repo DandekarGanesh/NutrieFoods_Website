@@ -1,6 +1,9 @@
 <!-- including header  -->
 <%- include("./navbar.ejs") %> 
 
+
+
+<!-- Product info Start -->
 <div class="product_container">
 
     <% if(typeof product !== 'undefined') { %>
@@ -27,22 +30,42 @@
     <% } %>
 </div>
 
+<!-- Product info end -->
+
 
 <br> <br> <br> <br> <br> <br> 
 
 
 
+
+<!-- Give review Start -->
 <div class="review-sec">
     <hr>
     <h3> Reviews </h3>
    
-    <form class="form">
-        <label for="customRange1" class="form-label"> Ratings </label>
-        <input type="range" class="form-range">
+    <form class="form" method="POST" action="/review/<%=product._id%>">
 
-        <br> <br> 
+        <!-- starability code start -->
+        <div class="mb-3 mt-3">
+            <label for="rating" class="form-label">Rating</label>
+          <fieldset class="starability-slot">
+            <input type="radio" id="no-rate" class="input-no-rate" name="Review[rating]" value="1" checked aria-label="No rating." />
+            <input type="radio" id="first-rate1" name="Review[rating]" value="1" />
+            <label for="first-rate1" title="Terrible">1 star</label>
+            <input type="radio" id="first-rate2" name="Review[rating]" value="2" />
+            <label for="first-rate2" title="Not good">2 stars</label>
+            <input type="radio" id="first-rate3" name="Review[rating]" value="3" />
+            <label for="first-rate3" title="Average">3 stars</label>
+            <input type="radio" id="first-rate4" name="Review[rating]" value="4" />
+            <label for="first-rate4" title="Very good">4 stars</label>
+            <input type="radio" id="first-rate5" name="Review[rating]" value="5" />
+            <label for="first-rate5" title="Amazing">5 stars</label>
+          </fieldset>
+        </div>
+        <!-- starability code end -->
+
         <label for="customRange1" class="form-label"> Reviews </label>
-        <textarea class="form-control" name="" id="" cols="200" rows="5"> eg: nice product </textarea> <br>
+        <textarea class="form-control" cols="200" rows="5" name="Review[comment]"> eg: nice product </textarea> <br>
 
         <button class="btn btn-success"> Add Reviews </button>
     </form>
@@ -50,10 +73,16 @@
     <hr>
 </div>
 
+<!-- Give review end -->
+
 
 <br> <br> <br> <br> <br>
 
 
+
+
+
+<!-- Suggested Products Start -->
 <div class="suggested_products">
     
         <% if(typeof cards !== 'undefined') { %>
@@ -77,6 +106,52 @@
             <% } %>
         <% } %>
  </div>
+<!-- Suggested Products end -->
+
+
+
+
+
+ <!-- Showing reviews start -->
+ <div class="reviews_outer">
+
+    <!-- left btn -->
+   <div class="move_btns" id="left-btn">
+     <span class="review_btn"> <i class="fa-solid fa-chevron-left"></i> </span>
+   </div>
+
+        <div class="reviews"> 
+
+            <% for(review in reviews) { %>
+                <% let date = reviews[review].createdAt %>
+              
+                 <a href="/review-show/<%=reviews[review]._id%>" style="text-decoration: none;">
+
+                    <div class="review_card">
+                        <div class="review_img">
+                            <img class="review_img" src="<%=product.url%>">
+                            <div class="review_stars"> <% for(let i=0; i<reviews[review].rating; i++) { %>&#9733;<% } %>
+                            <p class="review_date"> <%= date.getDate()%>/<%= date.getMonth()%>/<%= date.getFullYear() %> <span class="review_by"> Customer </span> </p>
+                            </div> 
+                        </div>
+        
+                        <div class="review_text"> 
+                            <%= reviews[review].comment %>
+                        </div>
+                    </div>
+                </a>
+
+          <% } %>
+        </div>
+
+    <!-- right btn -->
+    <div class="move_btns" id="right-btn">
+      <span class="review_btn"> <i class="fa-solid fa-chevron-right"></i>  </span>
+    </div>
+
+ </div>
+
+ <!-- Showing reviews end -->
 
 
 <!-- including footer  -->

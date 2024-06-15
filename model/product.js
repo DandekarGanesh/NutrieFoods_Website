@@ -8,6 +8,12 @@ const productSchma = new Schema({
     description: String
 });
 
+// productSchem.post("findOneAndDelete", async (product) => {
+//     if(product) {
+//        await Review.deleteMany({ _id: { $in: listing.reviews } });
+//     }
+// });
+
 
 const Product = mongoose.model('Product', productSchma);
 module.exports = Product;
