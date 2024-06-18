@@ -5,6 +5,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const Product = require("./model/product");
 const Review = require("./model/review");
+const NavCircle = require("./model/NavCircle");
 const methodOverride = require("method-override");
 
 
@@ -34,7 +35,8 @@ async function main() {
 // index route
 app.get("/", async (req,res) => {
     let cards = await Product.find({});
-    res.render("./index.ejs", { cards });
+    let navCircles = await NavCircle.find({});
+    res.render("./index.ejs", { cards, navCircles });
 });
 
 
@@ -49,6 +51,7 @@ app.get("/show/:id", async (req,res) => {
     let product = await Product.findById(id);
     let cards = await Product.find({});
     let reviews = await Review.find({productId: id});
+
     res.render("./show.ejs", { product, cards, reviews });
 });
 
@@ -87,13 +90,23 @@ app.put("/edit/:id", async (req,res) => {
    res.redirect("/");
 });
 
-
 // CRUD OPERATIONS END
 
 
 
 
-// reviews
+// CRUD operations for reviews
+// Show route for reviews
+app.get('/review-show/:id', async (req,res) => {
+    let { id } = req.params;
+    let review = await Review.findById(id);
+    let product = await Product.find({ _id : review.productId });
+    let img = product[0].url;
+    res.render('show_review.ejs', { review, img } );
+ });
+
+
+// Create route for reviews
 app.post('/review/:productId', (req,res) => {
     let { productId } = req.params;
     let newReview = new Review(req.body.Review);
@@ -103,17 +116,7 @@ app.post('/review/:productId', (req,res) => {
 });
 
 
-// CRUD operations for
-app.get('/review-show/:id', async (req,res) => {
-   let { id } = req.params;
-   let review = await Review.findById(id);
-   let product = await Product.find({ _id : review.productId });
-   let img = product[0].url;
-   res.render('show_review.ejs', { review, img } );
-});
-
-
-// render edit form
+// Render edit form for reviews
 app.get('/edit-review/:id', async (req,res) => {
     let { id } = req.params;
     let review = await Review.findById(id);
@@ -123,7 +126,7 @@ app.get('/edit-review/:id', async (req,res) => {
 });
 
 
-// do edit of review
+// Update route for reviews
 app.put('/edit-review/:productId/:id', async (req,res) => {
     let { productId, id } = req.params;
     await Review.findByIdAndUpdate( id , {...req.body.Review });
@@ -131,12 +134,61 @@ app.put('/edit-review/:productId/:id', async (req,res) => {
 });
 
 
-//delete review
+// Delete route for reviews
 app.delete('/delete-review/:productId/:id', async (req,res) => {
     let { productId, id } = req.params;
     await Review.findByIdAndDelete(id);
     res.redirect(`/show/${productId}`);
 });
+// CRUD Operations for reviews end
+
+
+
+// CRUD Operations for navCircles
+
+// Render form to create a navCircle
+app.get('/navCircle/add', (req,res) => {
+     res.render("addNavCircle");
+});
+
+
+// Create Route for NavCircle
+app.post('/navCircle/add', async (req,res) => {
+    let newNavCircle = await NavCircle({...req.body.NavCircle});
+    newNavCircle.save();
+    res.redirect('/');
+});
+
+// show route for navCircles
+app.get('/navCircle/:id', async (req,res) => {
+    let { id } = req.params;
+    let navCircle = await NavCircle.findById(id);
+    res.render("show_NavCircle", { navCircle } );
+});
+
+
+// Render edit form for navCircles
+app.get('/edit-navCircle/:id', async (req,res) => {
+    let { id } = req.params;
+    let navCircle = await NavCircle.findById(id); 
+    res.render("edit_navCircle", { navCircle } );
+});
+
+// Update route for navCirlces
+app.put('/edit-navCircle/:id', async (req,res) => {
+    let { id } = req.params; 
+    await NavCircle.findByIdAndUpdate(id, { ...req.body.navCircle} );
+    res.redirect("/");
+});
+
+
+// delte route
+app.delete('/delete-navCircle/:id', async (req,res) => {
+    let { id } = req.params; 
+    await NavCircle.findByIdAndDelete(id);
+    res.redirect('/');
+});
+
 
 
 

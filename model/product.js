@@ -2,10 +2,24 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const productSchma = new Schema({
-    title: String,
-    Price: Number,
-    url: String,
-    description: String
+    title: {
+        type: String,
+        requied: true
+    },
+    Price: {
+        type: Number,
+        required: true
+    },
+
+    url: {
+        type: String,
+        requred: true 
+    },
+
+    description: {
+        type: String,
+        required: true
+    }
 });
 
 // productSchem.post("findOneAndDelete", async (product) => {

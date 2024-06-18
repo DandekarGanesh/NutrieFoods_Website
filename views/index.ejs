@@ -4,70 +4,14 @@
 
 <!-- nav_circles sec start  -->
 <div class="nav_circles">
-     <div class="circle_outer">
-        <div class="circle"> <img class="circle_img" src="../NavCircles_Top Deals.gif" alt="img"></div>
-        <div class="circle_name"> Deals </div> 
-     </div>
-
-     <div class="circle_outer"> 
-        <div class="circle"> <img class="circle_img" src="../NavCircles_AllRanges.gif" alt=""> </div>
-        <div class="circle_name"> Explore Us </div> 
-    </div>
-
-    <div class="circle_outer">
-        <div class="circle"> <img class="circle_img" src="../NavCircles_newArrival.gif" alt=""> </div>
-        <div class="circle_name"> New Arrival </div> 
-    </div>
-
-    <div class="circle_outer">
-        <div class="circle"> <img class="circle_img" src="../NavCircles_BestSeller.gif" alt=""> </div>
-        <div class="circle_name"> Best Seller </div> 
-    </div>
-
-    <div class="circle_outer">
-        <div class="circle"> <img class="circle_img" src="../NavCircles_Millet_munch.gif" alt=""> </div>
-        <div class="circle_name"> Pancake - Whole Grain </div> 
-    </div>
-
-    <div class="circle_outer">
-        <div class="circle"> <img class="circle_img" src="../NavCircles_meals-on-go.gif" alt=""> </div>
-        <div class="circle_name"> Nutriefit meals </div> 
-    </div>
-
-    <div class="circle_outer">
-        <div class="circle"> <img class="circle_img" src="../NavCircles_Millet_munch.gif" alt=""> </div>
-        <div class="circle_name"> Wholesome Millet Munch  </div> 
-    </div>
-
-    <div class="circle_outer">
-        <div class="circle"> <img class="circle_img" src="../NavCircles_Trail_mix.gif" alt=""> </div>
-        <div class="circle_name"> Nuts & Mix Marvels </div> 
-    </div>
-
-    <div class="circle_outer">
-        <div class="circle"> <img class="circle_img" src="../NavCircles_Dried_Fruits.gif" alt=""> </div>
-        <div class="circle_name"> Deliciously Dried Fruits </div> 
-    </div>
-
-    <div class="circle_outer">
-        <div class="circle"> <img class="circle_img" src="../NavCircles_pulpy toffee.gif" alt=""> </div>
-        <div class="circle_name"> Fruity Delight Bites </div> 
-    </div>
-
-    <div class="circle_outer">
-        <div class="circle"> <img class="circle_img" src="../NavCircles_Raw sugar.gif" alt=""> </div>
-        <div class="circle_name"> Raw Sugar </div> 
-    </div>
-
-    <div class="circle_outer">
-        <div class="circle"> <img class="circle_img" src="../NavCircles_Choco_crunch.gif" alt=""> </div>
-        <div class="circle_name"> Chocolate Nuts Bliss </div> 
-    </div>
-
-    <div class="circle_outer">
-        <div class="circle"> <img class="circle_img" src="../NavCircles_Morning_delight.gif" alt=""> </div>
-        <div class="circle_name"> Granola Galore </div> 
-    </div>
+        <% for(let circle in navCircles) { %>
+            <a style="text-decoration: none;" href="/navCircle/<%=navCircles[circle]._id %>">
+                <div class="circle_outer">
+                    <div class="circle"> <img class="circle_img" src="<%= navCircles[circle].url%>" alt=""> </div>
+                    <div class="circle_name"> <%= navCircles[circle].title %> </div> 
+                </div>
+            </a>
+        <% } %>
 </div> 
 <!-- nav_circles sec end  -->
 
@@ -81,7 +25,6 @@
 
 <!-- card sec start -->
 <div class="home_products">
-
     <% if(typeof cards !== 'undefined') { %>
         <% for(card in cards) { %>
 
@@ -92,7 +35,7 @@
                     </div>
 
                     <div class="card_info">
-                        <div> <%= cards[card].title.toUpperCase() %> </div>
+                        <div> <% if(cards[card] && cards[card].title) { %> <%= cards[card].title.toUpperCase() %> <% } %> </div>
                         <h5> Rs.<%= cards[card].Price %> </h5>
                     </div>
                 </div>
@@ -100,6 +43,7 @@
             
         <% } %>
     <% } %>
+
 </div>
 <!-- card sec end -->
 
@@ -108,6 +52,65 @@
 <div class="space">
 
 </div>
+
+
+
+<script>
+
+     let searchProducts = (event) => {
+         let input = document.getElementById("input-search").value;
+         let ProductContainer = document.querySelector(".home_products");
+         
+         ProductContainer.innerHTML = "";
+
+
+
+
+        <%   for(let card in cards) {  %>
+             
+             
+            if('<%- JSON.stringify(cards[card].title) %>'.trim().toUpperCase().includes(input.trim().toUpperCase()) ) { 
+                console.log('<%- JSON.stringify(cards[card].title) %>' );
+
+                anchor = document.createElement('a');
+                mainDiv = document.createElement('div');
+                imgDiv = document.createElement('div');
+                img = document.createElement('img');
+                infoDiv = document.createElement('div');
+                titleDiv = document.createElement('div');
+                h5 = document.createElement('h5');  
+
+                anchor.className = 'cardLink';
+                anchor.href = "/show/<%=cards[card]._id%>";
+
+                mainDiv.className = "card";
+                imgDiv.className = "card_img";
+                img.src = "<%= cards[card].url %>";
+                
+                infoDiv.className = "card_info";
+                titleDiv.innerHTML = '<%= cards[card].title.toUpperCase() %>';
+                h5.innerHTML = '<%= cards[card].Price %>';
+
+                anchor.append(mainDiv);
+                mainDiv.append(imgDiv);
+                mainDiv.append(infoDiv);
+
+                imgDiv.append(img);
+                infoDiv.append(titleDiv);
+                infoDiv.append(h5);
+        
+                ProductContainer.append(anchor);
+              }  
+        <%  }  %>
+
+       
+
+   
+
+         console.log("is it working");
+
+     }
+</script>
 
 
 

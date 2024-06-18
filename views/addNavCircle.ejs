@@ -1,0 +1,39 @@
+<!-- including header  -->
+<%- include("./navbar.ejs") %>  
+
+<div class="page_heading">
+    <h2> add NavCircle form </h2>
+</div>
+  
+    <div class="addProduct">
+        <form method="POST"  action="/navCircle/add" class="row g-3 needs-validation" novalidate>
+            <div class="col-md-4">
+            <label for="validationCustom01" class="form-label"> Product Title </label>
+            <input type="text" class="form-control" name="NavCircle[title]" id="validationCustom01" required>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+            </div>
+         
+            <div class="col-md-4">
+            <label for="validationCustomUsername" class="form-label">image URL</label>
+            <div class="input-group has-validation">
+                <input type="text" name="NavCircle[url]" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                <div class="invalid-feedback">
+                choose a image URL.
+                </div>
+            </div>
+            </div>
+
+
+
+
+            
+            <div class="col-12 submit-btn">
+            <button class="btn btn-primary" type="submit"> Add NavCircle</button>
+            </div>
+        </form>
+    </div>
+
+<!-- including footer  -->
+<%- include("./footer.ejs") %>

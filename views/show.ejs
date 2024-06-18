@@ -13,7 +13,7 @@
 
         <div class="product_info">
             <p> Nutriefoods </p>
-            <h3> <%= product.title.toUpperCase() %> </h3>
+            <h3> <% if(product && product.title) { %> <%= product.title.toUpperCase() %> <% } %> </h3>
             <div class="product_price"> <h5> Rs.<%= product.Price %> </h5> </div>
             <p class="product_desc"> <%= product.description %> </p>
 
@@ -96,7 +96,7 @@
                             </div>
 
                             <div class="card_info">
-                                 <div> <%= cards[card].title.toUpperCase() %> </div>
+                                 <div> <% if(cards[card] && cards[card].title) { %> <%= cards[card].title.toUpperCase() %> <% } %> </div>
                                 <h5> <%= cards[card].Price %> </h5>
                             </div>
                         </div>
