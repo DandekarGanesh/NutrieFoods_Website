@@ -10,7 +10,7 @@
   
         <div class="addProduct">
             
-            <form method="POST"  action="/edit/<%=product._id%>?_method=PUT" class="row g-3 needs-validation" novalidate>
+            <form method="POST"  action="/product/edit/<%=product._id%>?_method=PUT" class="row g-3 needs-validation" novalidate>
                 <div class="col-md-4">
                 <label for="validationCustom01" class="form-label"> Product Title </label>
                 <input type="text" value="<%=product.title%>" class="form-control" name="Product[title]" id="validationCustom01" required>

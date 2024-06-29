@@ -1,0 +1,175 @@
+<!-- including header  -->
+<%- include("./navbar.ejs") %>  
+
+
+
+<style>
+
+    .view-all-products {
+        margin: 20px 10px 20px 10px;
+        border: 2px solid black;
+    }
+    
+    </style>
+
+    <h1> Cart </h1>
+
+
+    <% if(typeof products !== 'undefined' && products != null) { %>
+
+       <% let grandTotal = 0; %>   <!--  variable created to calculate grand  -->
+    
+        <div class="add-to-cart-cont">
+        
+            <% for(let card in products) { %>
+                <% grandTotal += (products[card].Price * products[card].quantity) %>
+                   <div class="add-to-cart-Product_id" style="display: none;"> <%= products[card]._id%> </div>
+
+                    <div class="add-to-cart-card">
+                        <a class="cardLink add-to-cart-img" href="/show/<%=products[card]._id%>" >
+                            <div> <img src="<%= products[card].url%>" alt=""> </div>
+                        </a>
+
+                        <div class="add-to-cart-info">
+                            <h6> <%= products[card].title %> </h6>
+
+                            <p class="add-to-cart-productPrice">Rs. <%= products[card].Price %> </p>
+
+                            <div class="add-to-cart-info-inner">
+                                <div class="add-to-cart-qty">
+                                    <div class="add-to-cart-btns">
+                                        <div class="add-to-cart-minus">
+                                            <i class="fa-solid fa-minus"></i>
+                                        </div>
+
+                                        <div class="add-to-cart-qty-value">
+                                            <%= products[card].quantity %> 
+                                        </div>
+
+                                        <div class="add-to-cart-plus">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <i class="fa-solid fa-trash-can"></i>
+
+                                <h6 class="btns-total-amt"> Rs. <%= (products[card].quantity*products[card].Price).toLocaleString("en-IN") %>.00  </h6>
+                            </div>
+
+
+                        </div>
+
+                        
+                    </div> 
+        
+            <% } %>
+
+        </div>   
+
+        <div class="add-to-cart-totalAmt" style="display: none;"> <%= grandTotal %> </div>
+        <h3 class="add-to-cart-grandTotal"> Grand Total : <%= grandTotal.toLocaleString("en-IN") %>.00 </h2>
+
+    <% } %>
+
+
+
+    <script>
+        
+        let plusBtn = document.querySelectorAll(".add-to-cart-plus");
+        let minusBtn = document.querySelectorAll(".add-to-cart-minus");
+        let btnValue = document.querySelectorAll(".add-to-cart-qty-value");
+        let deleteBtn = document.querySelectorAll(".add-to-cart-card");
+        let product_id = document.querySelectorAll(".add-to-cart-Product_id");
+        let pricePrice = document.querySelectorAll(".add-to-cart-productPrice");
+        let totatBtnPrice = document.querySelectorAll(".btns-total-amt");
+
+        let grandTotal = document.querySelector(".add-to-cart-totalAmt");
+        let grandTotalMain = document.querySelector(".add-to-cart-grandTotal");
+
+
+        for(let btn=0; btn<plusBtn.length; btn++) {
+            let id = product_id[btn].innerHTML.trim();
+            let price = parseInt(pricePrice[btn].innerHTML.trim().toString().substring(4));
+            let totalBtn = totatBtnPrice[btn];
+
+            // functionality for plus button
+            plusBtn[btn].addEventListener("click", async () => {
+                let val = parseInt(btnValue[btn].innerHTML.trim());
+
+                await axios({
+                    method: 'PUT',
+                    url: "http://localhost:8080/add-to-cart-plus",
+                    headers: {}, 
+                    data: {
+                        productId: id, // This is the body part
+                }})
+                .then(() => {
+                    let oldTotal = parseInt(grandTotal.innerHTML);
+                    grandTotal.innerHTML = `${oldTotal + price}`;
+                    grandTotalMain.innerHTML = `Grand Total : ${(oldTotal + price).toLocaleString("en-IN")}.00`;
+                    totalBtn.innerHTML = `Rs. ${price*(val+1).toLocaleString("en-IN")}.00`;
+                    btnValue[btn].innerHTML = val+1;
+                })
+                .catch((err) => { console.log(err) });
+            });
+
+
+
+            // functionality for minus button
+            minusBtn[btn].addEventListener("click", async () => {
+                let val = parseInt(btnValue[btn].innerHTML.trim());
+        
+                if(val > 1) {
+
+                    await axios({
+                        method: 'PUT',
+                        url: "http://localhost:8080/add-to-cart-minus",
+                        headers: {}, 
+                        data: {
+                        productId: id, // This is the body part
+                   }})
+                   .then(() => {
+                        let oldTotal = parseInt(grandTotal.innerHTML);
+                        grandTotal.innerHTML = `${oldTotal - price}`;
+                        grandTotalMain.innerHTML = `Grand Total : ${(oldTotal - price).toLocaleString("en-IN")}.00`;
+                        totalBtn.innerHTML = `Rs. ${price*(val-1).toLocaleString("en-IN")}.00`;
+                        btnValue[btn].innerHTML = val-1;
+                   })
+                   .catch((err) => { console.log(err) });
+
+                }
+            });
+
+
+            // functionality for delete button
+            deleteBtn[btn].addEventListener("click", async (event) => {
+                
+                if(event.target.className === "fa-solid fa-trash-can") {
+
+                    let val = parseInt(btnValue[btn].innerHTML.trim());
+                    await axios({
+                        method: 'DELETE',
+                        url: "http://localhost:8080/add-to-cart-delete",
+                        headers: {}, 
+                        data: {
+                        productId: id, // This is the body part
+                   }})
+                   .then(() => {
+                        let oldTotal = parseInt(grandTotal.innerHTML);
+                        grandTotal.innerHTML = `${oldTotal - (val*price)}`;
+                        grandTotalMain.innerHTML = `Grand Total : ${(oldTotal - (val*price)).toLocaleString("en-IN")}.00`;
+                        deleteBtn[btn].remove();
+                   })
+                   .catch((err) => console.log(err) );
+                }
+            });
+        }
+        
+        
+
+    </script>
+
+
+<!-- including footer  -->
+<%- include("./footer.ejs") %>
