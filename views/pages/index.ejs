@@ -1,0 +1,140 @@
+<!-- including header  -->
+<%- include("../navbar.ejs") %>  
+
+
+<!-- nav_circles sec start  -->
+<div class="nav_circles">
+        <% for(let circle in navCircles) { %>
+            <a style="text-decoration: none;" href="/navCircle/<%=navCircles[circle]._id %>">
+                <div class="circle_outer">
+                    <div class="circle"> <img class="circle_img" src="<%= navCircles[circle].url%>" alt=""> </div>
+                    <div class="circle_name"> <%= navCircles[circle].title %> </div> 
+                </div>
+            </a>
+        <% } %>
+</div> 
+<!-- nav_circles sec end  -->
+
+
+
+<!-- image sec start -->
+<div class="home_image">
+    <img src="//www.nutriefoods.in/cdn/shop/files/Crafted_With_Just_For_you_3.png?v=1715943063&width=3840" alt="">
+</div>
+<!-- image sec end -->
+
+
+<!-- card sec start -->
+<div class="home_products">
+    <% if(typeof cards !== 'undefined') { %>
+        <% for(card in cards) { %>
+
+            <div class="cardLink" >
+                <a href="/product/show/<%=cards[card]._id%>">
+                    <div class="card">
+                        <div class="card_img">
+                            <img src="<%= cards[card].url %>" alt="">
+                        </div>
+
+                        <div class="card_info">
+                            <div> <% if(cards[card] && cards[card].title) { %> <%= cards[card].title.toUpperCase() %> <% } %> </div>
+                            <h5> Rs.<%= cards[card].Price %> </h5>
+                        </div>
+                    </div>
+                </a>
+                <button class="add-to-cart-button" onclick="add_to_cart('<%= cards[card]._id %>')"> add to Cart </button>
+
+            </div>
+                
+
+         
+
+            
+        <% } %>
+    <% } %>
+
+</div>
+
+    <!-- View all cards -->
+    <div style="text-align: center; margin-top: 50px">
+       <a href="/product/view-all/All"> <button class="btn btn-success"> View All </button> </a>
+    </div>
+    <!-- View all cards end  -->
+<!-- card sec end -->
+
+
+
+<div class="space">
+
+</div>
+
+
+
+<script>
+
+   // call to add to cart 
+    async function add_to_cart(id) {
+        await axios({
+            method: 'post',
+            url: "http://localhost:8080/add-to-cart",
+            headers: {}, 
+            data: {
+                productId: id, // This is the body part
+            }})
+            .catch((err) => console.log(err));
+    }
+ 
+
+
+    //  search functionality start
+     let searchProducts = (event) => {
+         let input = document.getElementById("input-search").value;
+         let ProductContainer = document.querySelector(".home_products");
+         ProductContainer.innerHTML = "";
+
+        <%   for(let card in cards) {  %>
+             
+             
+            if('<%- JSON.stringify(cards[card].title) %>'.trim().toUpperCase().includes(input.trim().toUpperCase()) ) { 
+
+                anchor = document.createElement('a');
+                mainDiv = document.createElement('div');
+                imgDiv = document.createElement('div');
+                img = document.createElement('img');
+                infoDiv = document.createElement('div');
+                titleDiv = document.createElement('div');
+                h5 = document.createElement('h5');  
+
+                anchor.className = 'cardLink';
+                anchor.href = "product/show/<%=cards[card]._id%>";
+
+                mainDiv.className = "card";
+                imgDiv.className = "card_img";
+                img.src = "<%= cards[card].url %>";
+                
+                infoDiv.className = "card_info";
+                titleDiv.innerHTML = '<%= cards[card].title.toUpperCase() %>';
+                h5.innerHTML = '<%= cards[card].Price %>';
+
+                anchor.append(mainDiv);
+                mainDiv.append(imgDiv);
+                mainDiv.append(infoDiv);
+
+                imgDiv.append(img);
+                infoDiv.append(titleDiv);
+                infoDiv.append(h5);
+        
+                ProductContainer.append(anchor);
+              }  
+        <%  }  %>
+
+     }
+    //  search functionality end
+
+</script>
+
+
+
+
+<!-- including footer  -->
+<%- include("../footer.ejs") %>

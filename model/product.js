@@ -19,7 +19,9 @@ const productSchma = new Schema({
     description: {
         type: String,
         required: true
-    }
+    },
+
+    category: {}
 });
 
 // productSchem.post("findOneAndDelete", async (product) => {

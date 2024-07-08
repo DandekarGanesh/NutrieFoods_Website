@@ -29,6 +29,9 @@ body {
     top: 0;
 }  
 
+
+
+
 /* .navbar-collapse {
     color: #5a246e !important; 
     background-color: #CAAEFF !important;
@@ -178,6 +181,25 @@ li a {
 .add-to-cart-grandTotal {
     margin-left: 60%;
     margin-top: 25px;
+}
+
+
+
+/* check-out button */
+
+.check-out-btn {
+   display: flex;
+   justify-content: center;
+}
+
+.check-out-btn button {
+  height: 60px;
+  width: 22rem;
+  background-color: #5a246e;
+  color: white;
+  border-radius: 35px;
+  border: none;
+  font-weight: 500;
 }
 
 

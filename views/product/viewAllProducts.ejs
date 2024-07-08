@@ -1,0 +1,129 @@
+<!-- including header  -->
+<%- include("../navbar.ejs") %> 
+
+<style>
+
+.view-all-products {
+    margin: 20px 10px 20px 10px;
+    border: 2px solid black;
+}
+
+.category-name {
+    text-align: center;
+    margin-top: 50px;
+}
+
+</style>
+
+
+<h2 class="category-name"> <%= category %> </h2>
+
+<div class="view-all-products">
+
+      <% for(let card in products) { %>
+    
+        <% if((products[card].category && products[card].category[category] === "on") || category == "All") {  %>
+            
+                <div class="cardLink" href="/product/show/<%=products[card]._id%>" >
+                    <a href="/product/show/<%=products[card]._id%>">
+                        <div class="card">
+                            <div class="card_img">
+                                <img src="<%= products[card].url %>" alt="">
+                            </div>
+
+                            <div class="card_info">
+                                <div> <% if(products[card] && products[card].title) { %> <%= products[card].title.toUpperCase() %> <% } %> </div>
+                                <h5> Rs.<%= products[card].Price %> </h5>
+                            </div>
+                        </div>
+                    </a>
+                    <button class="add-to-cart-button" onclick="add_to_cart('<%= products[card]._id %>')"> add to Cart </button> 
+                    <br> <br> <br>  <br> <br> <br> 
+                </div>
+
+
+            <% } %>
+
+      <% } %>
+
+</div> 
+
+
+
+
+
+
+<script>
+
+
+
+ // call to add to cart 
+ async function add_to_cart(id) {
+        await axios({
+            method: 'post',
+            url: "http://localhost:8080/add-to-cart",
+            headers: {}, 
+            data: {
+                productId: id, // This is the body part
+            }})
+            .catch((err) => console.log(err));
+    }
+ 
+    
+     
+  //  search functionality start
+   let searchProducts = (event) => {
+       let input = document.getElementById("input-search").value;
+       let ProductContainer = document.querySelector(".view-all-products");
+       ProductContainer.innerHTML = "";
+
+      <%   for(let card in products) {  %>
+           
+           
+          if('<%- JSON.stringify(products[card].title) %>'.trim().toUpperCase().includes(input.trim().toUpperCase()) ) { 
+            
+          
+
+              anchor = document.createElement('a');
+              mainDiv = document.createElement('div');
+              imgDiv = document.createElement('div');
+              img = document.createElement('img');
+              infoDiv = document.createElement('div');
+              titleDiv = document.createElement('div');
+              h5 = document.createElement('h5');  
+
+              anchor.className = 'cardLink';
+              anchor.href = "/product/show/<%=products[card]._id%>";
+
+              mainDiv.className = "card";
+              imgDiv.className = "card_img";
+              img.src = "<%= products[card].url %>";
+              
+              infoDiv.className = "card_info";
+              titleDiv.innerHTML = '<%= products[card].title.toUpperCase() %>';
+              h5.innerHTML = '<%= products[card].Price %>';
+
+              anchor.append(mainDiv);
+              mainDiv.append(imgDiv);
+              mainDiv.append(infoDiv);
+
+              imgDiv.append(img);
+              infoDiv.append(titleDiv);
+              infoDiv.append(h5);
+      
+              ProductContainer.append(anchor);
+            }  
+      <%  }  %>
+
+   }
+  //  search functionality end
+
+</script>
+
+
+
+
+
+
+<!-- including footer  -->
+<%- include("../footer.ejs") %>

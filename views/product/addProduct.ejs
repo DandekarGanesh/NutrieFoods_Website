@@ -1,0 +1,117 @@
+<!-- including header  -->
+<%- include("../navbar.ejs") %>  
+
+<div class="page_heading">
+    <h2> add product form </h2>
+</div>
+  
+    <div class="addProduct">
+        <form method="POST"  action="/product/add" class="row g-3 needs-validation" novalidate>
+            <div class="col-md-4">
+            <label for="validationCustom01" class="form-label"> Product Title </label>
+            <input type="text" class="form-control" name="Product[title]" id="validationCustom01" required>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+            </div>
+            <div class="col-md-4">
+            <label for="validationCustom02" class="form-label"> Product Price </label>
+            <input type="number" name="Product[Price]" class="form-control" id="validationCustom02" required>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+            </div>
+            <div class="col-md-4">
+            <label for="validationCustomUsername" class="form-label">image URL</label>
+            <div class="input-group has-validation">
+                <input type="text" name="Product[url]" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                <div class="invalid-feedback">
+                Please choose a image.
+                </div>
+            </div>
+            <br> <br>
+            </div>
+
+            <!-- packing size -->
+             <h3> Packing Size</h3>
+            <div class="col-md-10">
+
+                <input type="checkbox" id="100gm" name="Product[packing]">
+                <label for="100gm"> 100gm </label> <br>
+
+                <input type="checkbox" id="250gm" name="Product[packing]">
+                <label for="250gm"> 250gm </label> <br>
+
+                <input type="checkbox" id="400gm" name="Product[packing]">
+                <label for="400gm"> 450gm </label> <br> 
+
+                <input type="checkbox" id="200gm" name="Product[packing]">
+                <label for="200gm"> 200gm </label> <br>
+
+                <input type="checkbox" id="500gm" name="Product[packing]">
+                <label for="500gm">500gm </label> <br>
+
+                <input type="checkbox" id="300gm" name="Product[packing]">
+                <label for="300gm"> 300gm </label> <br>
+                <br> <br> <br>
+            </div>
+
+
+            
+
+
+            <!-- category -->
+            <h3> Select Category </h3>
+            <div class="col-md-10">
+
+                <input type="checkbox" id="Best-Seller" name="Product[category][Best_Seller]">
+                <label for="Best-Seller"> Best Seller </label> <br>
+
+                <input type="checkbox" id="New-Launches" name="Product[category][New_Launches]">
+                <label for="New-Launches"> New Launches </label> <br>
+
+                <input type="checkbox" id="Fruity-Delight-Bites" name="Product[category][Fruity_Delight_Bites]">
+                <label for="Fruity-Delight-Bites"> Fruity Delight Bites </label> <br> 
+
+                <input type="checkbox" id="Nuts-&-Mix-Marvels" name="Product[category][Nuts_Mix_Marvels]">
+                <label for="Nuts-&-Mix-Marvels"> Nuts & Mix Marvels </label> <br>
+
+                <input type="checkbox" id="Deliciously-Dried-Fruits" name="Product[category][Deliciously_Dried_Fruits]">
+                <label for="Deliciously-Dried-Fruits"> Deliciously Dried Fruits </label> <br>
+
+                <input type="checkbox" id="Chocolate-Nuts-&-Bliss" name="Product[category][Chocolate_Nuts_Bliss]">
+                <label for="Chocolate-Nuts-&-Bliss"> Chocolate Nuts & Bliss </label> <br>
+
+                <input type="checkbox" id="Wholsome-Millet-Munch" name="Product[category][Wholsome_Millet_Munch]">
+                <label for="Wholsome-Millet-Munch"> Wholsome Millet Munch </label> <br>
+
+                <input type="checkbox" id="Raw-Sugar" name="Product[category][Raw_Sugar]">
+                <label for="Raw-Sugar"> Raw Sugar  </label> <br>
+
+                <input type="checkbox" id="Pancakges" name="Product[category][Pancakes]">
+                <label for="Pancakges"> Pancakges </label> <br>
+
+                <input type="checkbox" id="Nutriefit-Meals" name="Product[category][Nutriefit_Meals]">
+                <label for="Nutriefit-Meals"> Nutriefit Meals </label> <br>
+
+                <input type="checkbox" id="Granola-Galore" name="Product[category][Granola_Galore]">
+                <label for="Granola-Galore"> Granola Galore </label> <br>
+                <br> <br> 
+            </div>
+
+           
+
+
+            <textarea name="Product[description]" class="form-control" placeholder="Give our Product Info" id="floatingTextarea2" style="height: 100px" required></textarea>
+
+
+
+            
+            <div class="col-12 submit-btn">
+            <button class="btn btn-primary" type="submit"> Add Product</button>
+            </div>
+        </form>
+    </div>
+
+<!-- including footer  -->
+<%- include("../footer.ejs") %>

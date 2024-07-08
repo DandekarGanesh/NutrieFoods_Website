@@ -1,0 +1,78 @@
+<!-- including header  -->
+<%- include("../navbar.ejs") %>
+
+
+
+<style>
+        
+    .show_reviews {
+        width: 80%;
+        border: 1px solid black;
+        border-radius: 10px;
+        margin: 20px auto auto auto;
+        min-height: 400px;
+        padding-top: 20px;
+        display: flex;
+        
+    }
+
+    .show_reviews_img {
+       height: 250px;
+       width: 250px;
+       border-radius: 50%;
+    }
+
+
+    .show_reviews_info {
+       width: 60%;
+       padding: 25px;
+       font-size: 1.5rem;
+    }
+
+    .show_reviews_img-sec {
+        width: 40%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+</style>
+
+
+
+<h2> Edit navCircle </h2>
+<div class="show_reviews">
+
+     
+    <div class="show_reviews_img-sec">
+        <img class="show_reviews_img" src="<%= navCircle.url %>" alt="">
+    </div>
+
+    <div class="show_reviews_info">
+        <form method="POST"  action="/navCircle/edit/<%=navCircle._id%>?_method=PUT" class="row g-3 needs-validation" novalidate> 
+            <div class="col-md-10">
+                <label for="validationCustom02" class="form-label"> Title </label>
+                <input type="text" value="<%=navCircle.title%>" name="NavCircle[title]" class="form-control" id="validationCustom02" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-10">
+                <label for="validationCustom02" class="form-label"> Image URL </label>
+                <input type="text" value="<%=navCircle.url%>" name="NavCircle[url]" class="form-control" id="validationCustom02" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+       
+        <button class="btn btn-success col-12"> Edit </button> 
+        </form>
+        <br> <br> 
+    </div>
+</div>
+
+
+
+<!-- including footer  -->
+<%- include("../footer.ejs") %>

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Nutriefoods </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+     <!-- google locations -->
+     <!-- <script type="text/JavaScript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYuCphOy0g9Sjc8fpspLIdMgmHK2G9Vno&libraries=places"> </script> -->
+
+     <!-- cdn for j query -->
+     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+
+     <!-- cdn font awsome -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>                                             
+                                                                                            
+        body {
+            background-color: rgba(202, 174 , 255, 1);
+        }
+
+        header .logo {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .logo .fa-cart-shopping {
+            position: relative;
+            left: 20rem;
+            font-size: 1.2rem;
+            color: black;
+        }
+
+        .logo img {
+            height: 60px;
+            width: 220px;
+        }
+
+        .checkout_page {
+            display: flex;
+        }
+
+
+        .checkout_page .left-content {
+            max-width: 55%;
+            min-width: 55%;
+            height: 100%;
+            border-top: 0.5px solid rgba(0, 0, 0, 0.5);
+            padding-top: 30px;
+        }
+
+
+        .pay-btn {
+           margin-top: 20px;
+           background-color: white;
+        }
+
+        .pay-btn:hover {
+            background-color: rgb(237, 237, 237);
+        }
+
+
+        .left-content form {
+            margin-left: 15rem;
+        }
+
+        .checkout_page .right-content {
+            max-width: 45%;
+            min-width: 45%;
+            height: 100%;
+            background-color: white;
+            position: absolute;
+            right: 0;
+            padding: 30px 250px 30px 30px;
+        }
+
+
+        /* style for product */
+
+        .product {
+            display: flex;
+            align-items: center;
+            /* border: 2px solid red; */
+        }
+
+        .product_img, .product_img img {
+            height: 60px;
+            width: 60px;
+        }
+
+        .product-title {
+             margin-left: 20px;
+             font-size: 0.9rem;
+             width: 70%;
+             padding-right: 5px;
+        }
+
+        .product-price {
+            font-size: 0.8rem;
+        }
+       
+        .discount-code {
+            margin-top: 40px;
+            display: flex;
+        }
+
+        .discount-code input {
+            height: 45px;
+            border-radius: 3px;
+            border: 0.2px solid rgba(0, 0, 0, 0.2);
+        }
+
+
+        .discount-code button {
+            border: 0.2px solid rgba(0, 0, 0, 0.2);
+            margin-left: 10px;
+        }
+
+       
+        .total-amt {
+            margin-top: 35px;
+        }
+
+        .total-amt .subtotal {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .total-amt, .order-discount {
+            font-size: 0.9rem;
+        } 
+
+
+        .total, .Shipping {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .total h4 span {
+            font-weight: 100;
+            font-size: 15px;
+            margin-bottom: 10px;
+            margin-right: 3px;
+        }
+
+       
+
+    </style>
+
+</head>
+
+<body>
+
+    <header> 
+        <div class="logo">
+            <img src="https://cdn.shopify.com/s/files/1/0683/0047/2549/files/Logo_x320.png?v=1707728428" alt="">
+            <a href="http://localhost:8080/add-to-cart"> <i class="fa-solid fa-cart-shopping"></i> </a> 
+        </div>
+    </header>
+
+
+    <div class="checkout_page">
+
+        <!-- left content start-->
+       <div class="left-content">
+          
+                <form onsubmit="paymentStart()" class="row g-3 needs-validation" novalidate>
+                    <h4> Contact </h4>
+
+                    <!-- Email -->
+                    <div class="col-md-10">
+                        <div class="input-group has-validation">
+                            <span class="input-group-text" id="inputGroupPrepend">@</span>
+                            <input type="email" placeholder="Email" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                            <div class="invalid-feedback">
+                            Please enter a Email.
+                            </div>
+                        </div>
+                        <br> 
+                    </div>
+
+                     
+                    <h4> Delivery </h4>
+
+                    <!-- Country -->
+                    <div class="col-md-10">
+                        <select name="country" id="" class="form-select"> 
+                           <option value="india" class="form-control"> India </option>
+                        </select>
+                       <div class="invalid-feedback">
+                           Please provide a valid city.
+                    </div>
+                    </div>
+
+
+                      <!-- company name -->
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" id="validationCustom02" placeholder="Company (optional)">
+                    </div>
+
+
+                    <!-- First name -->
+                    <div class="col-md-5">
+                    <input type="text" class="form-control" id="validationCustom01" placeholder="First name" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    </div>
+
+                    <!-- Last name -->
+                    <div class="col-md-5">
+                    <input type="text" class="form-control" id="validationCustom02" placeholder="Last name" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    </div>
+                    
+                    <!-- Address -->
+                    <div class="col-md-10">
+                        <input type="text" class="form-control search-address" id="validationCustom02" placeholder="Address" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+
+                    <!-- address in detail -->
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" id="validationCustom02" placeholder="Apartment, suite, etc (optional)">
+                    </div>
+
+
+                    <!-- City -->
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" id="validationCustom02" placeholder="City" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+
+
+                    <!-- select state  -->
+                    <div class="col-md-4">
+                        <select name="country" id="" class="form-select"> 
+                           <option value="india" class="form-control"> Maharashtra </option>
+                           <option value="india" class="form-control"> Gujarat </option>
+                           <option value="india" class="form-control"> Karnataka </option>
+                           <option value="india" class="form-control"> Delhi </option>
+                           <option value="india" class="form-control"> Madhya Pradesh </option>
+                           <option value="india" class="form-control"> Goa </option>
+                        </select>
+                       <div class="invalid-feedback">
+                           Please provide a valid city.
+                    </div>
+                    </div>
+
+
+                     <!-- Pin code -->
+                     <div class="col-md-3">
+                        <input type="text" class="form-control" id="validationCustom02" placeholder="PIN Code" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+
+
+                    <!-- Phone number -->
+                    <div class="col-md-10">
+                        <input type="number" class="form-control" id="validationCustom02" placeholder="Phone" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                   </div>
+
+
+    
+                
+                    <div class="col-12">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="invalidCheck">
+                        <label class="form-check-label" for="invalidCheck">
+                        Save this information for next time
+                        </label>
+                    </div>
+                    </div>
+
+                
+                    <button class="btn pay-btn col-10"> PAY NOW </button>
+                </form>
+
+
+               
+
+       </div>
+       <!-- left content end -->
+
+
+
+       <% let subtotal = 0; %>
+
+       <!-- right content -->
+       <div class="right-content">
+            
+           <!-- product list start -->
+            <div class="product_list">
+                <% for(let card in products) { %>
+
+                    <div class="product">
+                        <div class="product_img">
+                            <img src="<%= products[card].url %>" alt="">
+                        </div>
+
+                        <div class="product-title">
+                            <%= products[card].title %>
+                        </div>
+
+                        <div class="product-price">
+                            &#x20B9;<%= products[card].Price %>.00
+                        </div>
+                    </div>     
+                    
+                    <% subtotal += (products[card].Price * products[card].quantity ) %>
+                
+                <% } %>
+            </div>
+            <!-- product list end -->
+
+
+            <div class="col-md-10 discount-code">
+                <input type="text" placeholder="Discount Code" class="form-control">
+                <button class="btn"> Apply </button>
+            </div>
+           
+            
+            <div class="total-amt">
+                <div class="subtotal">
+                    <p> Subtotal </p>
+                    <p>  &#x20B9;<%= subtotal %> </p>
+                </div>
+            </div>
+
+            <div class="order-discount">
+                <div class="subtotal">
+                    <p> Order discount </p>
+                </div>
+            </div>
+
+            <div class="Shipping">
+                    <p> Shipping </p>
+                    <p> FREE </p>
+            </div>
+
+            <div class="total">
+                    <h4> Total </h4>
+                    <h4> <span> INR </span> &#x20B9;<span id="totalAmt"><%= subtotal %></span> </h4>
+            </div>
+   
+
+       </div>
+       <!-- right content end -->
+
+      
+
+    </div>
+
+
+
+
+
+
+    <script>
+        // // Example starter JavaScript for disabling form submissions if there are invalid fields
+        // (() => {
+        // 'use strict'
+
+        // // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        // const forms = document.querySelectorAll('.needs-validation')
+
+        // // Loop over them and prevent submission
+        // Array.from(forms).forEach(form => {
+        //     form.addEventListener('submit', event => {
+        //     if (!form.checkValidity()) {
+        //         event.preventDefault()
+        //         event.stopPropagation()
+        //     }
+
+        //     form.classList.add('was-validated')
+        //     }, false)
+        // })
+        // })()
+
+
+
+        // js for payment RazorPay
+        // const paymentStart = async () => {
+        //     const amount = document.querySelector("#totalAmt").innerHTML;
+            
+        //     if(amount == '' || amount == null) {
+        //         alert("amount is Required!");
+        //         return;
+        //     }
+            
+        //     await axios({
+        //         url: '/user/create_order',
+        //         data: JSON.parse({amount: amount, info: 'order_request'}),
+        //         contentType: 'application/json',
+        //         method: 'POST',
+        //         dataType: 'json',
+        //         success: function(response) {
+        //             // will work on success
+        //             console.log(response);
+        //         },
+        //         error: function(error) {
+        //             // will work on error
+        //             console.log(error);
+        //             alert("SomeThing went wrong !!");
+        //         }
+        //     });
+
+
+        // }
+        // js for RazorPay end
+
+
+    </script>
+
+
+
+
+
+
+
+     <script type="text/JavaScript"> 
+             // autocomplete address
+            //  $(document).ready(function() {
+            //     var autocomplete = new google.maps.places.Autocomplete((document.querySelector(".search-address")), {
+            //     types: ['geocode'],
+            //     })
+            //  })
+           
+     </script>
+
+
+     <!-- js file for bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"> </script>
+    
+    <!-- js for axios -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js" integrity="sha512-JSCFHhKDilTRRXe9ak/FJ28dcpOJxzQaCd3Xg8MyF6XFjODhy/YMCM8HW0TFDckNHWUewW+kfvhin43hKtJxAw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
+</html>

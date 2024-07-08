@@ -17,7 +17,7 @@
 
     <% if(typeof products !== 'undefined' && products != null) { %>
 
-       <% let grandTotal = 0; %>   <!--  variable created to calculate grand  -->
+       <% let grandTotal = 0; %>   <!--  variable created to calculate gand total -->
     
         <div class="add-to-cart-cont">
         
@@ -70,7 +70,17 @@
         <div class="add-to-cart-totalAmt" style="display: none;"> <%= grandTotal %> </div>
         <h3 class="add-to-cart-grandTotal"> Grand Total : <%= grandTotal.toLocaleString("en-IN") %>.00 </h2>
 
+       <br> <br> <br>
+
+   
+       <!-- Add to cart button -->
+        <div class="check-out-btn">
+            <a href="http://localhost:8080/pages/checkouts"><button> Check out </button></a>
+        </div>
+
+
     <% } %>
+
 
 
 
@@ -99,7 +109,7 @@
 
                 await axios({
                     method: 'PUT',
-                    url: "http://localhost:8080/add-to-cart-plus",
+                    url: "http://localhost:8080/add-to-cart/add-to-cart-plus",
                     headers: {}, 
                     data: {
                         productId: id, // This is the body part
@@ -108,7 +118,7 @@
                     let oldTotal = parseInt(grandTotal.innerHTML);
                     grandTotal.innerHTML = `${oldTotal + price}`;
                     grandTotalMain.innerHTML = `Grand Total : ${(oldTotal + price).toLocaleString("en-IN")}.00`;
-                    totalBtn.innerHTML = `Rs. ${price*(val+1).toLocaleString("en-IN")}.00`;
+                    totalBtn.innerHTML = `Rs. ${(price*(val+1)).toLocaleString("en-IN")}.00`;
                     btnValue[btn].innerHTML = val+1;
                 })
                 .catch((err) => { console.log(err) });
@@ -124,7 +134,7 @@
 
                     await axios({
                         method: 'PUT',
-                        url: "http://localhost:8080/add-to-cart-minus",
+                        url: "http://localhost:8080/add-to-cart/add-to-cart-minus",
                         headers: {}, 
                         data: {
                         productId: id, // This is the body part
@@ -150,7 +160,7 @@
                     let val = parseInt(btnValue[btn].innerHTML.trim());
                     await axios({
                         method: 'DELETE',
-                        url: "http://localhost:8080/add-to-cart-delete",
+                        url: "http://localhost:8080/add-to-cart/add-to-cart-delete",
                         headers: {}, 
                         data: {
                         productId: id, // This is the body part

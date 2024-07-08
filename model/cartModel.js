@@ -6,22 +6,13 @@ const cartSchema = new Schema({
         type: String,
         required: true
     },
-    expireAt: {
-        type: Date,
-        default: Date.now,
-        expires: 7 * 24 * 60 * 60 * 1000,
-    },
-    
-    // Products: {
-    //     productId: {
-    //         type: Schema.Types.ObjectId,
-    //         ref: "Product",
-    //         required: true,
-    //     },
-    //     quantity: {
-    //         type: Number,
-    //     }
-    // }
+
+    // "expireAt": { 
+    //     type: Date,  
+    //     default: Date.now,
+    //     expires:  Date.now + (7 * 24 * 60 * 60 * 1000) 
+    // },
+   
 
     Products: [{
         productId: {
