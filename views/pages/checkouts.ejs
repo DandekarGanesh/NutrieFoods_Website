@@ -12,6 +12,9 @@
      <!-- cdn for j query -->
      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
 
+    <!-- js for payment window -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
      <!-- cdn font awsome -->
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -155,10 +158,12 @@
 <body>
 
     <header> 
-        <div class="logo">
-            <img src="https://cdn.shopify.com/s/files/1/0683/0047/2549/files/Logo_x320.png?v=1707728428" alt="">
-            <a href="http://localhost:8080/add-to-cart"> <i class="fa-solid fa-cart-shopping"></i> </a> 
-        </div>
+        <a href="/pages">
+            <div class="logo">
+                <img src="https://cdn.shopify.com/s/files/1/0683/0047/2549/files/Logo_x320.png?v=1707728428" alt="">
+                <a href="http://localhost:8080/add-to-cart"> <i class="fa-solid fa-cart-shopping"></i> </a> 
+            </div>
+        </a>
     </header>
 
 
@@ -167,7 +172,7 @@
         <!-- left content start-->
        <div class="left-content">
           
-                <form onsubmit="paymentStart()" class="row g-3 needs-validation" novalidate>
+                <form onsubmit="paymentStart()" class="row g-3 needs-validation" novalidate id="checkout-form">
                     <h4> Contact </h4>
 
                     <!-- Email -->
@@ -287,7 +292,7 @@
                     </div>
 
                 
-                    <button class="btn pay-btn col-10"> PAY NOW </button>
+                    <button class="btn pay-btn col-10" id="pay-btn"> PAY NOW </button>
                 </form>
 
 
@@ -371,82 +376,110 @@
 
 
     <script>
-        // // Example starter JavaScript for disabling form submissions if there are invalid fields
-        // (() => {
-        // 'use strict'
 
-        // // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        // const forms = document.querySelectorAll('.needs-validation')
-
-        // // Loop over them and prevent submission
-        // Array.from(forms).forEach(form => {
-        //     form.addEventListener('submit', event => {
-        //     if (!form.checkValidity()) {
-        //         event.preventDefault()
-        //         event.stopPropagation()
-        //     }
-
-        //     form.classList.add('was-validated')
-        //     }, false)
-        // })
-        // })()
-
-
-
+      
         // js for payment RazorPay
-        // const paymentStart = async () => {
-        //     const amount = document.querySelector("#totalAmt").innerHTML;
-            
-        //     if(amount == '' || amount == null) {
-        //         alert("amount is Required!");
-        //         return;
-        //     }
-            
-        //     await axios({
-        //         url: '/user/create_order',
-        //         data: JSON.parse({amount: amount, info: 'order_request'}),
-        //         contentType: 'application/json',
-        //         method: 'POST',
-        //         dataType: 'json',
-        //         success: function(response) {
-        //             // will work on success
-        //             console.log(response);
-        //         },
-        //         error: function(error) {
-        //             // will work on error
-        //             console.log(error);
-        //             alert("SomeThing went wrong !!");
-        //         }
-        //     });
+        const paymentStart = async () => {
+            event.preventDefault();
+            const amount = document.querySelector("#totalAmt").innerHTML;
+        
+            const {data: {key}} =  await axios({
+                url: `/user/api/getKey`,
+            }) 
+
+            // send req on server to get orderId from razorpay
+            await axios({
+                url: `/user/create_order/${amount}`,
+            }).then((res) => { 
+
+                const options = {
+                    key: key,
+                    amount: `${amount*100}`, 
+                    currency: "INR",
+                    name: "NutrieFoods",
+                    description: "Test Transaction of softwares",
+                    image: "https://cdn.shopify.com/s/files/1/0683/0047/2549/files/Logo1_square.png?v=1710135146",
+                    order_id: `${res.data.id}`,
+                    handler: async function(response) {
+                        console.log(response.razorpay_payment_id);
+                        console.log(response.razorpay_order_id);
+                        console.log(response.razorpay_signature);
+                        console.log('Payment Successful');
+
+                        // Update status to paid on DB
+                        await axios({
+                            url: '/update/status',
+                            method: 'POST',
+                            data: {
+                                payment_id: response.razorpay_payment_id,
+                                order_id: response.razorpay_order_id,
+                                signature: response.razorpay_signature
+                            },
+                            contentType: 'application/json',
+                            dataType: 'json',
+
+                        }).then(() => {
+                            // payment successful alert
+                            Swal.fire({
+                                title: "Good job!",
+                                text: "PAYMENT SUCCESSFUL :)",
+                                icon: "success"
+                            });
+                        }).catch(() => {
+                            // alert on payment successful but not updated on server
+                            Swal.fire({
+                                title: "Good job!",
+                                text: "PAYMENT SUCCESSFUL :) .. But not Updated on Server .. Contact Customer Care",
+                                icon: "success"
+                            });
+                        });
+
+                    },
+                    callback_url: "/pages",
+                    prefill: {
+                        name: "Ganesh",
+                        email: "Ganesh@gmail.com",
+                        contact: "12",
+                    },
+                    notes: {
+                        address: "Razorpay Corporate Office"
+                    },
+                    theme: {
+                        color: "#CAAEFF"
+                    }
+                };
 
 
-        // }
+                let razor = new window.Razorpay(options);
+                razor.open();
+
+            }).catch((err) => {
+                Swal.fire({
+                    title: "PAYMENT FAIL",
+                    text: "SomeThing went wrong!!.. Try after soome time",
+                    icon: "error"
+                });
+            });
+
+             
+       
+
+        }
         // js for RazorPay end
-
 
     </script>
 
 
 
-
-
-
-
-     <script type="text/JavaScript"> 
-             // autocomplete address
-            //  $(document).ready(function() {
-            //     var autocomplete = new google.maps.places.Autocomplete((document.querySelector(".search-address")), {
-            //     types: ['geocode'],
-            //     })
-            //  })
-           
-     </script>
-
+   
 
      <!-- js file for bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"> </script>
     
     <!-- js for axios -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js" integrity="sha512-JSCFHhKDilTRRXe9ak/FJ28dcpOJxzQaCd3Xg8MyF6XFjODhy/YMCM8HW0TFDckNHWUewW+kfvhin43hKtJxAw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- js for Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
