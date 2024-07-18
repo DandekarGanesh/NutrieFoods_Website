@@ -382,19 +382,23 @@
         const paymentStart = async () => {
             event.preventDefault();
             const amount = document.querySelector("#totalAmt").innerHTML;
+            console.log("payment started");
         
-            const {data: {key}} =  await axios({
-                url: `/user/api/getKey`,
+            const {data: {key}} = await axios({
+                url: `/payments/api/getKey`,
             }) 
 
             // send req on server to get orderId from razorpay
             await axios({
-                url: `/user/create_order/${amount}`,
+                url: `/payments/create_order/${amount}`,
             }).then((res) => { 
+                 
+                // console.log("response");
+                // console.log(res.data.id);
 
                 const options = {
                     key: key,
-                    amount: `${amount*100}`, 
+                    amount:  `${amount*100}`, 
                     currency: "INR",
                     name: "NutrieFoods",
                     description: "Test Transaction of softwares",
@@ -408,7 +412,7 @@
 
                         // Update status to paid on DB
                         await axios({
-                            url: '/update/status',
+                            url: '/payments/update/status',
                             method: 'POST',
                             data: {
                                 payment_id: response.razorpay_payment_id,

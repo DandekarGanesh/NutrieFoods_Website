@@ -1,0 +1,187 @@
+<%- include("../navbar.ejs") %>
+
+<style>
+    .pro-title {
+        max-width: 70%;
+        min-width: 70%;
+        /* border: 1px solid red; */
+        text-align: center;
+    }
+
+    .pro-qty {
+        width: 20%;
+        text-align: center;
+    }
+
+    .Pro_img {
+        width: 4%;
+        /* border: 1px solid green; */
+        text-align: center;
+    }
+
+
+    #delete-product-btn {
+       font-size: 25px;
+       cursor: pointer;
+    }
+
+</style>
+
+
+
+<div class="order_container">
+
+      <!-- order heading -->
+      <div class="order_heading">
+        <h4> Edit Order &nbsp;  
+            <button class="<%= order[0].status === "Paid" ? 'btn btn-success' : 'btn btn-danger' %>"> <%= order[0].status %> </button> &nbsp;
+        </h4> 
+
+        <p>  <%= order[0].order_id  %> </p>
+    </div>
+    <!-- order heading end -->
+     <br> <br>
+
+     
+
+      <!-- Product Details Start -->
+      <div class="order_ProductDetails">
+        <h4> Product Details </h4>
+         
+            <% for(let pro in products) { %>
+                <% let p = products[pro].Product[0]; %>
+
+                <!-- this field to fetch product id for js -->
+                <div class="Product_id" style="display: none"> <%= p._id %> </div>
+                <%= console.log(p) %>
+                 
+
+                <div class="order_ProductDetails_product">
+                    <div class="Pro_img">
+                       <img src="<%= p.url %>" alt="">
+                    </div>
+
+                    <div class="pro-title">
+                       <%= p.title.toUpperCase() %>
+                    </div>
+
+                    <div class="pro-qty">
+                        &#x20B9;<%= p.Price %> 	&times; <%= products[pro].quantity %>
+                    </div>
+
+                    <div>
+                       <i class="fa-solid fa-trash-can" id="delete-product-btn"></i> 
+                    </div>
+
+                </div>
+            <% } %>
+
+     </div>
+    <!-- Product Details end -->
+
+
+  
+    <!-- Delivery Details start -->
+     <form method="POST" action="/order/update/delivery-details?_method=PUT" class="col-md-6">
+        <div class="order_deliveryDetails">
+           <h4> delivery Details </h4>
+            <br>
+           
+                <label for=""> delivery Tracking Number</label> <br>
+                <input type="number" name="number" class="form-control" placeholder="Number" value="<%= order[0] && order[0].Delivery.number ? order[0].Delivery.number : '' %>"> <br>
+
+                 <% let date = order[0] && order[0].Delivery ? order[0].Delivery.date : '' %>
+                <label for=""> Expected delivery Date </label> <br>
+                <input type="date" name="date"  class="form-control" value=<%= order[0] && order[0].Delivery.date ? `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}` : '' %> > <br>
+
+                <!-- this input is only to send order id to backend -->
+                <input type="text" name="order_id" value="<%= order[0].order_id %>" style="display: none;">
+
+                <button class="btn btn-primary" type="submit"> Save Details </button>
+        </div>
+       
+    </form>
+    <!-- Delivery Details end -->
+
+</div>
+
+
+
+
+
+
+<script>
+    let delteOrderBtn = document.querySelectorAll(".order_ProductDetails_product");
+    let productIds = document.querySelectorAll(".Product_id");
+
+    // delete order (functionality)
+    for(let btn in delteOrderBtn) {
+        delteOrderBtn[btn].addEventListener('click', async (event) => {
+
+            if(event.target.className === 'fa-solid fa-trash-can') {
+                // sweet alert
+                Swal.fire({
+                    title: 'WARNING !! YOU ARE DELETING THE PRODUCT FROM ORDER',
+                    showDenyButton: true,
+                    confirmButtonText: 'DELETE',
+                    denyButtonText: 'DONT DELETE',
+                    customClass: {
+                        actions: 'my-actions',
+                        cancelButton: 'order-1 right-gap',
+                        confirmButton: 'order-2',
+                        denyButton: 'order-3',
+                    },
+                    }).then(async (result) => {
+                        // if we got yes from sweet alert
+                        if (result.isConfirmed) {
+                            await axios({
+                                url: '/order/update',
+                                method: 'PUT',
+                                data: {
+                                    order_id: '<%= order[0].order_id %>',
+                                    product_id: `${productIds[btn].innerHTML.trim()}`,
+                                }
+                            })
+                            .then((res) => {
+                                if(res.data.updated == true) {
+                                    Swal.fire({
+                                        title: "Changes Reflected in Data Base",
+                                        text: "Product Deleted!",
+                                        icon: "success"
+                                    });
+
+                                    delteOrderBtn[btn].remove();
+                                } else {
+                                    Swal.fire({
+                                        title: "SomeThing went Wrong",
+                                        text: "Try after some time !!",
+                                        icon: "error"
+                                    });
+                                }
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                            });
+
+                        
+                    // if user denied
+                    } else if (result.isDenied) {
+                        Swal.fire('Changes are not saved', '', 'info')
+                    }
+                })
+               
+            
+            }
+       });
+    }
+    
+  
+</script>
+
+
+
+
+
+
+
+<%- include("../footer.ejs") %>

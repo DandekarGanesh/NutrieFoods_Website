@@ -30,6 +30,31 @@ const razorPay_orderSchema = new Schema({
 
     signature: {
         type: String
+    },
+
+    Products: [{
+        productId: {
+            type: Schema.Types.ObjectId,
+            ref: "Product",
+        },
+        quantity: {
+            type: Number
+        }
+    }],
+
+    Date: {
+        type: Date,
+        default: Date.now(),
+    },
+
+    Delivery: {
+        number: {
+            type: Number,
+        },
+
+        date: {
+            type: Date,
+        }
     }
 
 });

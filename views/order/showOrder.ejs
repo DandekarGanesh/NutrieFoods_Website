@@ -1,0 +1,191 @@
+<%- include("../navbar.ejs") %>
+
+
+<style>
+     /* styles for sweet alert */
+
+.my-actions {
+margin: 2em 2em 0;
+}
+
+.order-1 {
+  order: 1;
+}
+
+.order-2 {
+  order: 2;
+}
+
+.order-3 {
+  order: 3;
+}
+
+.right-gap {
+  margin-right: auto;
+}
+
+.pro-title {
+        max-width: 70%;
+        min-width: 70%;
+        /* border: 1px solid red; */
+        text-align: center;
+    }
+
+    .pro-qty {
+        width: 20%;
+        text-align: center;
+    }
+
+    .Pro_img {
+        width: 4%;
+        /* border: 1px solid green; */
+        text-align: center;
+    }
+
+    .order_deliveryDetails {
+        line-height: 10px;
+    }
+
+
+</style>
+<!-- styles for sweet alert end -->
+
+<div class="order_container">
+    
+    <!-- order heading -->
+    <div class="order_heading">
+        <h4> <%= order.order_id %> &nbsp;  
+            <button class="<%= order.status === "Paid" ? 'btn btn-success' : 'btn btn-danger' %>"> <%= order.status %> </button> &nbsp;
+            <button class="btn btn-primary"> Fulfilled </button> &nbsp;
+            <button class="btn btn-secondary"> <a href="/order/edit/<%= order.order_id %>"> Edit </a> </button> &nbsp;
+            <button class="btn btn-warning order_delete_btn"> Delete Order </button>
+            
+        </h4> 
+        <% let date = order.Date %>
+        <% let formatter = new Intl.DateTimeFormat('en-US', { hour: '2-digit',  minute: '2-digit',  hour12: true }); %>
+        <p> <%= date.getDate() %>/<%= date.getMonth()+1 %>/<%= date.getFullYear() %> at <%= formatter.format(date) %> from online store</p>
+    </div>
+    <!-- order heading end -->
+
+
+    <!-- Product Details Start -->
+    <% if(products && products[0]) { %>
+     <div class="order_ProductDetails">
+        <h4> Product Details </h4>
+         
+            <% for(let pro in products) { %>
+                <% let p = products[pro].Product[0] %>
+
+                <div class="order_ProductDetails_product">
+                    <div class="Pro_img">
+                       <img src="<%= p.url %>" alt="">
+                    </div>
+
+                    <div class="pro-title">
+                       <%= p.title %>
+                    </div>
+
+                    <div class="pro-qty">
+                        &#x20B9;<%= p.Price %> 	&times; <%= products[pro].quantity %>
+                    </div>
+
+                    <div>
+                      <b>  &#x20B9;<%= p.Price * products[pro].quantity %> </b>
+                    </div>
+
+                </div>
+            <% } %>
+
+     </div>
+    <% } %>
+    <!-- Product Details end -->
+
+
+    <!-- Delivery Details start -->
+     <% if(order.Delivery && order.Delivery.date) { %>
+     <div class="order_deliveryDetails">
+        <h4> Delivery Details </h4> <br> <br>
+        <p> <b>Delhivery Tracking number </b> </p> 
+        <p> <b> <a href=""> <%= order.Delivery.number %> </a> </b> </p> <br> <br>
+
+        <% let date = order.Delivery.date %>
+        <p> <b> Expected Delivered on </b> </p> 
+        <p> <b> <%= date.toString().substring(0,15) %> </b> </p>
+        
+     </div>
+     <% } %>
+    <!-- Delivery Details end -->
+
+
+     <!-- Payment Details start -->
+     <div class="order_paymentDetails">
+        <h4> Payment Details </h4>
+        <p> Status : <b> <%= order.status %> </b> </p> 
+     </div>
+     <!-- Payment details end -->
+    
+    
+
+    <h3>
+        <%= order %>
+    </h3>
+
+
+    <br> <br>
+    <% if(products && products[0]) { %>
+    <h4>
+        <%= products[0].Product  %>
+    </h4>
+    <% } %>
+    
+
+</div>
+
+
+
+<script>
+    let deleteBtn = document.querySelector(".order_delete_btn");
+
+    deleteBtn.addEventListener("click", () => {
+        Swal.fire({
+        title: 'WARNING... You are deleting the order .. this can not be UNDO',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Delete Order',
+        denyButtonText: 'Dont Delete',
+        customClass: {
+            actions: 'my-actions',
+            cancelButton: 'order-1 right-gap',
+            confirmButton: 'order-2',
+            denyButton: 'order-3',
+        },
+        }).then(async (result) => {
+        if (result.isConfirmed) {
+            
+
+            // api call to delete start
+            await axios({
+                method: 'DELETE',
+                url: "/order/delete",
+                headers: {}, 
+                data: {
+                    orderId: '<%= order.order_id %>', // This is the body part
+             }})
+             .then((res) => {
+                window.location.href = "/order/viewAll";  // redirecting
+             });
+             // api call to delete order end
+
+
+
+        } else if (result.isDenied) {
+            Swal.fire('Changes are not saved', '', 'info')
+        }
+        })
+    });
+
+</script>
+
+
+
+<%- include("../footer.ejs") %>
