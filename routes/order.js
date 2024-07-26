@@ -8,6 +8,9 @@ const orderController = require("../controllers/order");
 router.get("/edit/:order_id", orderController.renderEditOrder);
 
 
+// my orders (for custom)
+router.get("/myOrders", orderController.myOrders);
+
 // orders (show all orders :- all , paid , unpaid)
 router.get("/:type", orderController.showOrders);
 

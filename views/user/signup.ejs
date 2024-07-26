@@ -1,0 +1,56 @@
+<!-- including header  -->
+<%- include("../navbar.ejs") %>  
+
+
+<style>
+    .container {
+        /* border: 2px solid black; */
+        height: 80vh;
+        width: 35vw;
+        margin-top: 3rem;
+        text-align: center;
+        padding: 25px;
+    }
+
+    .radius {
+        border-radius: 25px;
+        height: 50px;
+        border: 1.5px solid black;
+    }
+
+    .btn-radius {
+        border: 1px solid black;
+        width: 10vw;
+        border-radius: 25px;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        background-color: #5a246e;
+        color: white;
+        height: 40px;
+    }
+</style>
+
+
+
+
+<div class="container">
+    <h2> Create account </h2> <br> <br>
+
+    <form method="POST" action="/user/signup" class="row g-3 needs-validation" novalidate>
+        <input type="text" class="form-control radius" id="validationCustom01" name="firstName" placeholder="First Name">
+        <input type="text" class="form-control radius" id="validationCustom01" name="lastName" placeholder="Last Name">
+        <input type="text" class="form-control radius" id="validationCustom01" name="email" placeholder="Email">
+        <input type="" class="form-control radius" id="validationCustom01" name="password" placeholder="Password"> <br> <br>
+
+        <br> <br> <br> 
+        <button class="btn-radius"> Create </button>
+    </form>
+</div>
+
+
+
+
+
+<!-- including footer  -->
+<%- include("../footer.ejs") %>

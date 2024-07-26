@@ -53,7 +53,6 @@
 
                 <!-- this field to fetch product id for js -->
                 <div class="Product_id" style="display: none"> <%= p._id %> </div>
-                <%= console.log(p) %>
                  
 
                 <div class="order_ProductDetails_product">
@@ -86,7 +85,31 @@
         <div class="order_deliveryDetails">
            <h4> delivery Details </h4>
             <br>
-           
+                
+            <!-- select state  -->
+             <label for=""> Select Delivery Partner </label>
+            <div class="">
+                <select name="country" id="" class="form-select"> 
+                    <option value="Select" class="form-control"> Select </option>
+                    <option value="DTDC" class="form-control"> DTDC </option>
+                    <option value="Delhivery" class="form-control"> Delhivery </option>
+                    <option value="India Post" class="form-control"> India Post </option>
+                    <option value="4 PX" class="form-control"> 4 PX </option>
+                    <option value="99 Minutos" class="form-control"> 99 Minutos </option>
+                    <option value="Aeronet" class="form-control"> Aeronet </option>
+                    <option value="AGS" class="form-control"> AGS </option>
+                    <option value="Amazon Logistic UK" class="form-control"> Amazon Logistic UK </option>
+                    <option value="Amazon Logistic US" class="form-control"> Amazon Logistic US </option>
+                    <option value="Border Express" class="form-control"> Border Express </option>
+                    <option value="Land Mark Global" class="form-control"> Land Mark Global </option>
+                </select>
+
+                <div class="invalid-feedback">
+                    Please provide a valid city.
+                </div>
+            </div> <br>
+             
+
                 <label for=""> delivery Tracking Number</label> <br>
                 <input type="number" name="number" class="form-control" placeholder="Number" value="<%= order[0] && order[0].Delivery.number ? order[0].Delivery.number : '' %>"> <br>
 

@@ -135,3 +135,15 @@ module.exports.updateDeliveryDetails = async (req,res) => {
 
 
 
+
+
+
+
+// my orders
+module.exports.myOrders = (req,res) => {
+    res.render("order/myOrders");
+};
+
+
+
+

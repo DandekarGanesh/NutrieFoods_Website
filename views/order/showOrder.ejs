@@ -105,10 +105,15 @@ margin: 2em 2em 0;
      <% if(order.Delivery && order.Delivery.date) { %>
      <div class="order_deliveryDetails">
         <h4> Delivery Details </h4> <br> <br>
+
+        <p> <b>Delhivery Tracking number </b> </p> 
+        <p> <b> DTDC  </b> </p> <br> <br>
+
+
         <p> <b>Delhivery Tracking number </b> </p> 
         <p> <b> <a href=""> <%= order.Delivery.number %> </a> </b> </p> <br> <br>
 
-        <% let date = order.Delivery.date %>
+        <% let date = order.Delivery.date %> 
         <p> <b> Expected Delivered on </b> </p> 
         <p> <b> <%= date.toString().substring(0,15) %> </b> </p>
         

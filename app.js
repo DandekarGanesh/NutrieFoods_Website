@@ -10,7 +10,12 @@ const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const bodyParser = require('body-parser'); // to parse the data (which we get from api post)
 const ExpressError = require("./utils/ExpressError");
+const User = require("./model/user");
+const cookieParser = require("cookie-parser");
+const databaseConnect = require("./config/databaseConfig");
 
+// Database Connection
+databaseConnect();
 
 // Requiring Routes
 const productRouter = require("./routes/product");
@@ -20,6 +25,7 @@ const navCircleRouter = require("./routes/navCircle");
 const pageRouter = require("./routes/pages");
 const paymentsRouter = require("./routes/payments");
 const orderRouter = require("./routes/order");
+const userRouter = require("./routes/user");
 
 // sessions
 const session = require("express-session");
@@ -49,29 +55,19 @@ app.use(methodOverride("_method"));  // middle ware  to override the method
 app.use(express.static('Assets')); 
 app.use(bodyParser.urlencoded({ extended: true })); // parse application/x-www-form-urlencoded
 app.use(bodyParser.json()); // parse application/json
+app.use(cookieParser()); // to parse cookies
 
 
-// Database Connection
-main().then(() => {
-    console.log("connected to DB");
-}).catch((err) => {
-    console.log(err);
-});
-
-async function main() {
-    await mongoose.connect("mongodb://127.0.0.1:27017/Nutrie");
-}
-
-
+// Routes
 app.use("/product", productRouter); // Product Rotues
 app.use("/add-to-cart", add_to_cartRouter); // add-to-cart Rotues
 app.use("/review", review ); // review Rotues
 app.use("/navCircle", navCircleRouter ); // navCircleRouter Rotues
 app.use("/pages", pageRouter ); // pages Rotues (index page, policy , Terms and conditions)
-app.use("/payments", paymentsRouter); // user route
+app.use("/payments", paymentsRouter); // payments route
 app.use("/order", orderRouter); // order route
+app.use("/user", userRouter); // order route
  
-
 
 
 app.all("*", (req,res, next) => {
