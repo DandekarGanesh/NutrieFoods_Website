@@ -9,8 +9,8 @@ router.get("/api/getKey", paymentsController.sendRazorKey);
 
 // Razorpay payments
 
-// route to get the payment window and do payment
-router.get("/create_order/:amount", paymentsController.givePaymentWindow);
+// route to create order (to get the window of payment)
+router.post("/create_order/:amount", paymentsController.givePaymentWindow);
 
 
 // route to update DB on successful payment  ...PAID...

@@ -44,7 +44,7 @@ module.exports.validateNavCircle = (req,res,next) => {
 
 
 // this middleware is to check that the user is logged in or not (isLoggedin)
-module.exports.jwtAuth = (req,res, next) => {
+module.exports.isLoggedin = (req,res, next) => {
     const token = (req.cookies && req.cookies.token) || null;
    
    if(!token) {
@@ -53,7 +53,7 @@ module.exports.jwtAuth = (req,res, next) => {
 
    try {
       const payload = JWT.verify(token, process.env.JWT_secret);
-      req.user = { id: payload.id, email: payload.email };
+      req.user = { id: payload.id, email: payload.email, role: payload.role };
 
    } catch(err) {
 
@@ -62,3 +62,20 @@ module.exports.jwtAuth = (req,res, next) => {
 
    next();
 }
+
+
+
+
+
+// middleware for authorization
+module.exports.authorizedRoles = (...roles) => (req,res,next) => {
+    const currentUserRoles = req.user.role;
+
+    if(!roles.includes(currentUserRoles)) {
+        throw new ExpressError(403, 'You do not have permission to access this ROUTE');
+    } 
+        
+    next();
+}
+
+

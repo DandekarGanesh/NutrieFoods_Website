@@ -30,6 +30,11 @@ const userSchema = new Schema({
         required: [true, 'password is required']
     },
 
+    role: {
+        type: String,
+        default: 'USER',
+    },
+
     forgotPasswordToken: {
         type: String,
     },
@@ -55,12 +60,14 @@ userSchema.pre('save', async function(next) {
 
 
 
+
+
 // our custom methods
 userSchema.methods = {
     // method to generate a token
     jwtToken() {
         return JWT.sign(
-            { id: this._id, email: this.email },
+            { id: this._id, email: this.email, role: this.role },
             process.env.JWT_secret,
             { expiresIn: '24h' }
         );   

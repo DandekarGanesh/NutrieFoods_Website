@@ -87,11 +87,17 @@
             display: flex;
             align-items: center;
             /* border: 2px solid red; */
+            margin-bottom: 15px;
         }
 
         .product_img, .product_img img {
             height: 60px;
             width: 60px;
+        }
+
+        .product_img img{
+            border: 1px solid rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
         }
 
         .product-title {
@@ -149,7 +155,86 @@
             margin-right: 3px;
         }
 
-       
+        #apply-discount-btn:active {
+           background-color: rgba(202, 174 , 255, 1);
+        }
+
+
+        .discount-info {
+            min-height: 30px;
+            max-height: 30px;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            opacity: 0.8;
+            background-color: rgba(201, 196, 196, 0.3);
+            padding: 0 10px 0 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+        }
+
+
+        #order-discount {
+            /* border: 2px solid black; */
+        }
+
+
+    .badge {
+        padding-left: 9px;
+        padding-right: 9px;
+        -webkit-border-radius: 9px;
+        -moz-border-radius: 9px;
+        border-radius: 9px;
+        height: 25px;
+        width: 25px;
+        border-radius: 50%;
+    }
+
+    .label-warning[href],
+    .badge-warning[href] {
+       background-color: #c67605;
+    }
+
+    #lblCartCount {
+        font-size: 12px;
+        background: rgba(128, 128, 128, 1);
+        color: #fff;
+        padding: 0 5px;
+        vertical-align: top;
+        position: absolute;
+        left: 80px;
+        opacity: 100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: -10px;
+    }
+
+
+    .cross-sign {
+        cursor: pointer;
+    }
+
+
+    .flex {
+        display: flex;
+    }
+    
+    .space-evenly {
+        justify-content: space-evenly;
+    }
+
+    .space-between {
+        justify-content: space-between;
+    }
+
+    .w-100 {
+        width: 100%;
+    }
+
+    .align-center {
+        align-items: center;
+    }
 
     </style>
 
@@ -172,14 +257,14 @@
         <!-- left content start-->
        <div class="left-content">
           
-                <form onsubmit="paymentStart()" class="row g-3 needs-validation" novalidate id="checkout-form">
+                <form onsubmit="paymentStart()" class="row g-3 needs-validation" id="checkout-form">
                     <h4> Contact </h4>
 
                     <!-- Email -->
                     <div class="col-md-10">
                         <div class="input-group has-validation">
                             <span class="input-group-text" id="inputGroupPrepend">@</span>
-                            <input type="email" placeholder="Email" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                            <input type="email" placeholder="Email" id="email" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
                             <div class="invalid-feedback">
                             Please enter a Email.
                             </div>
@@ -209,7 +294,7 @@
 
                     <!-- First name -->
                     <div class="col-md-5">
-                    <input type="text" class="form-control" id="validationCustom01" placeholder="First name" required>
+                    <input type="text" class="form-control" id="validationCustom01" placeholder="First name">
                     <div class="valid-feedback">
                         Looks good!
                     </div>
@@ -217,7 +302,7 @@
 
                     <!-- Last name -->
                     <div class="col-md-5">
-                    <input type="text" class="form-control" id="validationCustom02" placeholder="Last name" required>
+                    <input type="text" class="form-control" id="validationCustom02" placeholder="Last name">
                     <div class="valid-feedback">
                         Looks good!
                     </div>
@@ -225,7 +310,7 @@
                     
                     <!-- Address -->
                     <div class="col-md-10">
-                        <input type="text" class="form-control search-address" id="validationCustom02" placeholder="Address" required>
+                        <input type="text" class="form-control search-address" id="validationCustom02" placeholder="Address">
                         <div class="valid-feedback">
                             Looks good!
                         </div>
@@ -239,7 +324,7 @@
 
                     <!-- City -->
                     <div class="col-md-3">
-                        <input type="text" class="form-control" id="validationCustom02" placeholder="City" required>
+                        <input type="text" class="form-control" id="validationCustom02" placeholder="City">
                         <div class="valid-feedback">
                             Looks good!
                         </div>
@@ -264,7 +349,7 @@
 
                      <!-- Pin code -->
                      <div class="col-md-3">
-                        <input type="text" class="form-control" id="validationCustom02" placeholder="PIN Code" required>
+                        <input type="text" class="form-control" id="validationCustom02" placeholder="PIN Code">
                         <div class="valid-feedback">
                             Looks good!
                         </div>
@@ -273,7 +358,7 @@
 
                     <!-- Phone number -->
                     <div class="col-md-10">
-                        <input type="number" class="form-control" id="validationCustom02" placeholder="Phone" required>
+                        <input type="number" class="form-control" id="validationCustom02" placeholder="Phone">
                         <div class="valid-feedback">
                             Looks good!
                         </div>
@@ -304,6 +389,7 @@
 
 
        <% let subtotal = 0; %>
+       <% let numberOfProduct = 0; %>
 
        <!-- right content -->
        <div class="right-content">
@@ -311,9 +397,12 @@
            <!-- product list start -->
             <div class="product_list">
                 <% for(let card in products) { %>
+                    <!-- here we are counting the product -->
+                    <% numberOfProduct += products[card].quantity; %>  
 
                     <div class="product">
                         <div class="product_img">
+                            <span class='badge badge-warning' id='lblCartCount'> <%= products[card].quantity %> </span>
                             <img src="<%= products[card].url %>" alt="">
                         </div>
 
@@ -325,7 +414,7 @@
                             &#x20B9;<%= products[card].Price %>.00
                         </div>
                     </div>     
-                    
+                     
                     <% subtotal += (products[card].Price * products[card].quantity ) %>
                 
                 <% } %>
@@ -334,8 +423,8 @@
 
 
             <div class="col-md-10 discount-code">
-                <input type="text" placeholder="Discount Code" class="form-control">
-                <button class="btn"> Apply </button>
+                <input type="text" id="apply-discount-code" placeholder="Discount Code" class="form-control">
+                <button class="btn" id="apply-discount-btn" onclick="checkDisCoupan()"> Apply </button>
             </div>
            
             
@@ -346,10 +435,18 @@
                 </div>
             </div>
 
-            <div class="order-discount">
+            <div class="order-discount" id="removeDiscountTag">
+
                 <div class="subtotal">
                     <p> Order discount </p>
                 </div>
+
+                <!-- discount applied here -->
+
+                <div class="subtotal" id="order-discount">
+    
+                </div>
+
             </div>
 
             <div class="Shipping">
@@ -366,7 +463,6 @@
        </div>
        <!-- right content end -->
 
-      
 
     </div>
 
@@ -375,14 +471,138 @@
 
 
 
+
     <script>
+        let totalAmount = document.querySelector("#totalAmt");
+        const mainAmount = totalAmount.innerHTML;
+        let amount = totalAmount.innerHTML;                                                                                                 
+        const email = document.getElementById("email").value;                                                                          
+        const disLabelsArray = [];  // to track that a discount coupan must use at most once only .. eg : ({coupan: coupan, discount: 10 }) 
+    
+       
+       // method to check discount Coupan
+       const checkDisCoupan = async () => {
+
+        const disCode = document.getElementById("apply-discount-code").value;
+
+           if(!disCode) {
+                Swal.fire({
+                    title: "Enter Discount Code",
+                    text: "if u have discount code then please apply here",
+                    icon: "fail"
+                });
+              return;
+           }
+           
+           if(disLabelsArray.length >= 1) {
+              Swal.fire({
+                    title: "One time one Discount",
+                    text: "You can not Select multiple discounts at a time (to select another discount remove previous discount)",
+                    icon: "fail"
+                });
+              return;
+           } 
+
+         
+           await axios({
+               url: `/misc/discount-coupan/${disCode}/${'<%= numberOfProduct %>'}/${amount}`,
+               method: 'GET',
+              
+           }).then((res) => {
+                const data = res.data;
+ 
+                // here the discount label exist and now will move forward
+                if(data.success === true) {
+                    const coupan = data.disCode;
+                    const disPer = data.dis;
+                    const cont = document.getElementById("order-discount");
+
+                    let arrayIncludes = false;
+                    for(let i in disLabelsArray) { if(disLabelsArray[i].coupan === coupan) arrayIncludes = true; break; }
+                    
+                    if(arrayIncludes) {
+                        Swal.fire({
+                            title: "you have taken this coupan",
+                            text: 'you can not add same Coupan twice',
+                            icon: "error"
+                        });
+                    } else {
+
+                        cont.innerHTML += `
+                        <div class="flex space-between w-100 align-center">
+                        <p class="discount-info"> <i class="fa-solid fa-tags"></i> &nbsp; <span class="coupan">${coupan}</span> <span class="discount-info cross-sign" style="font-size: 24px"> &times; </span> </p>
+                        <p> - &#x20B9;${mainAmount*disPer/100} </p>
+                        </div>
+                        `;
+
+                        totalAmount.innerHTML = amount-(mainAmount*disPer/100);
+                        amount -= (mainAmount*disPer/100);
+                        disLabelsArray.push({coupan: coupan, per: disPer});  // we are storing coupan name and its discount percentage with it
+                    }
+                    
+
+                } else {
+                    Swal.fire({
+                        title: "ERROR",
+                        text: `${data.message}`,
+                        icon: "error"
+                   }); 
+                   
+                }
+
+           }).catch((err) => {
+             
+                Swal.fire({
+                    title: "Something Went wrong",
+                    text: err.message,
+                    icon: "error"
+                });
+           });
+
+           document.getElementById("apply-discount-code").value = "";
+       }
+
+     
+
+
+      const removeDiscountTag = document.getElementById("removeDiscountTag");
+      
+      removeDiscountTag.addEventListener('click', (event) => {
+           if(event.target.className === "discount-info cross-sign") {
+               const coupan = event.target.parentElement.querySelector(".coupan").innerHTML;
+               let idx = -1;
+               for(let i in disLabelsArray) {if(disLabelsArray[i].coupan === coupan) idx = i;}
+
+               if(idx != -1) {
+                   amount += (mainAmount * disLabelsArray[idx].per) / 100;
+                   totalAmount.innerHTML = amount;
+                   disLabelsArray.splice(idx, idx+1);
+               }
+               event.target.parentElement.parentElement.remove();
+           }
+      });
+
+
+
 
       
         // js for payment RazorPay
         const paymentStart = async () => {
             event.preventDefault();
-            const amount = document.querySelector("#totalAmt").innerHTML;
-            console.log("payment started");
+
+        // this api is to check that the user have account or not ... if not then we will create a account other wise we will do nothing
+        await axios({
+            url: '/user/userExist-create',
+            method: 'POST',
+            data: {
+                email: email
+            }
+        }).then(async () => {
+            
+
+            // payment code start
+                
+              console.log("payment started");
         
             const {data: {key}} = await axios({
                 url: `/payments/api/getKey`,
@@ -390,11 +610,13 @@
 
             // send req on server to get orderId from razorpay
             await axios({
+                method: 'POST',
                 url: `/payments/create_order/${amount}`,
+                data: {
+                    discountArray: disLabelsArray,
+                }
             }).then((res) => { 
                  
-                // console.log("response");
-                // console.log(res.data.id);
 
                 const options = {
                     key: key,
@@ -465,10 +687,21 @@
                 });
             });
 
-             
-       
 
-        }
+            // Payment code end
+
+        }).catch((err) => {
+            Swal.fire({
+                title: "Error Occured",
+                text: "SomeThing went wrong!!.. Try after soome time",
+                icon: "error"
+            });
+        });
+        
+
+
+         }
+
         // js for RazorPay end
 
     </script>

@@ -3,8 +3,10 @@ const router = express.Router();
 const productController = require("../controllers/product");
 const wrapAsync = require("../utils/wrapAsync");
 const { validateProduct } = require("../middleware");
+const { isLoggedin, authorizedRoles }  = require("../middleware");
 
 
+// console.log(isLoggedin);
 
 // view all products
 router.get("/view-all/:category", wrapAsync(productController.viewAll));
@@ -15,7 +17,7 @@ router.get("/view-all/:category", wrapAsync(productController.viewAll));
 router.get("/show/:id", wrapAsync(productController.showProduct));
 
 // render form... to add new product
-router.get('/add', productController.renderNewForm);  
+router.get('/add',isLoggedin,  authorizedRoles('ADMIN'), productController.renderNewForm);  
 
 // Create product
 router.post('/add', validateProduct, wrapAsync(productController.createProduct));

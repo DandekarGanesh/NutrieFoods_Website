@@ -26,6 +26,8 @@ const pageRouter = require("./routes/pages");
 const paymentsRouter = require("./routes/payments");
 const orderRouter = require("./routes/order");
 const userRouter = require("./routes/user");
+const miscRouter = require("./routes/misc");
+const adminRouter = require("./routes/admin");
 
 // sessions
 const session = require("express-session");
@@ -67,6 +69,8 @@ app.use("/pages", pageRouter ); // pages Rotues (index page, policy , Terms and 
 app.use("/payments", paymentsRouter); // payments route
 app.use("/order", orderRouter); // order route
 app.use("/user", userRouter); // order route
+app.use("/misc", miscRouter); // misc routes
+app.use("/admin", adminRouter);
  
 
 

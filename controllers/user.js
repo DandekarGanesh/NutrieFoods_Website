@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const ExpressError = require("../utils/ExpressError");
 const sendMail = require("../utils/sendEmail");
 const crypto = require("crypto");
+const axios = require('axios');
 
 // render signup form
 module.exports.renderSignupForm = (req,res) => {
@@ -15,8 +16,6 @@ module.exports.renderSignupForm = (req,res) => {
 // signup
 module.exports.signup = async (req,res) => {
    let { firstName, lastName, email, password } = req.body;
-   email = email.trim();
-   password = password.trim();
 
    if(!email || !password) {
       throw new ExpressError(400, "Email and password is required");
@@ -34,10 +33,9 @@ module.exports.signup = async (req,res) => {
       const userInfo = new userModel(req.body);
       let result = await userInfo.save();
 
-      return res.redirect("/pages");
+     return res.redirect("/user/login");
 
    } catch(err) {
-
       // if err.code is 11000 it means the user is exist in DB
       if(err.code == 11000) {
          throw new ExpressError(400, 'Account Already exist with the provided email ID');
@@ -85,7 +83,7 @@ module.exports.login = async (req,res) => {
         throw new ExpressError(400, 'Invalid credentials');
     }
 
-    
+
     try {
         const token = user.jwtToken();
         user.password = undefined;
@@ -94,7 +92,8 @@ module.exports.login = async (req,res) => {
             maxAge: 24 * 60 * 60 * 1000,  // age of the token saved in cookie is 24hrs
             httpOnly: true,
         }
-
+        
+      
         res.cookie("token", token, cookieOption);
         res.redirect("/pages");
 
@@ -292,11 +291,61 @@ module.exports.changePassword = async (req,res) => {
     await user.save();
     user.password = undefined;
 
-
     console.log("Password Changed Successfully");
 
     return res.redirect("/pages");
 }
 
+
+
+
+module.exports.checkAndCreateUser = async (req,res) => {
+    let { email } = req.body;
+
+    // here we are checking that the email is registered or not
+    const user = await userModel.findOne({email});
+
+    if(user) {
+       return res.json({success: true });
+    }
+    
+    let password = Math.floor(Math.random()*10);
+    password = (password * 10) + Math.floor(Math.random()*10);
+    password = (password * 10) + Math.floor(Math.random()*10);
+    password = (password * 10) + Math.floor(Math.random()*10);
+
+    const message = `email : ${email}   Password : ${password}`;
+
+
+        await sendMail(email, 'Email Registered by NutrieFoods', message)
+        .then(() => {
+            console.log("email send");
+        }).catch(() => {
+            console.log("error (in sending email)");
+        });
+
+
+        let response = await axios({
+            url: 'http://localhost:8080/user/signup',
+            method: 'POST',
+            data: {
+                email: email,
+                password: password
+            }
+        }).then(() => {
+            return res.send({success: true});
+        }).catch(() => {
+            return res.send({success: false});
+        });
+  
+}
+
+
+
+
+module.exports.showAllUsers = async (req,res) => {
+    const allUsers = await userModel.find({});
+    res.render("user/showAllUsers", { allUsers });
+};
 
 

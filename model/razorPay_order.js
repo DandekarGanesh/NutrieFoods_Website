@@ -55,6 +55,10 @@ const razorPay_orderSchema = new Schema({
         date: {
             type: Date,
         }
+    },
+
+    discountArray: {
+        
     }
 
 });

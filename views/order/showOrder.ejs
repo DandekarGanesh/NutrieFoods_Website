@@ -46,11 +46,21 @@ margin: 2em 2em 0;
         line-height: 10px;
     }
 
+    .discount-details-table {
+        /* display: flex;
+        justify-content: space-evenly;
+        align-items: center; */
+        border: 2px solid black;
+        
+    }
+
 
 </style>
 <!-- styles for sweet alert end -->
 
 <div class="order_container">
+    <% let totalAmount = 0; %>
+    <% let itemCnt = 0; %>
     
     <!-- order heading -->
     <div class="order_heading">
@@ -75,6 +85,8 @@ margin: 2em 2em 0;
          
             <% for(let pro in products) { %>
                 <% let p = products[pro].Product[0] %>
+                <% totalAmount += (products[pro].quantity * p.Price) %>
+                <% itemCnt += products[pro].quantity %>
 
                 <div class="order_ProductDetails_product">
                     <div class="Pro_img">
@@ -126,6 +138,35 @@ margin: 2em 2em 0;
      <div class="order_paymentDetails">
         <h4> Payment Details </h4>
         <p> Status : <b> <%= order.status %> </b> </p> 
+
+        <!-- discount Details-->
+        <div class="flex  space-between">
+            <p> Subtotal </p>
+            <p> <%= itemCnt %> items</p>
+            <p> &#8377; <%= totalAmount %> </p>
+        </div>
+
+        <div class="flex  space-between">
+            <p> Discount </p>
+            <p> <%= order.discountArray[0].coupan %> </p>
+            <p> &#8377; <%= (totalAmount * order.discountArray[0].per)/100 %> </p>
+        </div>
+
+        <div class="flex  space-between">
+            <p> <b> Total </b> </p>
+            <p> <b> &#8377;<%= totalAmount - ((totalAmount * order.discountArray[0].per)/100) %> </b>  </p>
+        </div>
+        
+        <hr> 
+        <div class="flex  space-between">
+            <p> Paid </p>
+            <p> &#8377;  &#8377;<%= totalAmount - ((totalAmount * order.discountArray[0].per)/100) %>  </p>
+        </div>
+        <hr>
+
+        <br>
+        
+
      </div>
      <!-- Payment details end -->
     

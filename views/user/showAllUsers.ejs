@@ -1,0 +1,86 @@
+<!-- including header  -->
+<%- include("../navbar.ejs") %>  
+
+
+
+
+<style>
+  
+  .allUsers {
+     width: 95%;
+     margin-left: auto;
+     margin-right: auto;    
+     border: 1px solid rgba(0, 0, 0, 0.2);
+     padding: 25px;
+     border-radius: 25px;
+
+  }
+
+  .user-email {
+     max-width: 200px;
+     min-width: 200px;
+     cursor: pointer;
+  }
+
+  .user-row {
+    height: 30px;
+  }
+
+  .user-row:hover {
+     background-color: rgb(244, 238, 238);
+  }
+
+  .roleISAdmin {
+     font-weight: bold;
+     color: green;
+  }
+
+  .role {
+      max-width: 100px;
+      min-width: 100px;
+  }
+
+</style>
+
+
+<h2 class="orders_heading"> All Users </h2>
+
+<div class="allUsers">
+
+   <div class="flex space-between user-row">
+        <div class="user-email"> <b> Customer name </b> </div>
+        <div> <b> Role </b> </div>
+        <div> <b> Email Subscription </b> </div>
+        <div> <b> orders </b> </div>
+        <div> <b> amount Spend </b></div>
+    </div>
+    <br>
+
+
+    <% for(let i in allUsers) { %>
+        <div class="flex space-between user-row">
+            <div class="user-email"> <b> <%= allUsers[i].email %> </b> </div>
+
+            <% if(allUsers[i].role === "ADMIN") { %>
+               <div class="roleISAdmin role"> <%=  allUsers[i].role %> </div>
+            <% } else { %>
+               <div class="role"> <%=  allUsers[i].role %> </div>
+            <% } %>
+
+            <div> not Subscribed </div>
+            <div> 0 orders</div>
+            <div> &#8377;0.00 </div>
+        </div>
+    <% } %>
+
+
+
+</div>
+
+
+
+
+
+
+<!-- including footer  -->
+<%- include("../footer.ejs") %>

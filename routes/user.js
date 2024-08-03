@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/user");
-const { jwtAuth } = require("../middleware");  // middlware to check that the user is loged in or not
+const { isLoggedin } = require("../middleware");  // middlware to check that the user is loged in or not
 const wrapAsync = require("../utils/wrapAsync");
+const userModel = require("../model/user");
 
 
 
@@ -18,11 +19,11 @@ router.route("/login")
 
 
 // logout
-router.get("/logout", jwtAuth,  wrapAsync(userController.logout));
+router.get("/logout", isLoggedin,  wrapAsync(userController.logout));
 
 
 // getUser
-router.get("/", jwtAuth , wrapAsync(userController.getUser));
+router.get("/", isLoggedin , wrapAsync(userController.getUser));
 
 
 
@@ -39,8 +40,16 @@ router.route("/reset-password/:resetToken")
 
 
 router.route("/change-password")
-    .get(jwtAuth, userController.renderChangePassword)   // render change password password 
-    .post(jwtAuth, wrapAsync(userController.changePassword));  // Post route for change password 
+    .get(isLoggedin, userController.renderChangePassword)   // render change password password 
+    .post(isLoggedin, wrapAsync(userController.changePassword));  // Post route for change password 
+
+
+router.post("/userExist-create", userController.checkAndCreateUser);
+
+
+
+// Show all users
+router.get("/allUsers", userController.showAllUsers);
 
 
 

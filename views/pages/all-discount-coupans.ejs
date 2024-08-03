@@ -1,0 +1,57 @@
+<%- include("../navbar.ejs") %>
+
+<style>
+    td b a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .all-dis-coupans table {
+        width: 100%;
+        /* border: 2px solid black; */
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+</style>
+
+
+<br> 
+<h2> All Coupans </h2>
+<br>
+
+<div class="allOrders all-dis-coupans">
+    <table>
+        <tr class="order_row">
+            <th>Coupan</th>
+            <th> Coupan Discount </th>
+            <th> on above amt </th>
+            <th> Minimum Products </th>
+            <th></th>
+        </tr>
+
+        <% for(let i in allCoupans) { %>
+
+                <tr class="order_row">
+                    <td> <b> <%= allCoupans[i].coupan %> </b> </td>
+                    <td> <b> <%= allCoupans[i].disPercentage %>&percnt; </b> </td>
+                    <td> <b> &#8377;<%= allCoupans[i].disOnAbove %> </b> </td>
+                    <td> <b> <%= allCoupans[i].minProducts %> </b> </td>
+                    <td>
+                        <!-- <form method="POST" action="/pages/discount-coupan/?_method=DELETE"> -->
+                        <form method="POST" action="/pages/discount-coupan/<%= allCoupans[i]._id%>?_method=DELETE">
+                            <button class="btn btn-danger"> Delete </button>
+                        </form>
+                    </td>
+                </tr>
+               
+        <% } %>
+    
+    </table>
+</div>
+
+ 
+
+<%- include("../footer.ejs") %>

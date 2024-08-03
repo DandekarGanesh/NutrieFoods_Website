@@ -11,11 +11,13 @@ module.exports.sendRazorKey = (req,res) => {
 
 // to get the payment window
 module.exports.givePaymentWindow = async (req,res) => {
+    let { discountArray } = req.body;
     let { amount } = req.params;
     var instance = new Razorpay({
         key_id: process.env.RAZOR_ID,
         key_secret: process.env.RAZOR_SECRET,
     });
+
 
 
     var options = {
@@ -36,6 +38,7 @@ module.exports.givePaymentWindow = async (req,res) => {
             let paymentOrder = new razorpayModel(order); 
             paymentOrder.order_id = order.id;
             paymentOrder.Products = products[0].Products;
+            paymentOrder.discountArray = discountArray;
             await paymentOrder.save();
             
             res.send(order);

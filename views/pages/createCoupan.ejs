@@ -1,0 +1,27 @@
+<%- include("../navbar.ejs") %>
+
+<style>
+    form {
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+
+<br> <br>
+<form action="/pages/discount-coupan" method="POST" class="col-sm-6">
+    <label for=""> Type Coupan Code </label>
+    <input type="text" class="form-control" name="coupan" placeholder="Type new Discount Coupan you want to create"> <br> <br>
+
+    <label for=""> Discount Percentage  </label>
+    <input type="number" class="form-control" placeholder="eg: 10" name="disPercentage"> <br> <br>
+
+    <label for=""> Discount on above amount </label>
+    <input type="number" class="form-control" placeholder="eg: 999" name="disOnAbove"> <br> <br>
+
+    <label for=""> Minimum Products </label>
+    <input type="number" class="form-control" placeholder="eg: 3" name="minProducts"> <br> <br>
+
+    <button class="btn btn-warning"> Create Coupan </button>
+</form>
+
+<%- include("../footer.ejs") %>
