@@ -1,4 +1,8 @@
-<%- include("../navbar.ejs") %>
+<!-- heading -->
+<%- include("../Admin/heading.ejs") %>
+
+<!-- left part -->
+<%- include("../Admin/leftPanel.ejs") %>
 
 <style>
     td b a {
@@ -15,43 +19,54 @@
         text-align: center;
     }
 
+
+    .dis-per, .dis-amt, .dis-min-pro ,  .dis-title{
+        min-width: 20%;
+        max-width: 20%;
+    }
+
 </style>
 
-
-<br> 
-<h2> All Coupans </h2>
-<br>
+<div class="window">
 
 <div class="allOrders all-dis-coupans">
-    <table>
-        <tr class="order_row">
-            <th>Coupan</th>
-            <th> Coupan Discount </th>
-            <th> on above amt </th>
-            <th> Minimum Products </th>
-            <th></th>
-        </tr>
 
+    <h2 class="heading"> Discount Coupans <a href="/pages/discount-coupan"> <button class="create"> add Coupan </button> </a> </h2>
+    <div class="allProducts">
+
+        <div class="product-row row-effect"> 
+            <div class="dis-title"> Coupan </div>
+            <div class="dis-per">  Discount in (&percnt;) </div>
+            <div class="dis-amt"> on above amt (&#8377;) </div>
+            <div class="dis-min-pro">  minimum Products </div>
+            <div> </div>
+        </div>
+
+    <% if(allCoupans && allCoupans.length > 0) { %>
         <% for(let i in allCoupans) { %>
 
-                <tr class="order_row">
-                    <td> <b> <%= allCoupans[i].coupan %> </b> </td>
-                    <td> <b> <%= allCoupans[i].disPercentage %>&percnt; </b> </td>
-                    <td> <b> &#8377;<%= allCoupans[i].disOnAbove %> </b> </td>
-                    <td> <b> <%= allCoupans[i].minProducts %> </b> </td>
-                    <td>
-                        <!-- <form method="POST" action="/pages/discount-coupan/?_method=DELETE"> -->
-                        <form method="POST" action="/pages/discount-coupan/<%= allCoupans[i]._id%>?_method=DELETE">
-                            <button class="btn btn-danger"> Delete </button>
-                        </form>
-                    </td>
-                </tr>
-               
-        <% } %>
-    
-    </table>
+           <div class="product-row row-effect"> 
+               <div class="dis-title"> <%= allCoupans[i].coupan %> </div>
+               <div class="dis-per">  <%= allCoupans[i].disPercentage %>&percnt; </div>
+               <div class="dis-amt"> &#8377;<%= allCoupans[i].disOnAbove %> </div>
+               <div class="dis-min-pro">  <%= allCoupans[i].minProducts %> </div>
+
+               <div>
+                 <!-- <form method="POST" action="/pages/discount-coupan/?_method=DELETE"> -->
+                    <form method="POST" action="/pages/discount-coupan/<%= allCoupans[i]._id%>?_method=DELETE">
+                        <button class="btn btn-danger"> Delete </button>
+                    </form>
+               </div>
+           </div>
+
+
+       <% } %>
+    <% } %>
+  
+    </div>
 </div>
 
+</div>
  
 
-<%- include("../footer.ejs") %>
+<%- include("../Admin/footer.ejs") %>

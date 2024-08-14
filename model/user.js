@@ -30,6 +30,14 @@ const userSchema = new Schema({
         required: [true, 'password is required']
     },
 
+    totalOrders: {
+        type: Number
+    },
+
+    totalAmountSpend: {
+        type: Number
+    },
+
     role: {
         type: String,
         default: 'USER',
@@ -50,6 +58,9 @@ const userSchema = new Schema({
 
 // pre method
 userSchema.pre('save', async function(next) {
+    this.totalOrders = 0;
+    this.totalAmountSpend = 0;
+
     if(!this.isModified('password')) {
         return next();
     }
@@ -57,6 +68,9 @@ userSchema.pre('save', async function(next) {
     this.password = await bcrypt.hash(this.password, 10);
     return next();
 });
+
+
+
 
 
 

@@ -1,0 +1,16 @@
+</div>
+
+</body>
+
+<script>
+    let l = window.location.toString().substring(21);
+    let l_btn = document.querySelector(`[href='${l}']`);
+    l_btn2 = document.getElementById(l.split("/")[1]);
+ 
+    // console.log(l);
+    // console.log(l.split("/")[1]);
+    // console.log(l_btn2);
+     
+    if(l_btn && l_btn.parentElement) l_btn.parentElement.classList.add("btn-clicked");
+    if(l_btn2 && l_btn2.parentElement) l_btn2.classList.add("btn-clicked");
+</script>

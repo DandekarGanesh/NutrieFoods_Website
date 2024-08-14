@@ -1,13 +1,41 @@
-<%- include("../navbar.ejs") %>
+<!-- admin header -->
+<%- include('../Admin/heading.ejs') %>
+
+<!-- admin left-part -->
+<%- include('../Admin/leftPanel.ejs') %>
+
 
 <style>
     form {
         margin-left: auto;
         margin-right: auto;
     }
+
+    .create-form {
+        background-color: white;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        width: 80%;
+        margin: auto;
+        padding: 25px;
+        border-radius: 10px;
+    } 
+    
+    
+    .dis-heading {
+        text-align: center;
+    }
+
 </style>
 
+
+<div class="window">
+
 <br> <br>
+
+<div class="create-form">
+
+    <h2 class="dis-heading"> Create Discount Coupans </h2> <br>
+
 <form action="/pages/discount-coupan" method="POST" class="col-sm-6">
     <label for=""> Type Coupan Code </label>
     <input type="text" class="form-control" name="coupan" placeholder="Type new Discount Coupan you want to create"> <br> <br>
@@ -24,4 +52,8 @@
     <button class="btn btn-warning"> Create Coupan </button>
 </form>
 
-<%- include("../footer.ejs") %>
+</div>
+</div>
+
+<!-- admin footer -->
+<%- include("../Admin/footer.ejs") %>

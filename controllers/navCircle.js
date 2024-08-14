@@ -12,11 +12,6 @@ module.exports.createNavCircle = async (req,res) => {
     res.redirect('/pages');
 }
 
-module.exports.show = async (req,res) => {
-    let { id } = req.params;
-    let navCircle = await NavCircle.findById(id);
-    res.render("navCircle/show_NavCircle", { navCircle } );
-}
 
 
 module.exports.renderEditForm = async (req,res) => {
@@ -38,4 +33,10 @@ module.exports.destroyNavCircle =  async (req,res) => {
     await NavCircle.findByIdAndDelete(id);
     res.redirect('/pages');
 }
+
+
+module.exports.showAll = async (req,res) => {
+    let navCircles = await NavCircle.find({});
+    res.render("./navCircle/showAll.ejs", { navCircles });
+} 
 

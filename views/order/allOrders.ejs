@@ -1,50 +1,71 @@
-<%- include("../navbar.ejs") %>
+<!-- heading -->
+<%- include("../Admin/heading.ejs") %>
+
+<!-- left part  -->
+<%- include("../Admin/leftPanel.ejs") %>
 
 <style>
     td b a {
         text-decoration: none;
         color: black;
     }
+
+    .orders-row {
+        justify-content: space-between;
+    } 
 </style>
 
 
-<h2 class="orders_heading"> Our Orders </h2>
 
-<div class="allOrders">
-    <table>
-        <tr class="order_row">
-            <th>orderId</th>
-            <th> Date </th>
-            <th>Customer</th>
-            <th>Total</th>
-            <th>Payment Status</th>
-            <th> Fulfillment Status </th>
-            <th> Items </th>
-            <th> Delivery Status </th>
-        </tr>
+<div class="window">
 
-        <% for(let ord in orders) { %>
-            <% if(type === "viewAll" || type === orders[ord].status) { %>
-                <% let date = orders[ord].Date %>
-                <% let monthName = new Intl.DateTimeFormat("en-US", { month: "short" }).format; %>
-                <% let formatter = new Intl.DateTimeFormat('en-US', { hour: '2-digit',  minute: '2-digit',  hour12: true }); %>
+<h2 class="heading"> Our Orders </h2>
 
-                <tr class="order_row">
-                        <td> <b> <a href="/order/show/<%=orders[ord].order_id%>">  <%= orders[ord].order_id %>    </a> </b> </td>
-                        <td class="allOrders_date"> <span class="allOrders_time"> <%= date.getDate()%> <%= monthName(date) %> at <%= formatter.format(date) %> <span> </td>
-                        <td> xyz </td>
-                        <td> 100 </td>
-                        <td> <button class="<%= orders[ord].status === "Paid" ? 'btn btn-outline-success' : 'btn btn-outline-danger' %>"> <%= orders[ord].status %> </button> </td>
-                        <td> unfullfilled  </td>
-                        <td> 5 </td>
-                        <td> Tracking added </td>
-                </tr>
-               
+<div class="allProducts">
+    <!-- testing start-->
+     
+    <div class="product-row row-effect orders-row"> 
+        <div> <b> OrderId </b> </div>
+        <div> Date </div>
+        <div> Customer </div>
+        <div> Payment </div>
+        <div> Status</div>
+        <div> Item </div>
+        <div> Delivery Status </div>
+    </div>
+
+
+    <% if(orders && orders.length > 0) { %>
+        <% for(let i in orders) { %>
+            <% if(type === "viewAll" || type === orders[i].status) { %>
+            <% let order = orders[i] %>
+
+            <% let date = order.Date %>
+            <% let monthName = new Intl.DateTimeFormat("en-US", { month: "short" }).format; %>
+            <% let formatter = new Intl.DateTimeFormat('en-US', { hour: '2-digit',  minute: '2-digit',  hour12: true }); %>
+
+                <div class="product-row row-effect orders-row"> 
+                    <div> <b> <a href="/order/show/<%=order.order_id%>">  <%= order.order_id %>   </a> </b> </div>
+                    <div> <%= date.getDate()%> <%= monthName(date) %> at <%= formatter.format(date) %> </div>
+                    <div> XYZ </div>
+                    <div> <button class="<%= order.status === "Paid" ? 'btn btn-outline-success' : 'btn btn-outline-danger' %>"> <%= order.status %> </button> </div>
+                    <div> unfullfilled </div>
+                    <div> 5 </div>
+                    <div> tracking Added </div>
+                </div>
+        
             <% } %>
-        <% } %>
-    
-    </table>
+       <% } %>
+    <% } %>
+
+    <!-- testing end -->
 </div>
+
+</div>
+
+ 
+<!-- footer -->
+<%- include("../Admin/footer.ejs") %>
 
  
 
@@ -52,5 +73,3 @@
 
 
 
-
-<%- include("../footer.ejs") %>

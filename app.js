@@ -13,6 +13,7 @@ const ExpressError = require("./utils/ExpressError");
 const User = require("./model/user");
 const cookieParser = require("cookie-parser");
 const databaseConnect = require("./config/databaseConfig");
+const { getUser } = require("./middleware"); 
 
 // Database Connection
 databaseConnect();
@@ -58,6 +59,12 @@ app.use(express.static('Assets'));
 app.use(bodyParser.urlencoded({ extended: true })); // parse application/x-www-form-urlencoded
 app.use(bodyParser.json()); // parse application/json
 app.use(cookieParser()); // to parse cookies
+
+
+// putting user's information into req.user
+app.use(getUser, (req,res, next) => {
+    next();
+});
 
 
 // Routes

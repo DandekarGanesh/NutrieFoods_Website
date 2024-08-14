@@ -1,0 +1,46 @@
+<!-- admin heading -->
+<%- include("../Admin/heading.ejs") %>
+
+<!-- admin left panel -->
+<%- include("../Admin/leftPanel.ejs") %>
+
+
+
+<div class="window">
+  <h2 class="heading"> Nav-Circles  <a href="/navCircle/add"> <button class="create"> Add Circle</button> </a> </h2>
+
+  <div class="allProducts">
+    <% if(navCircles && navCircles.length > 0) { %>
+        <% for(let i in navCircles) { %>
+            <% let p = navCircles[i] %>
+
+           <div class="product-row row-effect"> 
+               <div class="img">
+                  <img src="<%= p.url %>" alt="">
+               </div>
+
+               <div class="title"> <%= p.title %> </div>
+               
+                <a href="/navCircle/edit/<%=navCircles[i]._id%>" style="margin-right: 20px">
+                   <button class="btn btn-outline-danger"> Edit </button>
+                </a>
+
+                <form method="POST"  action="/navCircle/delete/<%=navCircles[i]._id%>?_method=DELETE"> 
+                    <button class="btn btn-outline-dark"> Delete </button>
+                </form>
+
+           </div>
+           <hr>
+
+       <% } %>
+    <% } %>
+  
+
+</div>
+
+
+
+
+
+<!-- footer -->
+<%- include("../Admin/footer.ejs") %>

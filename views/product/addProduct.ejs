@@ -1,11 +1,38 @@
-<!-- including header  -->
-<%- include("../navbar.ejs") %>  
 
-<div class="page_heading">
-    <h2> add product form </h2>
-</div>
+<!-- admin header -->
+<%- include("../Admin/heading.ejs") %>
+
+<!-- admin left panel  -->
+<%- include("../Admin/leftPanel.ejs") %>
+
+
+<style>
+   .page_heading {
+      text-align: center;
+   }
+
+   .addProduct {
+      /* border: 2px solid black; */
+      margin: 10px;
+      padding: 10px;
+      background-color: white;
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      border-radius: 10px;
+   }
+</style>
+
+
+<div class="window">
+
   
     <div class="addProduct">
+
+        <br>
+        <div class="page_heading">
+            <h2> Add product form </h2>
+        </div>
+        <br>
+
         <form method="POST"  action="/product/add" class="row g-3 needs-validation" novalidate>
             <div class="col-md-4">
             <label for="validationCustom01" class="form-label"> Product Title </label>
@@ -113,5 +140,7 @@
         </form>
     </div>
 
-<!-- including footer  -->
-<%- include("../footer.ejs") %>
+</div>
+
+<!-- admin footer -->
+<%- include("../Admin/footer.ejs") %>

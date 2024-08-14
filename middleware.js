@@ -47,17 +47,17 @@ module.exports.validateNavCircle = (req,res,next) => {
 module.exports.isLoggedin = (req,res, next) => {
     const token = (req.cookies && req.cookies.token) || null;
    
-   if(!token) {
+   if(!token) {      
        throw new ExpressError(400, 'Not authorized (user is not loggedIn)');
    }
 
    try {
       const payload = JWT.verify(token, process.env.JWT_secret);
-      req.user = { id: payload.id, email: payload.email, role: payload.role };
+      req.user = { id: payload.id, email: payload.email, role: payload.role };   
 
    } catch(err) {
 
-      throw new ExpressError(400, err.message );
+      throw new ExpressError(400, err.message );       
    }
 
    next();
@@ -69,6 +69,9 @@ module.exports.isLoggedin = (req,res, next) => {
 
 // middleware for authorization
 module.exports.authorizedRoles = (...roles) => (req,res,next) => {
+    console.log(roles);
+    console.log(req.user);
+
     const currentUserRoles = req.user.role;
 
     if(!roles.includes(currentUserRoles)) {
@@ -76,6 +79,30 @@ module.exports.authorizedRoles = (...roles) => (req,res,next) => {
     } 
         
     next();
+}
+
+
+
+
+// this middleware is for to add our into into req.user
+module.exports.getUser = (req,res,next) => {
+    const token = (req.cookies && req.cookies.token) || null;
+
+    if(!token) {
+        next();
+    } else {
+
+        try {
+            const payload = JWT.verify(token, process.env.JWT_secret);
+            req.user = { id: payload.id, email: payload.email, role: payload.role };   
+         } catch(err) {
+            console.log(err);      
+         }
+    
+        res.locals.currUser = req.user;
+        next();
+    }
+   
 }
 
 

@@ -1,0 +1,297 @@
+
+<header>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.3/axios.min.js" integrity="sha512-zJXKBryKlsiDaWcWQ9fuvy50SG03/Qc5SqfLXxHmk9XiUUbcD9lXYjHDBxLFOuZSU6ULXaJ69bd7blSMEgxXNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</header>
+
+<style>
+
+* {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    margin: 0;
+    padding: 0;
+    /* overflow: hidden;   */
+     /* overflow hidden */
+}
+
+
+
+
+body {
+    background-color: black;
+}
+
+html, body {margin: 0; height: 100%; overflow: hidden}
+    
+.nav-bar {
+    height: 60px;
+    position: sticky;
+    top: 0;
+    opacity: 100;
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+     align-items: center;
+    /* padding: 0 10px 0 10px; */
+}
+
+.nav-bar .heading {
+    font-size: 2rem;
+}
+
+.nav-bar input {
+    background-color: rgb(81, 80, 80);
+    width: 50rem;
+    height: 70%;
+    color: white;
+    border: none;
+    padding-left: 15px;
+    border-radius: 10px;
+}
+
+.border {
+    border: 2px solid black;
+}
+
+.notification {
+    display: flex;
+    min-width: 120px;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 10px 0 10px;
+}
+
+.left-part {
+    height: 100vh;
+    min-width: 20%;
+    max-width: 20%;
+    opacity: 100;
+    background-color: rgb(235, 233, 233);
+    padding: 20px;
+    border-radius: 20px 0 0 20px;
+    position: fixed;
+    margin-top: 0;
+    z-index: 1000;
+    transition: all 0.3s linear;
+}
+
+.rows {
+    font-size: 1.2rem;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    border-radius: 10px;
+}
+
+.rows:hover {
+    background-color: white;
+}
+
+.rows a {
+    opacity: 0.7;
+    text-decoration: none;
+    color: black;
+}
+
+.rows:hover a {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.rows i {
+    margin-right: 15px;
+}
+
+#main-body {
+    display: flex;
+}
+
+.window {
+    border-radius: 0 20px 20px 0;
+    width: 80%;
+    margin-left: 20%;
+    height: 100vh;
+    padding: 15px;
+    overflow: auto;
+    background-color: rgb(246, 245, 245);
+}
+
+
+.row-effect:hover {
+   background-color: rgb(237, 232, 232);
+}
+
+.heading {
+    margin-bottom: 15px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+}
+
+.main-heading {
+   font-size: 2vw;
+   margin-left: 25px;
+}
+
+.heading .create {
+    background-color: black;
+    color: white;
+    height: 30px;
+    border: none;
+    border-radius: 10px;
+    padding: 0 15px 0 15px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.btn-clicked {
+    background-color: white;
+}
+
+
+.user-row {
+    align-items: center;
+}
+
+
+
+
+/* style to place the products in a line  (use for multipurpose) */
+
+.img img {
+    height: 50px;
+    width: 50px;
+    border-radius: 5px;
+}
+
+.product-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-left: 20px;
+    min-height: 80px;
+}
+
+.title {
+    max-width: 70%;
+    min-width: 70%;
+    /* border: 2px solid black; */
+    margin: 0 25px 0 25px;
+}
+
+.allProducts {
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: white;
+    margin: 20px;
+    margin-bottom: 100px;
+}
+
+.flex {
+    display: flex;  
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+
+/* end */
+
+.admin-ham-menu {
+    display: none;
+    font-size: 30px;
+    margin-left: 20px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+
+.admin-ham-menu label {
+    cursor: pointer;
+}
+
+
+.admin-ham-menu:hover {
+    background-color: rgb(125, 123, 123);
+    border-radius: 10px;;
+}
+
+
+
+@media(max-width: 1150px) {
+    .left-part {
+        /* background-color: red; */
+        margin-left: -500px;
+    }
+
+    .window {
+        width: 100%;
+        margin: 0;
+    }
+
+    .admin-panel-name {
+        display: none;
+    }
+
+    .admin-ham-menu {
+     display: block;
+    }
+
+    .left-part {
+        max-width: 300px;
+        min-width: 300px;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    }
+}
+
+#admin-check {
+    display: none;
+}
+
+#admin-check:checked ~ #main-body .left-part {
+    margin-left: 0;
+}
+  
+
+
+</style>
+
+
+<body>
+
+    <!-- <i class="fa-solid fa-bars"></i>  -->
+    <!-- header -->
+    <input type="checkbox" id="admin-check">
+    <div class="nav-bar">
+        <div class="main-heading admin-panel-name"> Admin Panel </div>
+        <div class="admin-ham-menu"> 
+          
+            <label for="admin-check">
+                <i class="fa-solid fa-bars"></i>
+            </label>
+        </div>
+
+        <input type="text" placeholder="Search">
+
+        <div class="notification">
+           <i class="fa-regular fa-bell"></i> 
+           <div> NutrieFoods </div>
+        </div>
+    </div>
+
+    
+

@@ -5,7 +5,7 @@
 <!-- nav_circles sec start  -->
 <div class="nav_circles">
         <% for(let circle in navCircles) { %>
-            <a style="text-decoration: none;" href="/navCircle/<%=navCircles[circle]._id %>">
+            <a style="text-decoration: none;">
                 <div class="circle_outer">
                     <div class="circle"> <img class="circle_img" src="<%= navCircles[circle].url%>" alt=""> </div>
                     <div class="circle_name"> <%= navCircles[circle].title %> </div> 

@@ -1,5 +1,8 @@
-<!-- including header  -->
-<%- include("../navbar.ejs") %>
+<!-- admin header -->
+<%- include("../Admin/heading.ejs") %>
+
+<!-- admin left part  -->
+<%- include("../Admin/leftPanel.ejs") %>
 
 
 
@@ -7,7 +10,7 @@
         
     .show_reviews {
         width: 80%;
-        border: 1px solid black;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         border-radius: 10px;
         margin: 20px auto auto auto;
         min-height: 400px;
@@ -38,10 +41,10 @@
 
 </style>
 
+<div class="window">
 
-
-<h2> Edit navCircle </h2>
-<div class="show_reviews">
+<h2 style="text-align: center;"> Edit navCircle </h2>
+<div class="show_reviews" style="background-color: white;">
 
      
     <div class="show_reviews_img-sec">
@@ -72,7 +75,7 @@
     </div>
 </div>
 
+</div>
 
-
-<!-- including footer  -->
-<%- include("../footer.ejs") %>
+<!-- admin footer  -->
+<%- include("../Admin/footer.ejs") %>

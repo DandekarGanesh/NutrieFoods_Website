@@ -52,5 +52,12 @@ router.post("/userExist-create", userController.checkAndCreateUser);
 router.get("/allUsers", userController.showAllUsers);
 
 
+// show all admins from user
+router.get("/admin", userController.showAdmins);
+
+// show super user
+router.get("/super-admin", userController.showSuperAdmin);
+
+
 
 module.exports = router;

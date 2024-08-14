@@ -1,0 +1,38 @@
+<!-- heading -->
+<%- include("../Admin/heading.ejs") %>
+
+<!-- left-panel -->
+<%- include("../Admin/leftPanel.ejs") %>
+
+
+<div class="window">
+
+    <h2 class="heading"> Products <a href="/product/add"> <button class="create"> Add Product</button> </a> </h2>
+    <div class="allProducts">
+    <% if(allProducts && allProducts.length > 0) { %>
+        <% for(let i in allProducts) { %>
+            <% let p = allProducts[i] %>
+
+           <div class="product-row row-effect space-between"> 
+               <div class="img">
+                  <img src="<%= p.url %>" alt="">
+               </div>
+
+               <div class="title"> <%= p.title %> </div>
+
+               <div class="price"> &#8377;<%= p.Price %> </div>
+
+               <div class=""> <a href="/product/edit/<%= p._id %>"> <button class="btn btn-outline-dark"> Edit </button> </a> </div>
+
+           </div>
+
+
+       <% } %>
+    <% } %>
+  
+    </div>
+</div>
+
+
+<!-- footer -->
+<%- include("../Admin/footer.ejs") %>

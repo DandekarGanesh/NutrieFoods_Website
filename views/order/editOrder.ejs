@@ -1,4 +1,8 @@
-<%- include("../navbar.ejs") %>
+<!-- admin heading -->
+<%- include("../Admin/heading") %>
+
+<!-- admin left panel -->
+<%- include("../Admin/leftPanel") %>
 
 <style>
     .pro-title {
@@ -25,9 +29,21 @@
        cursor: pointer;
     }
 
+    .Pro_img img {
+        height: 100px;
+        width: 100px;
+    }
+
+    .order_container {
+       padding: 25px;
+       background-color: white;
+       border-radius: 10px;
+    }
+
+
 </style>
 
-
+<div class="window">
 
 <div class="order_container">
 
@@ -55,7 +71,7 @@
                 <div class="Product_id" style="display: none"> <%= p._id %> </div>
                  
 
-                <div class="order_ProductDetails_product">
+                <div class="order_ProductDetails_product flex">
                     <div class="Pro_img">
                        <img src="<%= p.url %>" alt="">
                     </div>
@@ -125,12 +141,16 @@
        
     </form>
     <!-- Delivery Details end -->
+    <br> <br> <br>
+</div>
 
 </div>
 
 
 
 
+<!-- admin footer -->
+<%- include("../Admin/footer") %>
 
 
 <script>
@@ -200,11 +220,3 @@
     
   
 </script>
-
-
-
-
-
-
-
-<%- include("../footer.ejs") %>

@@ -16,6 +16,10 @@
         background-color: #CAAEFF;
       }
 
+      ul {
+        align-items: center;
+      }
+
     </style>
 <body>
 
@@ -28,14 +32,6 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/navCircle/add"> <div class="nav_options"> addCircle </div> </a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/product/add"> <div class="nav_options"> add Product  </div> </a>
-              </li>
 
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="/add-to-cart"> <div class="nav_options"> <i class="fa-solid fa-cart-shopping"></i>  </div> </a>
@@ -65,18 +61,6 @@
               <!-- drop down list end -->
 
 
-              <!-- orders dropdown start -->
-              <div class="dropdown">
-                <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Orders </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="/order/viewAll">All Orders</a></li>
-                  <li><a class="dropdown-item" href="/order/Paid">Paid Orders</a></li>
-                  <li><a class="dropdown-item" href="/order/created">Unpaid Orders</a></li>
-                </ul>
-              </div>
-              <!--  orders dropdown end -->
-
-
 
               <!-- My orders start -->
               <div class="dropdown">
@@ -87,40 +71,40 @@
               </div>
               <!--  my Orders end -->
 
-               <!-- orders dropdown start -->
+              
+      
+              
+              <!-- login/ logout start -->
+              <% if(typeof currUser != 'undefined') { %>
+               
                <div class="dropdown">
                 <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Login/logout </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="/user/signup"> SignUp </a></li>
-                  <li><a class="dropdown-item" href="/user/login"> Login </a></li>
                   <li><a class="dropdown-item" href="/user/logout"> Logout </a></li>
                   <li><a class="dropdown-item" href="/user/change-password"> Change Password </a></li>
                 </ul>
               </div>
-              <!--  orders dropdown end -->
+            
+              <%} else { %>
 
-               <!-- discount dropdown start -->
-               <div class="dropdown">
-                <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Discount-Coupans </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="/pages/all-Discount-Coupans"> All Discount-Coupans </a></li>
-                  <li><a class="dropdown-item" href="/pages/discount-coupan"> Create Discount-Coupan </a></li>
-                </ul>
-              </div>
-              
-              <!--  discount dropdown end -->
+                <div class="dropdown">
+                  <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Login/logout </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/user/signup"> SignUp </a></li>
+                    <li><a class="dropdown-item" href="/user/login"> Login </a></li>
+                  </ul>
+                </div>
 
-               <!-- Users info start -->
-               <div class="dropdown">
-                <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Users </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="/user/allUsers"> Show Users </a></li>
-                </ul>
-              </div>
-              <!-- Users info end -->
+              <% } %>
+              <!--  login/ logout end -->
+ 
 
             
-              
+              <% if(typeof currUser != 'undefined' && currUser.role != 'USER') { %>
+               <li>
+                <a href="/admin"> <button class="btn btn-dark"> Admin Panel </button> </a>
+               </li>
+              <% } %>
           
             </ul>
             <form class="d-flex" role="search">

@@ -1,19 +1,18 @@
-<!-- including header  -->
-<%- include("../navbar.ejs") %>  
-
-
 
 
 <style>
+
+   .user-heading {
+      text-align: center;
+   }
   
   .allUsers {
      width: 95%;
      margin-left: auto;
      margin-right: auto;    
-     border: 1px solid rgba(0, 0, 0, 0.2);
      padding: 25px;
      border-radius: 25px;
-
+     background-color: white;
   }
 
   .user-email {
@@ -40,47 +39,237 @@
       min-width: 100px;
   }
 
+  .flex {
+     display: flex;
+  }
+
+  .space-between {
+     justify-content: space-between;
+  }
+
+  #super-admin {
+    min-height: 60vh;
+    text-align: center;
+  }
+  
+  .super-pic img {
+    height:  10rem;
+    width: 10rem;
+    border-radius: 50%;
+  }
+
+  .super-info {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
 </style>
 
+<!-- heading -->
+<%- include("../Admin/heading.ejs") %>
 
-<h2 class="orders_heading"> All Users </h2>
-
-<div class="allUsers">
-
-   <div class="flex space-between user-row">
-        <div class="user-email"> <b> Customer name </b> </div>
-        <div> <b> Role </b> </div>
-        <div> <b> Email Subscription </b> </div>
-        <div> <b> orders </b> </div>
-        <div> <b> amount Spend </b></div>
-    </div>
-    <br>
+<!-- leftPanel -->
+<%- include("../Admin/leftPanel.ejs") %>
 
 
-    <% for(let i in allUsers) { %>
-        <div class="flex space-between user-row">
-            <div class="user-email"> <b> <%= allUsers[i].email %> </b> </div>
+<div class="window">
+   <% if(allUsers && allUsers[0] && allUsers[0].role !== 'USER') { %>
+      <% if(allUsers[0].role === 'ADMIN')  { %>
+         <h2 class="user-heading" style="color: green"> <i class="fa-solid fa-user-tie"></i> &nbsp; ADMIN </h2> <br> 
+      <% } else { %>
+         <h2 class="user-heading" style="color: red"> <i class="fa-brands fa-brave"></i> &nbsp; SUPER-ADMIN </h2> <br>
+      <% } %>
+   <% } else { %>
+       <h2 class="user-heading">  All Users </h2> <br> 
+   <% } %>
 
-            <% if(allUsers[i].role === "ADMIN") { %>
-               <div class="roleISAdmin role"> <%=  allUsers[i].role %> </div>
-            <% } else { %>
-               <div class="role"> <%=  allUsers[i].role %> </div>
-            <% } %>
+   <div class="allUsers">
 
-            <div> not Subscribed </div>
-            <div> 0 orders</div>
-            <div> &#8377;0.00 </div>
+
+
+   <% if(allUsers && allUsers[0] && allUsers[0].role !== "SUPER-ADMIN") { %>
+
+
+      <div class="flex space-between user-row">
+         <div class="user-email"> <b> Customer name </b> </div>
+         <div> <b> Role </b> </div>
+         <div> <b> Email Subscription </b> </div>
+         <div> <b> orders </b> </div>
+         <div> <b> amount Spend </b></div>
+         <div></div>
+      </div>
+      <br> <br> <br>
+
+      
+      <% for(let i in allUsers) { %>
+         <% if(typeof currUser != 'undefined' && currUser.email === allUsers[i].email) { %>
+            <div class="flex space-between user-row" style="background-color: pink;">
+         <% } else { %>
+            <div class="flex space-between user-row">
+         <% } %>
+         
+               <div class="user-email emailOfUser-toMakeAdmin"> <b> <%= allUsers[i].email %> </b> </div>
+
+               <% if(allUsers[i].role === "ADMIN") { %>
+                  <div class="roleISAdmin role"> <%=  allUsers[i].role %> </div>
+               <% } else { %>
+                  <div class="role"> <%=  allUsers[i].role %> </div>
+               <% } %>
+
+               <div> not Subscribed </div>
+               <div> 0 orders</div>
+               <div> &#8377;0.00 </div>
+               
+               <% if(allUsers[i].role === 'USER') { %>
+               <button class="btn btn-outline-warning make-admin-btn"> Make Admin</button>
+               <% } else { %>
+                  <button class="btn btn-outline-danger make-user-btn"> Make User </button>
+               <% } %>
+
+         </div>
+         <br>
+      <% } %>
+      </div>
+
+   <% }  else { %>
+      
+         
+        <div id="super-admin">
+            <div class="super-pic">
+               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTY8faObGiTq2Qx624gn-3w1Oj8byIkz3kqLg&s" alt="">
+            </div>
+            <br>
+
+            <div class="super-info">
+               <p> RAVINDRA VERMA </p>
+               <% if(typeof currUser != 'undefined' && currUser.email === allUsers[0].email) { %>
+                  <p> email : <span style="background-color: pink;"> <%= allUsers[0].email %> </span> </p>
+               <% } else { %>
+                  <p> email : <%= allUsers[0].email %> </p>
+               <% } %>
+              
+               <p> Contact number : 9999999999 </p>
+               <p> Address : Chh. Sambhajinagar, Maharashtra</p>
+           </div>
         </div>
-    <% } %>
 
-
+   <% } %>
 
 </div>
 
 
+<!-- footer -->
+<%- include("../Admin/footer.ejs") %>
+
+<script>
+    const make_admin_btn = document.querySelectorAll(".make-admin-btn");
+    const make_user_btn = document.querySelectorAll(".make-user-btn");
+    const user_email = document.querySelectorAll(".emailOfUser-toMakeAdmin b");
+
+    //to make a user admin 
+    if(make_admin_btn.length > 0 && user_email.length > 0) {
+    for(let i in make_admin_btn) {
+        const adminBtn = make_admin_btn[i];
+        const specificEmail =  user_email[i];
+
+        if(!adminBtn || !specificEmail) {
+            continue;
+        }
+
+        adminBtn.addEventListener('click', (event) => {
+         Swal.fire({
+               title: "Are you sure to make This User *****ADMIN****",
+               showDenyButton: true,
+               confirmButtonText: "Make Admin",
+               denyButtonText: `Dont make Admin`,
+               text: 'You are making this person as an Admin'
+               }).then( async (result) => {
+
+               if (result.isConfirmed) {
+
+                  await axios({
+                        url: `/admin`,
+                        method: 'POST',
+                        data: {
+                           email: specificEmail.innerHTML,
+                        }
+                  })
+                  .then(() => {
+                     Swal.fire("Saved!", "", "success");
+                     location.reload();
+                  })
+                  .catch((err) => {
+                     if(err.response.status == 403) {
+                        Swal.fire('Not Authorized' , err);
+                     } else {
+                        Swal.fire(err.message , "", err);
+                     }
+                  });
+
+
+               } else if (result.isDenied) {
+                  Swal.fire("Changes are not saved", "", "info");
+               }
+               });
+        });
+   }
+}
 
 
 
+   // make a admin to a user
+   if(make_user_btn.length > 0 && user_email.length > 0) {
+   for(let i in make_user_btn) {
+      const userBtn = make_user_btn[i];
+      const specificEmail =  user_email[i];
 
-<!-- including footer  -->
-<%- include("../footer.ejs") %>
+      if(!userBtn || !specificEmail) {
+         continue;
+      }
+
+      userBtn.addEventListener('click', (req,res) => {
+         Swal.fire({
+            title: `Are you Sure to make ${specificEmail.innerHTML} as a ***USER***`,
+            showDenyButton: true,
+            confirmButtonText: "Make User",
+            denyButtonText: `Remain Admin`
+            }).then(async (result) => {
+            if (result.isConfirmed) {
+
+               await axios({
+                        url: `/admin/makeUser`,
+                        method: 'POST',
+                        data: {
+                           email: specificEmail.innerHTML,
+                        }
+                  })
+                  .then(() => {
+                     Swal.fire("Saved!", "", "success");
+                     location.reload();
+                  })
+                  .catch((err) => {
+                     if(err.response.status == 403) {
+                        Swal.fire('Not Authorized' , err.msg);
+                     } else {
+                        Swal.fire(err.message , err.msg);
+                     }
+                    
+                  });
+
+
+
+            } else if (result.isDenied) {
+
+               Swal.fire("Changes are not saved", "", "info");
+            }
+         });
+
+      });      
+   }
+}
+    
+</script>
+
+
+

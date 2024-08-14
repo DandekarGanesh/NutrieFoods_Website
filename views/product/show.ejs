@@ -1,8 +1,6 @@
 <!-- including header  -->
 <%- include("../navbar.ejs") %> 
 
-
-
 <!-- Product info Start -->
 <div class="product_container">
 
@@ -16,16 +14,7 @@
             <h3> <% if(product && product.title) { %> <%= product.title.toUpperCase() %> <% } %> </h3>
             <div class="product_price"> <h5> Rs.<%= product.Price %> </h5> </div>
             <p class="product_desc"> <%= product.description %> </p>
-
-            <div class="delete-edit-btn">
-                <form method="POST" action="/product/delete/<%=product._id%>?_method=DELETE">
-                    <button class="btn btn-success"> Delete </button>
-                </form>
-                
-                <a href="/product/edit/<%=product._id%>"> <button class="btn btn-success"> edit </button> </a>
-            </div>
             
-
         </div>
     <% } %>
 </div>

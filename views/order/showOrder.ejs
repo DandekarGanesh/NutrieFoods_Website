@@ -1,4 +1,9 @@
-<%- include("../navbar.ejs") %>
+<!-- admin heading -->
+<%- include("../Admin/heading.ejs") %>
+
+<!-- admin left-panel -->
+<%- include("../Admin/leftPanel.ejs") %>
+
 
 
 <style>
@@ -8,17 +13,6 @@
 margin: 2em 2em 0;
 }
 
-.order-1 {
-  order: 1;
-}
-
-.order-2 {
-  order: 2;
-}
-
-.order-3 {
-  order: 3;
-}
 
 .right-gap {
   margin-right: auto;
@@ -37,9 +31,13 @@ margin: 2em 2em 0;
     }
 
     .Pro_img {
-        width: 4%;
         /* border: 1px solid green; */
         text-align: center;
+    }
+
+    .Pro_img img {
+        width: 100px;
+        height: 100px;
     }
 
     .order_deliveryDetails {
@@ -55,8 +53,30 @@ margin: 2em 2em 0;
     }
 
 
+    .order_container {
+        padding: 25px;
+    }
+
+    .order_ProductDetails_product {
+        display: flex;
+    }
+
+    .flex {
+        display: flex;
+    }
+
+    .space-between {
+        justify-content: space-between;
+    }
+
+    
+
+
 </style>
 <!-- styles for sweet alert end -->
+
+
+<div class="window">
 
 <div class="order_container">
     <% let totalAmount = 0; %>
@@ -68,7 +88,10 @@ margin: 2em 2em 0;
             <button class="<%= order.status === "Paid" ? 'btn btn-success' : 'btn btn-danger' %>"> <%= order.status %> </button> &nbsp;
             <button class="btn btn-primary"> Fulfilled </button> &nbsp;
             <button class="btn btn-secondary"> <a href="/order/edit/<%= order.order_id %>"> Edit </a> </button> &nbsp;
-            <button class="btn btn-warning order_delete_btn"> Delete Order </button>
+
+             <button class="btn btn-warning order_delete_btn"> Delete Order </button>
+         
+            
             
         </h4> 
         <% let date = order.Date %>
@@ -112,6 +135,7 @@ margin: 2em 2em 0;
     <% } %>
     <!-- Product Details end -->
 
+    <br> <br> <hr>
 
     <!-- Delivery Details start -->
      <% if(order.Delivery && order.Delivery.date) { %>
@@ -132,7 +156,8 @@ margin: 2em 2em 0;
      </div>
      <% } %>
     <!-- Delivery Details end -->
-
+     
+    <br> <br> <hr>
 
      <!-- Payment Details start -->
      <div class="order_paymentDetails">
@@ -160,7 +185,7 @@ margin: 2em 2em 0;
         <hr> 
         <div class="flex  space-between">
             <p> Paid </p>
-            <p> &#8377;  &#8377;<%= totalAmount - ((totalAmount * order.discountArray[0].per)/100) %>  </p>
+            <p> &#8377;<%= totalAmount - ((totalAmount * order.discountArray[0].per)/100) %>  </p>
         </div>
         <hr>
 
@@ -169,23 +194,18 @@ margin: 2em 2em 0;
 
      </div>
      <!-- Payment details end -->
-    
-    
-
-    <h3>
-        <%= order %>
-    </h3>
 
 
-    <br> <br>
-    <% if(products && products[0]) { %>
-    <h4>
-        <%= products[0].Product  %>
-    </h4>
-    <% } %>
+
     
 
 </div>
+
+</div>
+
+
+<!-- admin footer -->
+<%- include("../Admin/footer.ejs") %>
 
 
 
@@ -232,6 +252,3 @@ margin: 2em 2em 0;
 
 </script>
 
-
-
-<%- include("../footer.ejs") %>

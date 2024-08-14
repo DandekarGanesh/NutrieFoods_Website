@@ -344,8 +344,22 @@ module.exports.checkAndCreateUser = async (req,res) => {
 
 
 module.exports.showAllUsers = async (req,res) => {
-    const allUsers = await userModel.find({});
+    const allUsers = await userModel.find({role: 'USER'});
     res.render("user/showAllUsers", { allUsers });
 };
+
+
+
+module.exports.showAdmins = async (req,res) => {
+   const allUsers = await userModel.find({role: 'ADMIN'});
+   res.render("user/showAllUsers", { allUsers });
+}
+
+
+
+module.exports.showSuperAdmin = async (req,res) => {
+   const allUsers = await userModel.find({role: 'SUPER-ADMIN'});
+   res.render("user/showAllUsers", { allUsers });
+}
 
 
