@@ -7,9 +7,11 @@ module.exports.renderNewForm = (req,res) => {
 
 
 module.exports.createNavCircle = async (req,res) => {
+    const url = req.file.path;
     let newNavCircle = await NavCircle({...req.body.NavCircle});
+    newNavCircle.url = url;
     newNavCircle.save();
-    res.redirect('/pages');
+    res.redirect('/navCircle/all');
 }
 
 
@@ -22,9 +24,13 @@ module.exports.renderEditForm = async (req,res) => {
 
 
 module.exports.updateNavCircle = async (req,res) => {
+    const url = req.file.path;
     let { id } = req.params; 
-    await NavCircle.findByIdAndUpdate(id, { ...req.body.NavCircle} );
-    res.redirect("/pages");
+    let newNavCircle = await NavCircle.findById(id);
+    newNavCircle.url = url;
+
+    await newNavCircle.save();
+    res.redirect("/navCircle/all");
 }
 
 

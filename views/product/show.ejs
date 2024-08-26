@@ -5,14 +5,33 @@
 <div class="product_container">
 
     <% if(typeof product !== 'undefined') { %>
-        <div class="product_img">
-           <img src="<%=product.url%>" alt="">
+        <div class="img-sec">
+            <div class="product_img">
+                <img src="<%=product.url%>" alt=""> 
+             </div>
+             <br>
+
+             <div class="all-images">
+                <img src="<%=product.url%>" alt=""> 
+                <img src="<%=product.url%>" alt=""> 
+                <img src="<%=product.url%>" alt=""> 
+                <img src="<%=product.url%>" alt=""> 
+             </div>
         </div>
+       
 
         <div class="product_info">
             <p> Nutriefoods </p>
             <h3> <% if(product && product.title) { %> <%= product.title.toUpperCase() %> <% } %> </h3>
-            <div class="product_price"> <h5> Rs.<%= product.Price %> </h5> </div>
+
+            <br>
+            <div class="product_price"> 
+                <p class="original-price"> Rs. 499.00</p> &nbsp; &nbsp; &nbsp; &nbsp;
+                <p class="dis-price"> Rs. <%= product.Price %>.00 </p>   &nbsp; &nbsp; &nbsp; &nbsp;
+                <p class="off-tag"> 60 OFF </p>
+            </div>
+
+            <br> <br> <br>
             <p class="product_desc"> <%= product.description %> </p>
             
         </div>

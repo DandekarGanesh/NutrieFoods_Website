@@ -22,7 +22,13 @@
 
                <div class="price"> &#8377;<%= p.Price %> </div>
 
-               <div class=""> <a href="/product/edit/<%= p._id %>"> <button class="btn btn-outline-dark"> Edit </button> </a> </div>
+               <div class=""> <a href="/product/edit/<%= p._id %>"> <button class="btn btn-outline-danger"> Edit </button> </a> </div>
+
+               <div>
+                  <form method="POST" action="/product/delete/<%= p.id %>?_method=DELETE" >
+                    <button class="btn btn-outline-dark">Delete</button> 
+                  </form>
+                </div>
 
            </div>
 

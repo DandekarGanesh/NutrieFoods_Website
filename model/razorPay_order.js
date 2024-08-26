@@ -59,6 +59,11 @@ const razorPay_orderSchema = new Schema({
 
     discountArray: {
         
+    },
+
+    buyer: {
+        type: String,
+        required: true
     }
 
 });

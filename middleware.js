@@ -69,9 +69,6 @@ module.exports.isLoggedin = (req,res, next) => {
 
 // middleware for authorization
 module.exports.authorizedRoles = (...roles) => (req,res,next) => {
-    console.log(roles);
-    console.log(req.user);
-
     const currentUserRoles = req.user.role;
 
     if(!roles.includes(currentUserRoles)) {

@@ -3,6 +3,26 @@
 </body>
 
 <script>
+    // show image when we select it
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#blah').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#validationCustomUsername").change(function(){
+        readURL(this);
+    });
+
+
+
+
     let l = window.location.toString().substring(21);
     let l_btn = document.querySelector(`[href='${l}']`);
     l_btn2 = document.getElementById(l.split("/")[1]);

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const pagesController = require("../controllers/pages");
 const wrapAsync = require("../utils/wrapAsync");
+const { isLoggedin , authorizedRoles} = require("../middleware");
 
 // index route
 router.get("/", wrapAsync(pagesController.index));
@@ -26,13 +27,22 @@ router.get("/all-discount-coupans", wrapAsync(pagesController.showAllDiscountCou
 
 
 router.route("/discount-coupan")
-       .get(wrapAsync(wrapAsync(pagesController.renderDisCoupanForm))) // render Discount Coupans form
-       .post(wrapAsync(pagesController.createDisCoupan));  // create discount coupan
+       .get( 
+              isLoggedin,
+              authorizedRoles('ADMIN', 'SUPER-ADMIN'), 
+              wrapAsync(wrapAsync(pagesController.renderDisCoupanForm))) // render Discount Coupans form
+       .post(
+              isLoggedin,
+              authorizedRoles('ADMIN', 'SUPER-ADMIN'),
+              wrapAsync(pagesController.createDisCoupan));  // create discount coupan
 
 
 
 // delete discount coupan 
-router.delete("/discount-coupan/:id", wrapAsync(pagesController.destroyCoupan));
+router.delete("/discount-coupan/:id",
+       isLoggedin,
+       authorizedRoles('ADMIN', 'SUPER-ADMIN'), 
+       wrapAsync(pagesController.destroyCoupan));
 
 
 

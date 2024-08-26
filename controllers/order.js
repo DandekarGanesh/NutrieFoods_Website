@@ -1,7 +1,7 @@
 const order_model = require('../model/razorPay_order');
 const ProductModel = require('../model/product');
 const razorpayModel = require("../model/razorPay_order");
-
+const mongoose = require("mongoose");
 
 
 
@@ -140,8 +140,29 @@ module.exports.updateDeliveryDetails = async (req,res) => {
 
 
 // my orders
-module.exports.myOrders = (req,res) => {
-    res.render("order/myOrders");
+module.exports.myOrders = async (req,res) => {
+    const myOrders = await razorpayModel.find({buyer: req.user.email});
+    let Products = [];
+
+  if(myOrders) {
+
+    for(let i in myOrders) {
+         let productArray = [];
+
+        for(let j in myOrders[i].Products) {
+            let id = myOrders[i].Products[j].productId;
+            let product = await ProductModel.findById(id);
+            product.quantity = myOrders[i].Products[j].quantity;  
+            productArray.push(product);
+        }
+
+        Products.push(productArray);
+    }
+
+  }
+    
+    
+    res.render("order/myOrders", { myOrders, Products });
 };
 
 

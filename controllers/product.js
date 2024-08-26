@@ -28,17 +28,19 @@ module.exports.renderNewForm = (req,res) => {
 
 
 module.exports.createProduct = (req,res, next) => {
+    let url = req.file.path;
     let data = req.body.Product;
-    let newProduct = new Product(data);
+    const newProduct = new Product(data);
+    newProduct.url = url;
     newProduct.save();
-    res.redirect('/pages');
+    res.redirect('/product/allProducts');
 }
 
 
 module.exports.destroyProduct = async (req,res)  => {
     let { id } = req.params;
     await Product.findByIdAndDelete(id);
-    res.redirect("/pages");
+    res.redirect("/product/allProducts");
 }
 
 
@@ -46,11 +48,17 @@ module.exports.renderEditForm = async (req,res) => {
     let { id } = req.params;
     let product =  await Product.findById(id);
     res.render("product/edit.ejs", { product });
-}
+}     
 
 
 module.exports.updateProduct = async (req,res) => {
     let { id } = req.params;
-    await Product.findByIdAndUpdate(id, { ...req.body.Product });
-    res.redirect("/pages");
+    const updatedProduct = req.body.Product;
+   
+    if(typeof req.file !== "undefined") {
+        updatedProduct.url = req.file.path;
+    }
+
+    await Product.findByIdAndUpdate(id, { ...updatedProduct });    
+    res.redirect("/product/allProducts");
 }

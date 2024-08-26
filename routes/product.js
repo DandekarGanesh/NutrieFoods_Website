@@ -6,6 +6,10 @@ const { validateProduct } = require("../middleware");
 const { isLoggedin, authorizedRoles }  = require("../middleware");
 const product = require("../model/product");
 
+// for image uploads
+const multer  = require('multer');
+const { storage } = require("../cloudConfig");
+const upload = multer({ storage });
 
 
 // view all products
@@ -28,8 +32,10 @@ router.get('/add',
 router.post('/add', 
     isLoggedin,  
     authorizedRoles('ADMIN', 'SUPER-ADMIN'), 
-    validateProduct, 
+    // validateProduct, 
+    upload.single("Product[image]"),
     wrapAsync(productController.createProduct));
+
 
 // delete product
 router.delete('/delete/:id', 
@@ -40,8 +46,7 @@ router.delete('/delete/:id',
 // render edit form for products
 router.get('/edit/:id', 
     isLoggedin, 
-    authorizedRoles('ADMIN', 'SUPER-ADMIN'), 
-    validateProduct, 
+    authorizedRoles('ADMIN', 'SUPER-ADMIN'),  
     wrapAsync(productController.renderEditForm));
 
 
@@ -49,7 +54,8 @@ router.get('/edit/:id',
 router.put("/edit/:id", 
     isLoggedin, 
     authorizedRoles('ADMIN', 'SUPER-ADMIN'), 
-    validateProduct, 
+    // validateProduct, 
+    upload.single("Product[image]"),
     wrapAsync(productController.updateProduct));
 
 // CRUD OPERATIONS END

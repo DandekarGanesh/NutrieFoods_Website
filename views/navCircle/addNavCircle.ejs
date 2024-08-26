@@ -14,8 +14,8 @@
 <br>
   
     <div class="addProduct allProducts">
-        <form method="POST"  action="/navCircle/add" class="row g-3 needs-validation" novalidate>
-            <div class="col-md-4">
+        <form method="POST"  action="/navCircle/add" class="row g-3 needs-validation" novalidate enctype="multipart/form-data">
+            <div class="col-md-8">
             <label for="validationCustom01" class="form-label"> Product Title </label>
             <input type="text" class="form-control" name="NavCircle[title]" id="validationCustom01" required>
             <div class="valid-feedback">
@@ -23,10 +23,10 @@
             </div>
             </div>
          
-            <div class="col-md-4">
+            <div class="col-md-8">
             <label for="validationCustomUsername" class="form-label">image URL</label>
             <div class="input-group has-validation">
-                <input type="text" name="NavCircle[url]" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                <input type="file" name="NavCircle[url]" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
                 <div class="invalid-feedback">
                 choose a image URL.
                 </div>

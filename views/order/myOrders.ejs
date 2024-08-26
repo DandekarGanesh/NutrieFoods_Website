@@ -1,7 +1,133 @@
 <%- include("../navbar.ejs") %>
 
-<h2> My Orders </h2>
+<style>
+ 
+ .title {
+    text-align: center;
+ }
+
+ .order-info {
+   width: 60vw;
+   margin-left: auto;
+   margin-right: auto;
+   padding: 20px;
+   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+   margin-top: 40px;
+   border-radius: 20px;
+ }
+
+ .img-div img {
+    height: 100px;
+    width: 100px;
+ }
+
+ .product-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+ }
+
+ .product-qty {
+    position: relative;
+    background-color: rgb(115, 114, 114);
+    color: white;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 80px;
+    top: 20px;
+    font-size: 12px;
+ }
+
+ .product-title {
+    width: 40vw;
+ }
+
+
+ @media(max-width: 1000px) {
+    .order-info {
+        width: 90vw;
+    }
+ }
+
+</style>
+
+
+<br> <br>
+<h2 class="title"> My Orders </h2>
+
+
+   
+     
+   <% for(let i=0; i<Products.length; i++) { %>
+      <div class="order-info">
+      <h3> Order no : <%= i+1 %> </h3>
+
+    <% for(let j in Products[i]) { %>
+        <% let p = Products[i][j]; %>
+
+        <div class="product-row">
+            <div class="img-div">
+                <span class="product-qty"> <%= p.quantity%> </span>
+                <img src="<%= p.url %>" alt="">
+            </div>
+            <div class="product-title"> <%= p.title %> </div>
+            <div> &#8377;<%= p.Price %> </div>
+        </div>
+        <br>
+    <% } %>
+
+
+   <!-- my orders      -->
+   <% let order = myOrders[i] %>
+
+      <h2> Monetry Status </h2>
+      <p> Amount Status :-  <span style="color: green"> PAID </span></p>
+  
+      <% let date = order.Date %>
+      <div class="product-row"> <div> Order on : </div>  <div> <%= date.getDay() %>/<%= date.getMonth()%>/<%= date.getFullYear() %> </div> </div>
+      <div class="product-row"> <div> Payment OrderId : </div> <div> <%= myOrders.order_id %> </div> </div>
+  
+      <% if(typeof order.discountArray[0] != 'undefined') { %>
+         <div class="product-row"> <div> Coupan :</div> <div> <%= order.discountArray[0].coupan %></div> </div>
+         <div class="product-row"> <div> Discount :</div> <div> <%= order.discountArray[0].per %>% </div> </div>
+       <% } %>
+     
+      <hr>
+      <!-- total Amount -->
+      <div class="product-row"> <div> Total Paid Amount : </div> <div> &#8377;<%= (order.amount/100).toLocaleString("en-IN") %> </div> </div>
+      <hr>
+
+      <h2> Delhivery Details </h2>
+
+      <% if(typeof order.Delivery.date != 'undefined') { %>
+         <% let delhivery = order.Delivery %>
+         <% let delhiveryDate = delhivery.date; %>
+ 
+       <div class="product-row"> <div> Delhivery Number : </div> <div> <a href=""> <%= delhivery.number %> </a> </div> </div>
+       <div class="product-row"> <div> Delhivery On : </div> <div> <%= delhiveryDate.getDate() %>/<%= delhiveryDate.getMonth() %>/<%= delhiveryDate.getFullYear() %> </div> </div>
+ 
+     <% } else { %>
+         
+        <p> Will let u Know about the Delhivery :) till then enjoy </p>
+     <% } %>
+ 
+      
+    </div>
+   <% } %>
+
+
+
 
 
 
 <%- include("../footer.ejs") %>
+
+
+
+
+
+

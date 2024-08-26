@@ -9,8 +9,6 @@
      <!-- google locations -->
      <!-- <script type="text/JavaScript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYuCphOy0g9Sjc8fpspLIdMgmHK2G9Vno&libraries=places"> </script> -->
 
-     <!-- cdn for j query -->
-     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
 
     <!-- js for payment window -->
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
@@ -236,6 +234,22 @@
         align-items: center;
     }
 
+    /* loading button */
+    .loader .icon {
+       display: inline-block;
+       font-size: 1.2rem;
+       animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100%  {
+            transform: rotate(360deg);
+        }
+    }
+
     </style>
 
 </head>
@@ -264,7 +278,7 @@
                     <div class="col-md-10">
                         <div class="input-group has-validation">
                             <span class="input-group-text" id="inputGroupPrepend">@</span>
-                            <input type="email" placeholder="Email" id="email" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                            <input type="email" placeholder="Email" id="email" class="form-control" id="validationCustomUsername" value="<%= currUser.email %>" aria-describedby="inputGroupPrepend" required>
                             <div class="invalid-feedback">
                             Please enter a Email.
                             </div>
@@ -377,7 +391,7 @@
                     </div>
 
                 
-                    <button class="btn pay-btn col-10" id="pay-btn"> PAY NOW </button>
+                    <button class="btn pay-btn col-10 loader" id="pay-btn"> PAY NOW </button>
                 </form>
 
 
@@ -473,24 +487,34 @@
 
 
     <script>
+       let btns = document.querySelectorAll(".loader");
+
+       for(let i=0; i<btns.length; i++) {
+          btns[i].addEventListener('click', () => {
+             btns[i].classList.add("loader");
+             btns[i].innerHTML = '<i class="fa-solid fa-spinner icon"></i>';
+          });
+       }
+
+
         let totalAmount = document.querySelector("#totalAmt");
         const mainAmount = totalAmount.innerHTML;
         let amount = totalAmount.innerHTML;                                                                                                 
-        const email = document.getElementById("email").value;                                                                          
+        const email = document.getElementById("email").value;                                                                    
         const disLabelsArray = [];  // to track that a discount coupan must use at most once only .. eg : ({coupan: coupan, discount: 10 }) 
     
        
        // method to check discount Coupan
        const checkDisCoupan = async () => {
-
         const disCode = document.getElementById("apply-discount-code").value;
 
            if(!disCode) {
                 Swal.fire({
                     title: "Enter Discount Code",
                     text: "if u have discount code then please apply here",
-                    icon: "fail"
+                    icon: "warning"
                 });
+                          
               return;
            }
            
@@ -558,8 +582,6 @@
                     icon: "error"
                 });
            });
-
-           document.getElementById("apply-discount-code").value = "";
        }
 
      
@@ -588,6 +610,7 @@
       
         // js for payment RazorPay
         const paymentStart = async () => {
+            let email = document.getElementById("email").value;  
             event.preventDefault();
 
         // this api is to check that the user have account or not ... if not then we will create a account other wise we will do nothing
@@ -608,12 +631,14 @@
                 url: `/payments/api/getKey`,
             }) 
 
+
             // send req on server to get orderId from razorpay
             await axios({
                 method: 'POST',
                 url: `/payments/create_order/${amount}`,
                 data: {
                     discountArray: disLabelsArray,
+                    email: email,
                 }
             }).then((res) => { 
                  
@@ -675,6 +700,9 @@
                     }
                 };
 
+                let payBtn = document.getElementById('pay-btn');
+                payBtn.classList.remove("loader");
+                payBtn.innerHTML = "PAY NOW";
 
                 let razor = new window.Razorpay(options);
                 razor.open();

@@ -11,7 +11,7 @@ module.exports.sendRazorKey = (req,res) => {
 
 // to get the payment window
 module.exports.givePaymentWindow = async (req,res) => {
-    let { discountArray } = req.body;
+    let { discountArray, email } = req.body;
     let { amount } = req.params;
     var instance = new Razorpay({
         key_id: process.env.RAZOR_ID,
@@ -39,6 +39,7 @@ module.exports.givePaymentWindow = async (req,res) => {
             paymentOrder.order_id = order.id;
             paymentOrder.Products = products[0].Products;
             paymentOrder.discountArray = discountArray;
+            paymentOrder.buyer = email.toLowerCase();  // here we are adding user email into the order
             await paymentOrder.save();
             
             res.send(order);

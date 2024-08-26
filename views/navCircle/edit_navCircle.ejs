@@ -9,7 +9,7 @@
 <style>
         
     .show_reviews {
-        width: 80%;
+        width: 100%;
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         border-radius: 10px;
         margin: 20px auto auto auto;
@@ -29,7 +29,6 @@
     .show_reviews_info {
        width: 60%;
        padding: 25px;
-       font-size: 1.5rem;
     }
 
     .show_reviews_img-sec {
@@ -46,13 +45,10 @@
 <h2 style="text-align: center;"> Edit navCircle </h2>
 <div class="show_reviews" style="background-color: white;">
 
-     
-    <div class="show_reviews_img-sec">
-        <img class="show_reviews_img" src="<%= navCircle.url %>" alt="">
-    </div>
+    
 
     <div class="show_reviews_info">
-        <form method="POST"  action="/navCircle/edit/<%=navCircle._id%>?_method=PUT" class="row g-3 needs-validation" novalidate> 
+        <form method="POST"  action="/navCircle/edit/<%=navCircle._id%>?_method=PUT" class="needs-validation" novalidate enctype="multipart/form-data"> 
             <div class="col-md-10">
                 <label for="validationCustom02" class="form-label"> Title </label>
                 <input type="text" value="<%=navCircle.title%>" name="NavCircle[title]" class="form-control" id="validationCustom02" required>
@@ -61,15 +57,28 @@
                 </div>
             </div>
 
+            <br>
             <div class="col-md-10">
-                <label for="validationCustom02" class="form-label"> Image URL </label>
-                <input type="text" value="<%=navCircle.url%>" name="NavCircle[url]" class="form-control" id="validationCustom02" required>
-                <div class="valid-feedback">
-                    Looks good!
+                <label for="validationCustom02" class="form-label"> Old Image </label>
+                <div>
+                    <img src="<%=navCircle.url%>" alt="" height="150px" width="150px">
+                </div>
+            </div>
+ 
+            <br> <br>
+
+            <label for="" class="form-label"> New Image </label> <br> 
+            <input type="file" name="NavCircle[url]" id="validationCustomUsername">
+            
+            <div class="col-md-10">
+                <br> 
+                <div>
+                    <img alt="Selected image"  id="blah" height="150px" width="150px">
                 </div>
             </div>
        
-        <button class="btn btn-success col-12"> Edit </button> 
+            <br>
+        <button class="btn btn-success"> Edit </button> 
         </form>
         <br> <br> 
     </div>

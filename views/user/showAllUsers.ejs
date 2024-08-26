@@ -97,7 +97,9 @@
          <div> <b> Email Subscription </b> </div>
          <div> <b> orders </b> </div>
          <div> <b> amount Spend </b></div>
-         <div></div>
+         <% if(typeof currUser != 'undefined' && currUser.role == 'SUPER-ADMIN') { %> 
+            <div> &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </div> 
+         <% } %>
       </div>
       <br> <br> <br>
 
@@ -121,10 +123,12 @@
                <div> 0 orders</div>
                <div> &#8377;0.00 </div>
                
+               <% if(typeof currUser != 'undefined' && currUser.role == 'SUPER-ADMIN') { %>
                <% if(allUsers[i].role === 'USER') { %>
                <button class="btn btn-outline-warning make-admin-btn"> Make Admin</button>
                <% } else { %>
                   <button class="btn btn-outline-danger make-user-btn"> Make User </button>
+               <% } %>
                <% } %>
 
          </div>

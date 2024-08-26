@@ -6,11 +6,9 @@ const express = require("express");
 const app = express();
 const port = 8080;
 const path = require("path");
-const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const bodyParser = require('body-parser'); // to parse the data (which we get from api post)
 const ExpressError = require("./utils/ExpressError");
-const User = require("./model/user");
 const cookieParser = require("cookie-parser");
 const databaseConnect = require("./config/databaseConfig");
 const { getUser } = require("./middleware"); 
@@ -32,7 +30,7 @@ const adminRouter = require("./routes/admin");
 
 // sessions
 const session = require("express-session");
-const { error } = require("console");
+// const { error } = require("console");
 
 const sessionOptions = {
     secret: "mySuperSecret",
@@ -63,6 +61,7 @@ app.use(cookieParser()); // to parse cookies
 
 // putting user's information into req.user
 app.use(getUser, (req,res, next) => {
+    res.locals.currUser = req.user;
     next();
 });
 
