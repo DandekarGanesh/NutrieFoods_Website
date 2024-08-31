@@ -3,6 +3,21 @@
     <h2> This is footer</h2>
 </div>
 
+
+<script>
+    // call to add to cart 
+    async function add_to_cart(id) {
+        await axios({
+            method: 'post',
+            url: "/add-to-cart",
+            headers: {}, 
+            data: {
+                productId: id, // This is the body part
+            }})
+            .catch((err) => console.log(err));
+    }
+</script>
+
 <!-- custom js file -->
  <script src="../script.js"> </script>
 

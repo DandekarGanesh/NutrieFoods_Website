@@ -1,21 +1,25 @@
 <!-- including header  -->
 <%- include("../navbar.ejs") %> 
 
+<!-- image zoom -->
+<script src="https://unpkg.com/js-image-zoom@0.4.1/js-image-zoom.js" type="application/javascript"></script>
+
 <!-- Product info Start -->
 <div class="product_container">
 
     <% if(typeof product !== 'undefined') { %>
         <div class="img-sec">
-            <div class="product_img">
+            <div id="img-container" class="product_img">
                 <img src="<%=product.url%>" alt=""> 
              </div>
              <br>
 
              <div class="all-images">
-                <img src="<%=product.url%>" alt=""> 
-                <img src="<%=product.url%>" alt=""> 
-                <img src="<%=product.url%>" alt=""> 
-                <img src="<%=product.url%>" alt=""> 
+                <img class="place-img" src="<%=product.url %>" alt="">
+                 
+                <% for(let i=0; i<product.images.length; i++) { %>
+                    <img class="place-img" src="<%=product.images[i] %>" alt=""> 
+                <% } %>
              </div>
         </div>
        
@@ -26,9 +30,19 @@
 
             <br>
             <div class="product_price"> 
-                <p class="original-price"> Rs. 499.00</p> &nbsp; &nbsp; &nbsp; &nbsp;
+                <p class="original-price"> Rs. <%= product.originalPrice %>.00</p> &nbsp; &nbsp; &nbsp; &nbsp;
                 <p class="dis-price"> Rs. <%= product.Price %>.00 </p>   &nbsp; &nbsp; &nbsp; &nbsp;
-                <p class="off-tag"> 60 OFF </p>
+                <p class="off-tag"> &#8377;<%= Math.abs(product.originalPrice-product.Price) %> OFF </p>
+            </div>
+
+            <br>
+
+            <div>
+                <button class="add-to-cart-btn" onclick="add_to_cart('<%= product._id %>')"> Add to cart </button>
+            </div>
+
+            <div>
+                <button class="add-to-cart-btn buy-btn"> Buy it now </button>
             </div>
 
             <br> <br> <br>
@@ -164,6 +178,36 @@
 
  <!-- Showing reviews end -->
 
+
+
+<script>
+  
+  // image zoom functionality start
+  var options = {
+    // height: 100,
+    width: 400,
+    zoomWidth: 500,
+    offset: {vertical: 10, horizontal: 10},
+    scale: 1.5,
+};
+
+ new ImageZoom(document.getElementById("img-container"), options);
+//  image zoom functionality end
+
+
+ 
+  let images = document.querySelectorAll(".place-img");
+  let mainImg = document.querySelector(".product_img");
+
+  for(let i=0; i<images.length; i++) {
+
+      images[i].addEventListener('click', () => {
+           mainImg.innerHTML = "";
+           mainImg.innerHTML = `<img src=${images[i].src}>`;
+      });
+  }
+
+</script>
 
 <!-- including footer  -->
 <%- include("../footer.ejs") %>

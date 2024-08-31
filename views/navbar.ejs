@@ -25,8 +25,8 @@
 <body>
 
    <!-- nav bar  -->
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
+    <!-- <nav class="navbar navbar-expand-lg bg-body-tertiary"> -->
+        <!-- <div class="container-fluid">
           <a class="nav-link active" aria-current="page" href="/pages"> <div class="nav_options"> Home  </div> </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -36,15 +36,15 @@
 
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="/add-to-cart"> <div class="nav_options"> <i class="fa-solid fa-cart-shopping"></i>  </div> </a>
-              </li>
+              </li> -->
 
               <!-- drop down list start -->
-              <div class="dropdown">
+              <!-- <div class="dropdown">
                 <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                    Category
-                </a>
+                </a> -->
               
-                <ul class="dropdown-menu">
+                <!-- <ul class="dropdown-menu">
                   <li><a class="dropdown-item" href="/product/view-all/All">All Collections</a></li>
                   <li><a class="dropdown-item" href="/product/view-all/Best_Seller">Best Seller</a></li>
                   <li><a class="dropdown-item" href="/product/view-all/New_Launches">New Launches</a></li>
@@ -58,18 +58,18 @@
                   <li><a class="dropdown-item" href="/product/view-all/Nutriefit_Meals">Nutrifit Meals </a></li>
                   <li><a class="dropdown-item" href="/product/view-all/Granola_Galore">Granola Galore - Artisan Bliss </a></li>
                 </ul>
-              </div>
+              </div> -->
               <!-- drop down list end -->
 
 
 
               <!-- My orders start -->
-              <div class="dropdown">
+              <!-- <div class="dropdown">
                 <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> My Order </a>
                 <ul class="dropdown-menu">
                   <li><a class="dropdown-item" href="/order/myOrders">My Order </a></li>
                 </ul>
-              </div>
+              </div> -->
               <!--  my Orders end -->
 
               
@@ -78,23 +78,23 @@
               <!-- login/ logout start -->
               <% if(typeof currUser != 'undefined') { %>
                
-               <div class="dropdown">
+               <!-- <div class="dropdown">
                 <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Login/logout </a>
                 <ul class="dropdown-menu">
                   <li><a class="dropdown-item" href="/user/logout"> Logout </a></li>
                   <li><a class="dropdown-item" href="/user/change-password"> Change Password </a></li>
                 </ul>
-              </div>
+              </div> -->
             
               <%} else { %>
 
-                <div class="dropdown">
+                <!-- <div class="dropdown">
                   <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Login/logout </a>
                   <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="/user/signup"> SignUp </a></li>
                     <li><a class="dropdown-item" href="/user/login"> Login </a></li>
                   </ul>
-                </div>
+                </div> -->
 
               <% } %>
               <!--  login/ logout end -->
@@ -102,16 +102,126 @@
 
             
               <% if(typeof currUser != 'undefined' && currUser.role != 'USER') { %>
-               <li>
+               <!-- <li>
                 <a href="/admin"> <button class="btn btn-dark"> Admin Panel </button> </a>
-               </li>
+               </li> -->
               <% } %>
           
-            </ul>
+            <!-- </ul>
             <form class="d-flex" role="search">
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" oninput="searchProducts()" id="input-search">
               <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
           </div>
+        </div> -->
+      <!-- </nav> -->
+
+
+
+
+
+
+    <!-- scrolling nav start -->
+       <div id="scrolling-nav">
+        <marquee> Welcome to the World of Nutrition and Taste  &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp;   Get Exclusive Additional 10% Off on all Products Use Code "NEWWEB10"   &nbsp; &nbsp; &nbsp;  |   &nbsp; &nbsp; &nbsp; Free Shipping over Rs. 499 only </marquee>
+       </div>
+    <!-- scrolling nav end -->
+
+ 
+      <!-- nav bar starts -->
+      <nav id="navigation-bar">
+
+        <!-- nav left part -->
+        <div class="nav-left">
+          <div class="nav-logo"> 
+
+              <% if(typeof currUser != 'undefined' && (currUser.role != 'ADMIN' || currUser.role != 'SUPER-ADMIN' )) { %> 
+                <a href="/admin"> <img src="https://cdn.shopify.com/s/files/1/0683/0047/2549/files/Logo1_48e2f5af-ef12-4c59-a2fb-f6717861ba4e.png?v=1715498191" alt="logo"> </a>
+
+              <% } else { %>
+                <a href="/pages"> <img src="https://cdn.shopify.com/s/files/1/0683/0047/2549/files/Logo1_48e2f5af-ef12-4c59-a2fb-f6717861ba4e.png?v=1715498191" alt="logo"> </a>
+              <% } %>
+         
+          </div>
+
+          <div class="line"> <a href="/pages"> Home </a> </div>
+          <div class="line"> <a href="/pages/about-us"> About Us </a> </div>
+
+          <div class="dropdown">  
+              <div data-bs-toggle="dropdown" aria-expanded="false" class="pointer line">
+                 Shop <i class="fa-solid fa-angle-down"></i>
+              </div>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/product/view-all/All">All Collections</a></li>
+                <li><a class="dropdown-item" href="/product/view-all/Best_Seller">Best Seller</a></li>
+                <li><a class="dropdown-item" href="/product/view-all/New_Launches">New Launches</a></li>
+                <li><a class="dropdown-item" href="/product/view-all/Fruity_Delight_Bites">Fruity Delight Bites</a></li>
+                <li><a class="dropdown-item" href="/product/view-all/Nuts_Mix_Marvels">Nuts & Mix Marvel</a></li>
+                <li><a class="dropdown-item" href="/product/view-all/Deliciously_Dried_Fruits">Deliciously Dried Fruit</a></li>
+                <li><a class="dropdown-item" href="/product/view-all/Chocolate_Nuts_Bliss">Chocolate Nuts & Bliss</a></li>
+                <li><a class="dropdown-item" href="/product/view-all/Wholsome_Millet_Munch">Wholesome Millet Munch</a></li>
+                <li><a class="dropdown-item" href="/product/view-all/Raw_Sugar">Pure Sweetness of Raw Sugar </a></li>
+                <li><a class="dropdown-item" href="/product/view-all/Pancakes">Pancakes - Whole Grain</a></li>
+                <li><a class="dropdown-item" href="/product/view-all/Nutriefit_Meals">Nutrifit Meals </a></li>
+                <li><a class="dropdown-item" href="/product/view-all/Granola_Galore">Granola Galore - Artisan Bliss </a></li>
+              </ul>
+          </div>
+
+
+          <div class="line"> <a href="/pages/corporate-gifting"> Corporate Gifting </a> </div>
+          <div class="line"> <a href="/pages/contact"> Contact </a> </div>
         </div>
+        <!-- nav left end -->
+
+
+        <div class="nav-right">
+          <i id="index-search" onclick="openSearchBox()" class="fa-solid fa-magnifying-glass pointer"></i>
+
+          <% if(typeof currUser != 'undefined') { %>
+            <a href="/user/logout"> <i class="fa-regular fa-user pointer"></i> </a>
+          <% } else { %>
+            <a href="/user/login"> <i class="fa-regular fa-user pointer"></i> </a>
+          <% } %>
+
+         
+          <a href="/add-to-cart"> <i class="fa-solid fa-cart-shopping pointer"></i> </a>
+        </div>
+
+
       </nav>
+
+
+       <!-- div to show searched products -->
+       <div id="searchedProducts">
+      </div>
+
+
+
+
+
+
+   <script>
+
+        // search result in for search box
+        let displaySearchedProducts = () => {
+            let cont = document.getElementById('searchedProducts');
+            let inputSearch = document.getElementById('input-search');
+            let input = inputSearch.value;
+            cont.innerHTML = "";
+    
+            <% if(typeof cards != 'undefined') { %>
+            if(input.trim().length != 0) {
+
+                <%   for(let card in cards) {  %>
+                  
+                    if('<%- JSON.stringify(cards[card].title) %>'.trim().toUpperCase().includes(input.trim().toUpperCase()) ) { 
+                        cont.innerHTML += "<a href='product/show/<%=cards[card]._id%>'> <div class='searched-row'> <div> <img class='small-img' src='<%= cards[card].url %>'> </img>  </div> <div class='searched-title'> <%= cards[card].title %> </div> </div> </a>";
+                    }
+
+                <% }  %>
+            } 
+            <% } %>
+
+       }
+     
+    </script>

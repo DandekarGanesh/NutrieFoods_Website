@@ -34,34 +34,42 @@
         <br>
 
         <form method="POST"  action="/product/add" class="row g-3 needs-validation" novalidate enctype="multipart/form-data">
-            <div class="col-md-6">
+            <div class="col-md-8">
             <label for="validationCustom01" class="form-label"> Product Title </label>
             <input type="text" class="form-control" name="Product[title]" id="validationCustom01" required>
             <div class="valid-feedback">
                 Looks good!
             </div>
             </div>
+
+
+        
             <div class="col-md-6">
-            <label for="validationCustom02" class="form-label"> Product Price </label>
+            <label for="validationCustom01" class="form-label"> Original Product Price </label>
+            <input type="text" class="form-control" name="Product[originalPrice]" id="validationCustom01" required>
+            </div>
+            
+            <div class="col-md-6">
+            <label for="validationCustom02" class="form-label"> Product Price to sell </label>
             <input type="number" name="Product[Price]" class="form-control" id="validationCustom02" required>
-            <div class="valid-feedback">
-                Looks good!
             </div>
-            </div>
-            <div class="col-md-4">
 
+            <div class="col-md-6">
+            <!-- images start -->
 
+            <!-- image one -->
             <label for="validationCustomUsername" class="form-label">Upload Product image</label>
             <div class="input-group has-validation">
-                <input type="file" name="Product[image]" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
-                <div class="invalid-feedback">
-                Please choose a image.
-                </div>
+                <input type="file" name="products" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required multiple>
             </div>
             <br> <br>
-
             <img style="height:180px; width: 380px" id="blah" alt="Select a Image">
             </div>
+
+           
+
+
+            <!-- images end -->
 
             <!-- packing size -->
              <h3> Packing Size</h3>
@@ -88,7 +96,7 @@
             </div>
 
 
-            
+                  
 
 
             <!-- category -->

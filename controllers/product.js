@@ -27,11 +27,16 @@ module.exports.renderNewForm = (req,res) => {
 }
 
 
-module.exports.createProduct = (req,res, next) => {
-    let url = req.file.path;
+module.exports.createProduct = (req,res) => {
+    let url = req.files[0].path;
     let data = req.body.Product;
     const newProduct = new Product(data);
     newProduct.url = url;
+    
+    for(let i=1; i<req.files.length; i++) {
+        newProduct.images.push(req.files[i].path);
+    }
+
     newProduct.save();
     res.redirect('/product/allProducts');
 }
@@ -55,10 +60,46 @@ module.exports.updateProduct = async (req,res) => {
     let { id } = req.params;
     const updatedProduct = req.body.Product;
    
-    if(typeof req.file !== "undefined") {
-        updatedProduct.url = req.file.path;
-    }
-
     await Product.findByIdAndUpdate(id, { ...updatedProduct });    
     res.redirect("/product/allProducts");
+}
+
+
+module.exports.allProducts = async (req,res) => {
+    const allProducts = await Product.find({});
+    res.render("product/allProducts", { allProducts });
+}
+
+
+
+module.exports.renderChangeImage = async (req,res) => {
+    const { ProductId, number } = req.params;
+    const pro = await Product.findById(ProductId);
+    let url = "";
+
+    if(number == 1) {
+        url = pro.url;
+    } else {
+        url = pro.images[number-2];
+    }
+
+    res.render("product/editImage.ejs", { url, ProductId, number });
+}
+
+
+
+module.exports.changeImage = async (req,res) => {
+    const { ProductId, number } = req.params;
+    let pro = await Product.findById(ProductId);
+
+    if(req.file) {
+        if(number == 1) {
+            pro.url = req.file.path;
+        } else {
+           pro.images[number-2] = req.file.path;
+        }
+    }
+   
+    await Product.findByIdAndUpdate(ProductId, {...pro}); 
+    res.redirect(`/product/edit/${ProductId}`);
 }

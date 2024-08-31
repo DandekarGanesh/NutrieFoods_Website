@@ -25,6 +25,11 @@ const disCoupanSchema = new Schema({
         type: Number,
         trim: true,
         required: [true, 'Give the minimum number of prodcuts above which the discount is applicable']
+    },
+
+    specificTo: {
+        type: String,
+        trim: true
     }
 });
 

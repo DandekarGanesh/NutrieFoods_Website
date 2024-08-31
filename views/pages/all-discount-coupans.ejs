@@ -20,10 +20,11 @@
     }
 
 
-    .dis-per, .dis-amt, .dis-min-pro ,  .dis-title{
-        min-width: 20%;
-        max-width: 20%;
+    .dis-per, .dis-amt, .dis-min-pro ,  .dis-title, .specific-row{
+        min-width: 18%;
+        max-width: 18%;
     }
+
 
 </style>
 
@@ -39,6 +40,7 @@
             <div class="dis-per">  Discount in (&percnt;) </div>
             <div class="dis-amt"> on above amt (&#8377;) </div>
             <div class="dis-min-pro">  minimum Products </div>
+            <div> SpecificTo </div>
             <div> </div>
         </div>
 
@@ -50,6 +52,13 @@
                <div class="dis-per">  <%= allCoupans[i].disPercentage %>&percnt; </div>
                <div class="dis-amt"> &#8377;<%= allCoupans[i].disOnAbove %> </div>
                <div class="dis-min-pro">  <%= allCoupans[i].minProducts %> </div>
+
+               
+                <% if(allCoupans[i].specificTo && allCoupans[i].specificTo !== "NA") { %> 
+                    <div class="specific-row"> <%= allCoupans[i].specificTo %> </div>
+                <% } else { %>
+                    <div class="specific-row"> NA </div>
+                <% } %>
 
                <div>
                  <!-- <form method="POST" action="/pages/discount-coupan/?_method=DELETE"> -->

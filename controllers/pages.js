@@ -12,18 +12,21 @@ module.exports.index = async (req,res) => {
 }
 
 
-module.exports.about_us = (req,res) => {
-    res.render("./pages/about-us.ejs");
+module.exports.about_us = async (req,res) => {
+    const cards = await Product.find({});
+    res.render("./pages/about-us.ejs", { cards });
 }
 
 
-module.exports.corporate_gifting = (req,res) => {
-    res.render("./pages/corporate-gifting.ejs");
+module.exports.corporate_gifting = async (req,res) => {
+    const cards = await Product.find({});
+    res.render("./pages/corporate-gifting.ejs", { cards });
 }
 
 
-module.exports.contact = (req,res) => {
-    res.render("./pages/contact.ejs");
+module.exports.contact = async (req,res) => {
+    const cards = await Product.find({});
+    res.render("./pages/contact.ejs", { cards });
 }
 
 

@@ -14,9 +14,11 @@
             <% let p = allProducts[i] %>
 
            <div class="product-row row-effect space-between"> 
-               <div class="img">
-                  <img src="<%= p.url %>" alt="">
-               </div>
+              <a href="/product/show/<%= p._id %>">
+                <div class="img">
+                    <img src="<%= p.url %>" alt="">
+                </div>
+              </a>
 
                <div class="title"> <%= p.title %> </div>
 

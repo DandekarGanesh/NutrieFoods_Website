@@ -18,3 +18,32 @@
     })
   })()
 
+
+
+
+
+
+
+
+
+
+  // JS for search box on main page
+  let openSearchBox = () => {
+
+      let leftNav = document.querySelector('.nav-left')
+      let rightNav = document.querySelector('.nav-right');
+      let nav = document.getElementById("navigation-bar");
+      nav.innerHTML = "";
+      nav.innerHTML = `<input id='input-search' oninput='displaySearchedProducts()' class="search-product-box" type='text' placeholder='Search'>  <span id='close-search' class="pointer"> &times; </span>`;
+
+     const closeSearch = document.getElementById("close-search");
+     
+     // close input field
+     closeSearch.addEventListener('click', (req,res) => {          
+        nav.innerHTML = "";
+        nav.innerHTML = `<div class='nav-left'> ${leftNav.innerHTML} </div>`;
+        nav.innerHTML += `<div class='nav-right'> ${rightNav.innerHTML} </div>`;
+        document.getElementById('searchedProducts').innerHTML = "";
+     });
+}
+

@@ -1,0 +1,66 @@
+<!-- admin header  -->
+<%- include("../Admin/heading.ejs") %>
+
+<!-- admin left panel -->
+<%- include("../Admin/leftPanel.ejs") %>
+
+
+<style>
+
+    .box {
+        height: 95%;
+        width: 95%;
+        background-color: white;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 2rem;
+    }
+
+    
+
+    .product-img {
+        height: 350px;
+        width: 350px;
+        /* border: 2px solid black; */
+   }
+
+</style>
+
+<div class="window">
+
+    <h2> &nbsp;  &nbsp; Edit Image </h2>
+    <div class="box">
+     
+        <div>
+          <br> <br>
+          <h5>  Old image </h5> 
+          <img class="product-img" src="<%= url %>" alt="image">
+        </div>
+
+        <hr>   
+        
+        <br> 
+        <div>
+            <h5> Upload new Image </h5>
+
+            <form class="col-md-4" method="post" action="/product/edit/image/<%= ProductId %>/<%= number %>?_method=PUT"  enctype="multipart/form-data">
+                <input class="form-control"  type="file" name="image" required> <br>
+                <button class="btn btn-outline-danger"> Change Image </button>
+            </form>
+         
+        </div>
+
+
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+<!-- admin footer  -->
+<%- include("../Admin/footer.ejs") %>

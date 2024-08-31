@@ -38,19 +38,24 @@
 
 <form action="/pages/discount-coupan" method="POST" class="col-sm-6">
     <label for=""> Type Coupan Code </label>
-    <input type="text" class="form-control" name="coupan" placeholder="Type new Discount Coupan you want to create"> <br> <br>
+    <input type="text" class="form-control" name="coupan" placeholder="Type new Discount Coupan you want to create" required> <br> <br>
 
     <label for=""> Discount Percentage  </label>
-    <input type="number" class="form-control" placeholder="eg: 10" name="disPercentage"> <br> <br>
+    <input type="number" class="form-control" placeholder="eg: 10" name="disPercentage" required> <br> <br>
 
     <label for=""> Discount on above amount </label>
-    <input type="number" class="form-control" placeholder="eg: 999" name="disOnAbove"> <br> <br>
+    <input type="number" class="form-control" placeholder="eg: 999" name="disOnAbove" required> <br> <br>
 
     <label for=""> Minimum Products </label>
-    <input type="number" class="form-control" placeholder="eg: 3" name="minProducts"> <br> <br>
+    <input type="number" class="form-control" placeholder="eg: 3" name="minProducts" required> <br> <br>
+
+    <label for=""> Specific to Email (or NA) </label>
+    <input type="text" class="form-control" placeholder="eg: ganesh@gmail.com" name="specificTo" required> <br> <br>
 
     <button class="btn btn-warning"> Create Coupan </button>
 </form>
+
+<br> <br> <br> <br>
 
 </div>
 </div>

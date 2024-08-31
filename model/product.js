@@ -6,6 +6,12 @@ const productSchma = new Schema({
         type: String,
         requied: true
     },
+
+    originalPrice: {
+        type: Number,
+        required: true
+    },
+
     Price: {
         type: Number,
         required: true
@@ -14,6 +20,10 @@ const productSchma = new Schema({
     url: {
         type: String,
         requred: true 
+    },
+
+    images: {
+        type: Array,
     },
 
     description: {

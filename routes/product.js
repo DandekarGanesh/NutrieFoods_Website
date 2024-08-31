@@ -7,7 +7,7 @@ const { isLoggedin, authorizedRoles }  = require("../middleware");
 const product = require("../model/product");
 
 // for image uploads
-const multer  = require('multer');
+const multer = require('multer');
 const { storage } = require("../cloudConfig");
 const upload = multer({ storage });
 
@@ -28,13 +28,16 @@ router.get('/add',
     authorizedRoles('ADMIN', 'SUPER-ADMIN'), 
     wrapAsync(productController.renderNewForm));  
 
+
+
 // Create product
 router.post('/add', 
     isLoggedin,  
     authorizedRoles('ADMIN', 'SUPER-ADMIN'), 
     // validateProduct, 
-    upload.single("Product[image]"),
+    upload.array('products'),
     wrapAsync(productController.createProduct));
+
 
 
 // delete product
@@ -61,10 +64,27 @@ router.put("/edit/:id",
 // CRUD OPERATIONS END
 
 
-router.get("/allProducts", async (req,res) => {
-    const allProducts = await product.find({});
-    res.render("product/allProducts", { allProducts });
-});
+// show all products for admin
+router.get("/allProducts", 
+    productController.allProducts
+);
+
+
+
+
+//---- this route is to edit the single image of a product ----///
+router.get("/edit/image/:ProductId/:number", 
+    productController.renderChangeImage
+);
+
+
+
+
+// put route to update image of a product
+router.put("/edit/image/:ProductId/:number", 
+    upload.single('image'),
+    productController.changeImage,
+ );
 
 
 module.exports = router;
