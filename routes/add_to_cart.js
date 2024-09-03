@@ -24,6 +24,10 @@ router.put("/add-to-cart-minus", wrapAsync(add_to_cartController.decreseProductQ
 router.delete("/add-to-cart-delete", wrapAsync(add_to_cartController.deleteProduct));
 
 
+// returns -> count of cart items
+router.get("/getCartItems", wrapAsync(add_to_cartController.countItems));
+
+
 
 
 module.exports = router;

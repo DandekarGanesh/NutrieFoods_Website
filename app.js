@@ -60,7 +60,7 @@ app.use(cookieParser()); // to parse cookies
 
 
 // putting user's information into req.user
-app.use(getUser, (req,res, next) => {
+app.use(getUser, async (req,res, next) => {
     res.locals.currUser = req.user;
     next();
 });

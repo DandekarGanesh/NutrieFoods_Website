@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE >
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -22,104 +22,9 @@
       }
 
     </style>
+
+
 <body>
-
-   <!-- nav bar  -->
-    <!-- <nav class="navbar navbar-expand-lg bg-body-tertiary"> -->
-        <!-- <div class="container-fluid">
-          <a class="nav-link active" aria-current="page" href="/pages"> <div class="nav_options"> Home  </div> </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/add-to-cart"> <div class="nav_options"> <i class="fa-solid fa-cart-shopping"></i>  </div> </a>
-              </li> -->
-
-              <!-- drop down list start -->
-              <!-- <div class="dropdown">
-                <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                   Category
-                </a> -->
-              
-                <!-- <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="/product/view-all/All">All Collections</a></li>
-                  <li><a class="dropdown-item" href="/product/view-all/Best_Seller">Best Seller</a></li>
-                  <li><a class="dropdown-item" href="/product/view-all/New_Launches">New Launches</a></li>
-                  <li><a class="dropdown-item" href="/product/view-all/Fruity_Delight_Bites">Fruity Delight Bites</a></li>
-                  <li><a class="dropdown-item" href="/product/view-all/Nuts_Mix_Marvels">Nuts & Mix Marvel</a></li>
-                  <li><a class="dropdown-item" href="/product/view-all/Deliciously_Dried_Fruits">Deliciously Dried Fruit</a></li>
-                  <li><a class="dropdown-item" href="/product/view-all/Chocolate_Nuts_Bliss">Chocolate Nuts & Bliss</a></li>
-                  <li><a class="dropdown-item" href="/product/view-all/Wholsome_Millet_Munch">Wholesome Millet Munch</a></li>
-                  <li><a class="dropdown-item" href="/product/view-all/Raw_Sugar">Pure Sweetness of Raw Sugar </a></li>
-                  <li><a class="dropdown-item" href="/product/view-all/Pancakes">Pancakes - Whole Grain</a></li>
-                  <li><a class="dropdown-item" href="/product/view-all/Nutriefit_Meals">Nutrifit Meals </a></li>
-                  <li><a class="dropdown-item" href="/product/view-all/Granola_Galore">Granola Galore - Artisan Bliss </a></li>
-                </ul>
-              </div> -->
-              <!-- drop down list end -->
-
-
-
-              <!-- My orders start -->
-              <!-- <div class="dropdown">
-                <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> My Order </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="/order/myOrders">My Order </a></li>
-                </ul>
-              </div> -->
-              <!--  my Orders end -->
-
-              
-      
-              
-              <!-- login/ logout start -->
-              <% if(typeof currUser != 'undefined') { %>
-               
-               <!-- <div class="dropdown">
-                <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Login/logout </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="/user/logout"> Logout </a></li>
-                  <li><a class="dropdown-item" href="/user/change-password"> Change Password </a></li>
-                </ul>
-              </div> -->
-            
-              <%} else { %>
-
-                <!-- <div class="dropdown">
-                  <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Login/logout </a>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="/user/signup"> SignUp </a></li>
-                    <li><a class="dropdown-item" href="/user/login"> Login </a></li>
-                  </ul>
-                </div> -->
-
-              <% } %>
-              <!--  login/ logout end -->
- 
-
-            
-              <% if(typeof currUser != 'undefined' && currUser.role != 'USER') { %>
-               <!-- <li>
-                <a href="/admin"> <button class="btn btn-dark"> Admin Panel </button> </a>
-               </li> -->
-              <% } %>
-          
-            <!-- </ul>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" oninput="searchProducts()" id="input-search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-          </div>
-        </div> -->
-      <!-- </nav> -->
-
-
-
-
-
 
     <!-- scrolling nav start -->
        <div id="scrolling-nav">
@@ -133,6 +38,12 @@
 
         <!-- nav left part -->
         <div class="nav-left">
+
+          <div id="side-menu-btns">
+            <label class="ham-menu" for="menu-drawer"  onclick='changeUi()'> <i class="fa-solid fa-bars"></i> </label>
+            <label class="cross-sign" for="menu-drawer" onclick='changeUi()'> <i class="fa-solid fa-xmark"></i> </label>
+          </div>
+
           <div class="nav-logo"> 
 
               <% if(typeof currUser != 'undefined' && (currUser.role != 'ADMIN' || currUser.role != 'SUPER-ADMIN' )) { %> 
@@ -184,44 +95,99 @@
           <% } %>
 
          
-          <a href="/add-to-cart"> <i class="fa-solid fa-cart-shopping pointer"></i> </a>
+        <div> <a href="/add-to-cart"> <i class="fa-solid fa-cart-shopping pointer"> </i> </a>  </div> <span class="cart-item-number">0</span>
         </div>
 
 
       </nav>
 
+      <!-- check box -->
+      <input type="checkbox" id="menu-drawer" style="display: none;">
 
-       <!-- div to show searched products -->
-       <div id="searchedProducts">
+
+
+
+      <!-- menu drawer container -->
+      <div class="menu-drawer">
+        <br>
+         <div class="upper-part">
+          <a href="/pages"> <div class="drawer-row">  Home  </div> </a>
+          <a href="/pages/about-us"> <div class="drawer-row">  About Us </div> </a>
+          <a href=""> <div class="drawer-row">  Shop </div> </a>
+          <a href=""> <div class="drawer-row"> Corportae Gifting </div> </a>
+          <a href=""> <div class="drawer-row">  Contact  </div> </a>
+         </div>
+
+         <div class="lower-part">
+
+         </div>
       </div>
 
 
 
 
 
+      <!-- div to show searched products -->
+      <div id="searchedProducts">
+      </div>
 
+
+
+      
    <script>
 
-        // search result in for search box
-        let displaySearchedProducts = () => {
-            let cont = document.getElementById('searchedProducts');
-            let inputSearch = document.getElementById('input-search');
-            let input = inputSearch.value;
-            cont.innerHTML = "";
-    
-            <% if(typeof cards != 'undefined') { %>
-            if(input.trim().length != 0) {
+    // search result in for search box
+    let displaySearchedProducts = () => {
+        let cont = document.getElementById('searchedProducts');
+        let inputSearch = document.getElementById('input-search');
+        let input = inputSearch.value;
+        cont.innerHTML = "";
 
-                <%   for(let card in cards) {  %>
-                  
-                    if('<%- JSON.stringify(cards[card].title) %>'.trim().toUpperCase().includes(input.trim().toUpperCase()) ) { 
-                        cont.innerHTML += "<a href='product/show/<%=cards[card]._id%>'> <div class='searched-row'> <div> <img class='small-img' src='<%= cards[card].url %>'> </img>  </div> <div class='searched-title'> <%= cards[card].title %> </div> </div> </a>";
-                    }
+        <% if(typeof cards != 'undefined') { %>
+        if(input.trim().length != 0) {
 
-                <% }  %>
-            } 
-            <% } %>
+            <%   for(let card in cards) {  %>
+              
+                if('<%- JSON.stringify(cards[card].title) %>'.trim().toUpperCase().includes(input.trim().toUpperCase()) ) { 
+                    cont.innerHTML += "<a href='product/show/<%=cards[card]._id%>'> <div class='searched-row'> <div> <img class='small-img' src='<%= cards[card].url %>'> </img>  </div> <div class='searched-title'> <%= cards[card].title %> </div> </div> </a>";
+                }
 
-       }
-     
-    </script>
+            <% }  %>
+        } 
+        <% } %>
+
+   }
+
+
+
+
+  // code for menu drawer
+  function changeUi() {
+     let hamburger = document.querySelector('.nav-left .ham-menu');
+     let crossSign = document.querySelector('.nav-left .cross-sign');
+
+     if(hamburger.style.display === "none") {
+        hamburger.style.display = 'block';
+        crossSign.style.display = 'none';
+     } else {
+       hamburger.style.display = 'none';
+       crossSign.style.display = "block";
+     }
+  }
+
+
+
+  // update the count of cart
+  let cart_item_cnt = document.querySelector('.cart-item-number');
+  
+  window.addEventListener('load', async (event) => {
+    let res = await axios. get('/add-to-cart/getCartItems');
+    let count = res.data.count;
+
+    if(cart_item_cnt) {
+      cart_item_cnt.innerHTML = `${count}`;
+    }
+  });
+
+ 
+</script>

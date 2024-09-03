@@ -156,3 +156,21 @@ module.exports.deleteProduct = async (req,res) => {
 
 
 
+module.exports.countItems = async (req,res) => {
+    let s_Id = req.sessionID;
+    let cart = await cartModel.find({session_id: `${s_Id}`});
+    let cnt = 0;
+
+   if(cart && cart[0] && cart[0].Products) {
+    for(pro in cart[0].Products) {
+        cnt += cart[0].Products[pro].quantity;
+    }
+}
+   
+   res.send({count: cnt});
+}
+
+
+
+
+

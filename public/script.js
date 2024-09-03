@@ -47,3 +47,25 @@
      });
 }
 
+
+
+
+
+
+// call to add to cart 
+async function add_to_cart(id) {
+    await axios({
+        method: 'post',
+        url: "/add-to-cart",
+        headers: {}, 
+        data: {
+            productId: id, // This is the body part
+        }})
+        .then(() => {
+  
+          let span = document.querySelector(".cart-item-number");
+          span.innerHTML = `${parseInt(span.innerHTML) + 1}`;
+        })
+        .catch((err) => console.log(err));
+}
+

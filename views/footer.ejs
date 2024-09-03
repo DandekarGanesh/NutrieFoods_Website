@@ -4,22 +4,11 @@
 </div>
 
 
-<script>
-    // call to add to cart 
-    async function add_to_cart(id) {
-        await axios({
-            method: 'post',
-            url: "/add-to-cart",
-            headers: {}, 
-            data: {
-                productId: id, // This is the body part
-            }})
-            .catch((err) => console.log(err));
-    }
-</script>
 
 <!-- custom js file -->
- <script src="../script.js"> </script>
+<script src="../script.js"> </script>
+
+
 
 <!-- cdn for axios -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js" integrity="sha512-JSCFHhKDilTRRXe9ak/FJ28dcpOJxzQaCd3Xg8MyF6XFjODhy/YMCM8HW0TFDckNHWUewW+kfvhin43hKtJxAw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>  
